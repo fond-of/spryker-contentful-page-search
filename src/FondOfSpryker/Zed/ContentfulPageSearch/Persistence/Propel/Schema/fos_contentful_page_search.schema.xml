@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd"
+          name="zed"
+          defaultIdMethod="native"
+          namespace="Orm\Zed\ContentfulPageSearch\Persistence"
+          package="src.Orm.Zed.ContentfulPageSearch.Persistence">
+
+    <table name="fos_contentful_page_search">
+        <column name="id_contentful_page_search" type="BIGINT" autoIncrement="true" primaryKey="true"/>
+        <column name="contentful_entry_id" required="true" size="255" type="VARCHAR"/>
+        <!-- 'structured_data' column contains the result from database query while 'data' column contains mapped data for the search engine -->
+        <column name="structured_data" type="LONGVARCHAR" required="true"/>
+        <id-method-parameter value="fob_contentful_page_search_pk_seq"/>
+        <behavior name="synchronization">
+            <parameter name="resource" value="contentful_page"/>
+            <parameter name="locale" required="true"/>
+            <parameter name="key_suffix_column" value="contentful_entry_id"/>
+            <parameter name="queue_group" value="sync.search.contentful"/>
+            <parameter name="params" value='{"type":"contentful"}'/>
+        </behavior>
+        <behavior name="timestampable"/>
+    </table>
+</database>
