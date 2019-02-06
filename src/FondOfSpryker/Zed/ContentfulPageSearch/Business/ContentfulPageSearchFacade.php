@@ -2,7 +2,6 @@
 
 namespace FondOfSpryker\Zed\ContentfulPageSearch\Business;
 
-use Exception;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -14,8 +13,6 @@ class ContentfulPageSearchFacade extends AbstractFacade implements ContentfulPag
 {
     /**
      * @param array $idCollection
-     *
-     * @throws \Exception
      *
      * @return void
      */

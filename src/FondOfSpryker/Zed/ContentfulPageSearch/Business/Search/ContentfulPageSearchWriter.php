@@ -2,37 +2,53 @@
 
 namespace FondOfSpryker\Zed\ContentfulPageSearch\Business\Search;
 
-use Exception;
+use Orm\Zed\Contentful\Persistence\FosContentfulQuery;
+use Orm\Zed\ContentfulPageSearch\Persistence\Base\FosContentfulPageSearch;
+use Orm\Zed\ContentfulPageSearch\Persistence\FosContentfulPageSearchQuery;
 
 class ContentfulPageSearchWriter implements ContentfulPageSearchWriterInterface
 {
     /**
-     * @var \FondOfSpryker\Zed\ContentfulPageSearch\Persistence\ContentfulPageSearchQueryContainerInterface
+     * @var \Orm\Zed\ContentfulPageSearch\Persistence\FosContentfulPageSearchQuery
      */
-    protected $queryContainer;
+    protected $contentfulPageSearchQuery;
+
+    /**
+     * @var \Orm\Zed\Contentful\Persistence\FosContentfulQuery
+     */
+    protected $contentfulQuery;
 
     /**
      * ContentfulPageSearchWriter constructor.
      *
-     * @param \FondOfSpryker\Zed\ContentfulPageSearch\Business\Search\ContentfulPageSearchQueryContainerInterface $queryContainer
+     * @param \Orm\Zed\ContentfulPageSearch\Persistence\FosContentfulPageSearchQuery $contentfulPageSearchQuery
+     * @param \Orm\Zed\Contentful\Persistence\FosContentfulQuery $contentfulQuery
      */
     public function __construct(
-        ContentfulPageSearchQueryContainerInterface $queryContainer
+        FosContentfulQuery $contentfulQuery,
+        FosContentfulPageSearchQuery $contentfulPageSearchQuery
     ) {
+        $this->contentfulQuery = $contentfulQuery;
+        $this->contentfulPageSearchQuery = $contentfulPageSearchQuery;
     }
 
     /**
      * @param array $contentfulEntryIds
      *
-     * @throws \Exception
-     *
      * @return void
      */
     public function publish(array $contentfulEntryIds): void
     {
-        $contentfulEntryEntities = $this->findContentfulEntryEntities($contentfulEntryIds);
-        
-        throw new Exception('PUBLISH');
+        $this->contentfulPageSearchQuery->clear();
+
+        /** @var \Orm\Zed\Contentful\Persistence\FosContentful[] $contentfulEntries */
+        $contentfulEntries = $this->contentfulQuery
+            ->filterByIdContentful_In($contentfulEntryIds);
+
+        /** @var \Orm\Zed\Contentful\Persistence\FosContentful $entry */
+        foreach ($contentfulEntries as $entry) {
+            $this->store($entry->getPrimaryKey());
+        }
     }
 
     /**
@@ -42,25 +58,33 @@ class ContentfulPageSearchWriter implements ContentfulPageSearchWriterInterface
      */
     public function unpublish(array $contentfulEntryIds): void
     {
-        // TODO: Implement unpublish() method.
     }
 
     /**
-     * @param array $idCollection
-     *
-     * @return array
-     */
-    protected function findContentfulEntryEntities(array $contentfulEntryIds): array
-    {
-        return $this->queryContainer->queryContentfulEntriesByIds($contentfulEntryIds);
-    }
-
-    /**
-     * @param array $contentfulEntryEntities
+     * @param int $contentfulId
      *
      * @return void
      */
-    protected function storeData(array $contentfulEntryEntities): void
+    protected function store(int $contentfulId): void
     {
+        $entity = $this->getContentfulPageSearchEntity($contentfulId);
+        $entity->setFkContentful($contentfulId);
+        $entity->setData('');
+        $entity->setStructuredData('');
+        $entity->save();
+    }
+
+    /**
+     * @param int $contentfulId
+     *
+     * @return \Orm\Zed\ContentfulPageSearch\Persistence\Base\FosContentfulPageSearch
+     */
+    protected function getContentfulPageSearchEntity(int $contentfulId): FosContentfulPageSearch
+    {
+        $this->contentfulPageSearchQuery->clear();
+
+        return $this->contentfulPageSearchQuery
+            ->filterByFkContentful($contentfulId)
+            ->findOneOrCreate();
     }
 }
