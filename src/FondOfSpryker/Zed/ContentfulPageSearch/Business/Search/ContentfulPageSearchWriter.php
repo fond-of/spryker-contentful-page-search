@@ -2,9 +2,15 @@
 
 namespace FondOfSpryker\Zed\ContentfulPageSearch\Business\Search;
 
+use FondOfSpryker\Shared\ContentfulPageSearch\ContentfulPageSearchConstants;
+use FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Facade\ContentfulPageSearchToSearchFacadeInterface;
+use FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Service\ContentfulPageSearchToUtilEncodingInterface;
+use Generated\Shared\Transfer\LocaleTransfer;
+use Orm\Zed\Contentful\Persistence\FosContentful;
 use Orm\Zed\Contentful\Persistence\FosContentfulQuery;
-use Orm\Zed\ContentfulPageSearch\Persistence\Base\FosContentfulPageSearch;
+use Orm\Zed\ContentfulPageSearch\Persistence\FosContentfulPageSearch;
 use Orm\Zed\ContentfulPageSearch\Persistence\FosContentfulPageSearchQuery;
+use Propel\Runtime\Map\TableMap;
 
 class ContentfulPageSearchWriter implements ContentfulPageSearchWriterInterface
 {
@@ -19,17 +25,33 @@ class ContentfulPageSearchWriter implements ContentfulPageSearchWriterInterface
     protected $contentfulQuery;
 
     /**
+     * @var \FondOfSpryker\Zed\ContentfulPageSearch\Business\Search\ContentfulPageSearchToSearchFacadeInterface
+     */
+    protected $searchFacade;
+
+    /**
+     * @var \FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Service\ContentfulPageSearchToUtilEncodingInterface
+     */
+    protected $utilEncoding;
+
+    /**
      * ContentfulPageSearchWriter constructor.
      *
-     * @param \Orm\Zed\ContentfulPageSearch\Persistence\FosContentfulPageSearchQuery $contentfulPageSearchQuery
      * @param \Orm\Zed\Contentful\Persistence\FosContentfulQuery $contentfulQuery
+     * @param \Orm\Zed\ContentfulPageSearch\Persistence\FosContentfulPageSearchQuery $contentfulPageSearchQuery
+     * @param \FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Facade\ContentfulPageSearchToSearchFacadeInterface $searchFacade
+     * @param \FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Service\ContentfulPageSearchToUtilEncodingInterface $utilEncoding
      */
     public function __construct(
         FosContentfulQuery $contentfulQuery,
-        FosContentfulPageSearchQuery $contentfulPageSearchQuery
+        FosContentfulPageSearchQuery $contentfulPageSearchQuery,
+        ContentfulPageSearchToSearchFacadeInterface $searchFacade,
+        ContentfulPageSearchToUtilEncodingInterface $utilEncoding
     ) {
         $this->contentfulQuery = $contentfulQuery;
         $this->contentfulPageSearchQuery = $contentfulPageSearchQuery;
+        $this->searchFacade = $searchFacade;
+        $this->utilEncoding = $utilEncoding;
     }
 
     /**
@@ -67,11 +89,41 @@ class ContentfulPageSearchWriter implements ContentfulPageSearchWriterInterface
      */
     protected function store(int $contentfulId): void
     {
-        $entity = $this->getContentfulPageSearchEntity($contentfulId);
-        $entity->setFkContentful($contentfulId);
-        $entity->setData('');
-        $entity->setStructuredData('');
-        $entity->save();
+        $contentfulEntity = $this->getContentfulEntity($contentfulId);
+        $contentfulPageSearchEntity = $this->getContentfulPageSearchEntity($contentfulId);
+
+        $contentfulData = $contentfulEntity->toArray(TableMap::TYPE_FIELDNAME, true, [], true);
+        $data = $this->mapToSearchData($contentfulData, $contentfulEntity->getEntryLocale());
+
+        $contentfulPageSearchEntity->setData($data);
+        $contentfulPageSearchEntity->setStructuredData($this->utilEncoding->encodeJson($contentfulData));
+        $contentfulPageSearchEntity->setFkContentful($contentfulId);
+        $contentfulPageSearchEntity->setLocale($contentfulEntity->getEntryLocale());
+        $contentfulPageSearchEntity->save();
+    }
+
+    /**
+     * @param array $fosContentfulData
+     * @param string $localeName
+     *
+     * @return array
+     */
+    public function mapToSearchData(array $fosContentfulData, string $localeName): array
+    {
+        return $this->searchFacade->transformPageMapToDocumentByMapperName(
+            $fosContentfulData,
+            (new LocaleTransfer())->setLocaleName($localeName),
+            ContentfulPageSearchConstants::CONTENTFUL_RESOURCE_NAME
+        );
+    }
+
+    protected function getContentfulEntity(int $contentfulId): FosContentful
+    {
+        $this->contentfulQuery->clear();
+
+        return $this->contentfulQuery
+            ->filterByIdContentful($contentfulId)
+            ->findOne();
     }
 
     /**

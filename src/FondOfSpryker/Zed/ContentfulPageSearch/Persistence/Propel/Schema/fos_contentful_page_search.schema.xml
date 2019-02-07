@@ -18,8 +18,10 @@
         <id-method-parameter value="fob_contentful_page_search_pk_seq"/>
         <behavior name="synchronization">
             <parameter name="resource" value="contentful"/>
+            <parameter name="locale" required="true"/>
             <parameter name="key_suffix_column" value="fk_contentful"/>
             <parameter name="queue_group" value="sync.search.contentful"/>
+            <parameter name="params" value='{"type":"contentful"}'/>
         </behavior>
         <behavior name="timestampable"/>
     </table>
