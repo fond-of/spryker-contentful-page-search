@@ -2,6 +2,7 @@
 
 namespace FondOfSpryker\Zed\ContentfulPageSearch\Persistence;
 
+use Orm\Zed\Contentful\Persistence\FosContentfulQuery;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface ContentfulPageSearchQueryContainerInterface extends QueryContainerInterface
@@ -11,5 +12,5 @@ interface ContentfulPageSearchQueryContainerInterface extends QueryContainerInte
      *
      * @return array|null
      */
-    public function queryContentfulEntriesByIds(array $contentfulEntryIds): ?array;
+    public function queryContentfulPageSearchByIds(array $contentfulEntryIds): FosContentfulQuery;
 }

@@ -25,6 +25,13 @@ class ContentfulPageSearchKeyGeneratorPlugin extends AbstractPlugin implements S
             ->createFosContentfulQuery()
             ->findPk($dataTransfer->getReference());
 
-        return $entity->getStorageKey();
+        $key = [
+            'contentful',
+            strtolower($entity->getEntryId()),
+            strtolower($entity->getEntryLocale()),
+            strtolower($entity->getIdContentful()),
+        ];
+
+        return implode(':', $key);
     }
 }
