@@ -95,8 +95,11 @@ class ContentfulPageSearchWriter implements ContentfulPageSearchWriterInterface
         $contentfulData = $contentfulEntity->toArray(TableMap::TYPE_FIELDNAME, true, [], true);
         $data = $this->mapToSearchData($contentfulData, $contentfulEntity->getEntryLocale());
 
+        if($contentfulEntity->getEntryTypeId() != 'textBlock')
+            return;
+
         $contentfulPageSearchEntity->setData($data);
-        $contentfulPageSearchEntity->setStructuredData($this->utilEncoding->encodeJson($contentfulData));
+        $contentfulPageSearchEntity->setStructuredData($contentfulEntity->getEntryData());
         $contentfulPageSearchEntity->setFkContentful($contentfulId);
         $contentfulPageSearchEntity->setLocale($contentfulEntity->getEntryLocale());
         $contentfulPageSearchEntity->save();

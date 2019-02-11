@@ -2,6 +2,8 @@
 
 namespace FondOfSpryker\Zed\ContentfulPageSearch\Communication;
 
+use FondOfSpryker\Zed\ContentfulPageSearch\ContentfulPageSearchDependencyProvider;
+use FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Facade\ContentfulSearchPageToEventBehaviorFacadeInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
@@ -9,4 +11,11 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
  */
 class ContentfulPageSearchCommunicationFactory extends AbstractCommunicationFactory
 {
+    /**
+     * @return \FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Facade\ContentfulSearchPageToEventBehaviorFacadeInterface
+     */
+    public function getEventBehaviourFacade(): ContentfulSearchPageToEventBehaviorFacadeInterface
+    {
+        return $this->getProvidedDependency(ContentfulPageSearchDependencyProvider::FACADE_EVENT_BEHAVIOR);
+    }
 }

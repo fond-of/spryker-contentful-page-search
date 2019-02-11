@@ -62,4 +62,12 @@ class ContentfulPageSearchBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(ContentfulPageSearchDependencyProvider::SERVICE_UTIL_ENCODING);
     }
+
+    /**
+     *
+     */
+    protected function getContentfulPageSearchWriterPlugins()
+    {
+
+    }
 }

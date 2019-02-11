@@ -12,10 +12,11 @@ use Spryker\Zed\Search\Dependency\Plugin\NamedPageMapInterface;
 
 /**
  * @method \FondOfSpryker\Zed\ContentfulPageSearch\Business\ContentfulPageSearchFacade getFacade()
+ * @method \FondOfSpryker\Zed\ContentfulPageSearch\Communication\ContentfulPageSearchCommunicationFactory getFactory()
  */
 class ContentfulPageSearchTextBlockMapPlugin extends AbstractPlugin implements NamedPageMapInterface
 {
-    const CONTENTFUL_TYPE_ID = 'textBlock';
+    const TYPE = 'contentful';
 
     /**
      * @return string
@@ -37,12 +38,19 @@ class ContentfulPageSearchTextBlockMapPlugin extends AbstractPlugin implements N
         $pageMaptransfer = (new PageMapTransfer())
             ->setStore(Store::getInstance()->getStoreName())
             ->setLocale($locale->getLocaleName())
-            ->setType(static::CONTENTFUL_TYPE_ID)
+            ->setType(static::TYPE)
             ->setIsActive(true);
 
         $pageMapBuilder
-            ->addSearchResultData($pageMaptransfer, 'name', 'asdfasdfasdf')
-            ->addSearchResultData($pageMaptransfer, 'contentful_entry_id', 9);
+            ->addSearchResultData($pageMaptransfer, 'ic_contentful', $data['id_contentful'])
+            ->addSearchResultData($pageMaptransfer, 'entry_id', $data['entry_id'])
+            ->addSearchResultData($pageMaptransfer, 'name', $data['entry_id'])
+            ->addSearchResultData($pageMaptransfer, 'type', $data['entry_type_id'])
+            ->addSearchResultData($pageMaptransfer, 'entry_locale', $data['entry_locale'])
+            ->addSearchResultData($pageMaptransfer, 'url', '/de')
+            ->addFullTextBoosted($pageMaptransfer, $data['entry_id'])
+            ->addFullTextBoosted($pageMaptransfer, $data['entry_type_id'])
+            ->addFullTextBoosted($pageMaptransfer, $data['entry_locale']);
 
         return $pageMaptransfer;
     }
