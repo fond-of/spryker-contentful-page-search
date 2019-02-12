@@ -95,8 +95,9 @@ class ContentfulPageSearchWriter implements ContentfulPageSearchWriterInterface
         $contentfulData = $contentfulEntity->toArray(TableMap::TYPE_FIELDNAME, true, [], true);
         $data = $this->mapToSearchData($contentfulData, $contentfulEntity->getEntryLocale());
 
-        if($contentfulEntity->getEntryTypeId() != 'textBlock')
+        if ($contentfulEntity->getEntryTypeId() != 'textBlock') {
             return;
+        }
 
         $contentfulPageSearchEntity->setData($data);
         $contentfulPageSearchEntity->setStructuredData($contentfulEntity->getEntryData());
@@ -120,6 +121,11 @@ class ContentfulPageSearchWriter implements ContentfulPageSearchWriterInterface
         );
     }
 
+    /**
+     * @param int $contentfulId
+     *
+     * @return \Orm\Zed\Contentful\Persistence\FosContentful
+     */
     protected function getContentfulEntity(int $contentfulId): FosContentful
     {
         $this->contentfulQuery->clear();

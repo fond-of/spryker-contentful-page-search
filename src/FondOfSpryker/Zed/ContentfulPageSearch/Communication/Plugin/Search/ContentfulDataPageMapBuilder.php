@@ -14,9 +14,9 @@ use Spryker\Zed\Search\Dependency\Plugin\NamedPageMapInterface;
  * @method \FondOfSpryker\Zed\ContentfulPageSearch\Business\ContentfulPageSearchFacade getFacade()
  * @method \FondOfSpryker\Zed\ContentfulPageSearch\Communication\ContentfulPageSearchCommunicationFactory getFactory()
  */
-class ContentfulPageSearchTextBlockMapPlugin extends AbstractPlugin implements NamedPageMapInterface
+class ContentfulDataPageMapBuilder extends AbstractPlugin implements NamedPageMapInterface
 {
-    const TYPE = 'contentful';
+    const TYPE = 'contentful_page';
 
     /**
      * @return string

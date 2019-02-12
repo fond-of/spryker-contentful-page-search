@@ -21,7 +21,7 @@
             <parameter name="key_suffix_column" value="fk_contentful"/>
             <parameter name="locale" required="true"/>
             <parameter name="queue_group" value="sync.search.contentful"/>
-            <parameter name="params" value='{"type":"contentful"}'/>
+            <parameter name="params" value='{"type":"page"}'/>
         </behavior>
         <behavior name="timestampable"/>
     </table>

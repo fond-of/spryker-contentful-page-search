@@ -2,7 +2,7 @@
 
 namespace FondOfSpryker\Zed\ContentfulPageSearch\Persistence;
 
-use Orm\Zed\Contentful\Persistence\FosContentfulQuery;
+use Orm\Zed\ContentfulPageSearch\Persistence\FosContentfulPageSearchQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
@@ -17,7 +17,7 @@ class ContentfulPageSearchQueryContainer extends AbstractQueryContainer implemen
      *
      * @return array|null
      */
-    public function queryContentfulPageSearchByIds(array $contentfulEntryIds): FosContentfulQuery
+    public function queryContentfulPageSearchByIds(array $contentfulEntryIds): FosContentfulPageSearchQuery
     {
         return $this->getFactory()
             ->createFobContentfulPageSearchQuery()
