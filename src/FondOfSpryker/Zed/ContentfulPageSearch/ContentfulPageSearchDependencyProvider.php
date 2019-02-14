@@ -3,6 +3,7 @@
 namespace FondOfSpryker\Zed\ContentfulPageSearch;
 
 use FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Facade\ContentfulPageSearchToSearchFacadeBridge;
+use FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Facade\ContentfulPageSearchToStorageFacadeBridge;
 use FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Facade\ContentfulSearchPageToEventBehaviorFacadeBridge;
 use FondOfSpryker\Zed\ContentfulPageSearch\Dependency\QueryContainer\ContentfulPageSearchToContentfulEntryQueryContainerBridge;
 use FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Service\ContentfulPageSearchToUtilEncodingBridge;
@@ -13,6 +14,7 @@ class ContentfulPageSearchDependencyProvider extends AbstractBundleDependencyPro
 {
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
     public const FACADE_SEARCH = 'FACADE_SEARCH';
+    public const FACADE_STORAGE = 'FACADE_STORAGE';
     public const QUERY_CONTAINER_CONTENTFUL_ENTRY = 'QUERY_CONTAINER_CONTENTFUL_ENTRY';
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
@@ -48,6 +50,7 @@ class ContentfulPageSearchDependencyProvider extends AbstractBundleDependencyPro
     public function provideBusinessLayerDependencies(Container $container)
     {
         $container = $this->addSearchFacade($container);
+        $container = $this->addStorageFacade($container);
         $container = $this->addUtilEncodingService($container);
         
         return $container;
@@ -62,6 +65,22 @@ class ContentfulPageSearchDependencyProvider extends AbstractBundleDependencyPro
     {
         $container[static::FACADE_EVENT_BEHAVIOR] = function (Container $container) {
             return new ContentfulSearchPageToEventBehaviorFacadeBridge($container->getLocator()->eventBehavior()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addStorageFacade(Container $container): Container
+    {
+        $container[static::FACADE_STORAGE] = function (Container $container) {
+            return new ContentfulPageSearchToStorageFacadeBridge(
+                $container->getLocator()->storage()->facade()
+            );
         };
 
         return $container;

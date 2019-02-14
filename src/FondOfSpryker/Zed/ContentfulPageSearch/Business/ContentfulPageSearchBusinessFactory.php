@@ -3,8 +3,10 @@
 namespace FondOfSpryker\Zed\ContentfulPageSearch\Business;
 
 use FondOfSpryker\Zed\ContentfulPageSearch\Business\Search\ContentfulPageSearchWriter;
+use FondOfSpryker\Zed\ContentfulPageSearch\Business\Search\Plugin\SizeAdviserShoesGroupPlugin;
 use FondOfSpryker\Zed\ContentfulPageSearch\ContentfulPageSearchDependencyProvider;
 use FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Facade\ContentfulPageSearchToSearchFacadeInterface;
+use FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Facade\ContentfulPageSearchToStorageFacadeInterface;
 use FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Service\ContentfulPageSearchToUtilEncodingInterface;
 use Orm\Zed\Contentful\Persistence\FosContentfulQuery;
 use Orm\Zed\ContentfulPageSearch\Persistence\FosContentfulPageSearchQuery;
@@ -27,8 +29,20 @@ class ContentfulPageSearchBusinessFactory extends AbstractBusinessFactory
             $this->createContentfulQuery(),
             $this->createFosContentfulPageSearchQuery(),
             $this->getSearchFacade(),
-            $this->getUtilEncodingService()
+            $this->getStorageFacade(),
+            $this->getUtilEncodingService(),
+            $this->getContentfulPageSearchWriterPlugins()
         );
+    }
+
+    /**
+     * @return FondOfSpryker\Zed\ContentfulPageSearch\Business\Search\ContentfulPageSearchWriterPluginInterface[]
+     */
+    public function getContentfulPageSearchWriterPlugins(): array
+    {
+        return [
+            new SizeAdviserShoesGroupPlugin($this->getStorageFacade(), $this->createContentfulQuery()),
+        ];
     }
 
     /**
@@ -64,10 +78,10 @@ class ContentfulPageSearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     *
+     * @return \FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Facade\ContentfulPageSearchToStorageFacadeInterface
      */
-    protected function getContentfulPageSearchWriterPlugins()
+    public function getStorageFacade(): ContentfulPageSearchToStorageFacadeInterface
     {
-
+        return $this->getProvidedDependency(ContentfulPageSearchDependencyProvider::FACADE_STORAGE);
     }
 }

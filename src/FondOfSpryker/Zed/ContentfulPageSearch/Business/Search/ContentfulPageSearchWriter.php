@@ -4,13 +4,13 @@ namespace FondOfSpryker\Zed\ContentfulPageSearch\Business\Search;
 
 use FondOfSpryker\Shared\ContentfulPageSearch\ContentfulPageSearchConstants;
 use FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Facade\ContentfulPageSearchToSearchFacadeInterface;
+use FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Facade\ContentfulPageSearchToStorageFacadeInterface;
 use FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Service\ContentfulPageSearchToUtilEncodingInterface;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Contentful\Persistence\FosContentful;
 use Orm\Zed\Contentful\Persistence\FosContentfulQuery;
 use Orm\Zed\ContentfulPageSearch\Persistence\FosContentfulPageSearch;
 use Orm\Zed\ContentfulPageSearch\Persistence\FosContentfulPageSearchQuery;
-use Propel\Runtime\Map\TableMap;
 
 class ContentfulPageSearchWriter implements ContentfulPageSearchWriterInterface
 {
@@ -35,23 +35,37 @@ class ContentfulPageSearchWriter implements ContentfulPageSearchWriterInterface
     protected $utilEncoding;
 
     /**
-     * ContentfulPageSearchWriter constructor.
-     *
+     * @var \FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Facade\ContentfulPageSearchToStorageFacadeInterface
+     */
+    protected $storageFacade;
+
+    /**
+     * @var array
+     */
+    protected $contentfulPageSearchWriterPlugins;
+
+    /**
      * @param \Orm\Zed\Contentful\Persistence\FosContentfulQuery $contentfulQuery
      * @param \Orm\Zed\ContentfulPageSearch\Persistence\FosContentfulPageSearchQuery $contentfulPageSearchQuery
      * @param \FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Facade\ContentfulPageSearchToSearchFacadeInterface $searchFacade
+     * @param \FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Facade\ContentfulPageSearchToStorageFacadeInterface $storageFacade
      * @param \FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Service\ContentfulPageSearchToUtilEncodingInterface $utilEncoding
+     * @param array $contentfulPageSearchWriterPlugins
      */
     public function __construct(
         FosContentfulQuery $contentfulQuery,
         FosContentfulPageSearchQuery $contentfulPageSearchQuery,
         ContentfulPageSearchToSearchFacadeInterface $searchFacade,
-        ContentfulPageSearchToUtilEncodingInterface $utilEncoding
+        ContentfulPageSearchToStorageFacadeInterface $storageFacade,
+        ContentfulPageSearchToUtilEncodingInterface $utilEncoding,
+        array $contentfulPageSearchWriterPlugins
     ) {
         $this->contentfulQuery = $contentfulQuery;
         $this->contentfulPageSearchQuery = $contentfulPageSearchQuery;
         $this->searchFacade = $searchFacade;
         $this->utilEncoding = $utilEncoding;
+        $this->storageFacade = $storageFacade;
+        $this->contentfulPageSearchWriterPlugins = $contentfulPageSearchWriterPlugins;
     }
 
     /**
@@ -92,18 +106,15 @@ class ContentfulPageSearchWriter implements ContentfulPageSearchWriterInterface
         $contentfulEntity = $this->getContentfulEntity($contentfulId);
         $contentfulPageSearchEntity = $this->getContentfulPageSearchEntity($contentfulId);
 
-        $contentfulData = $contentfulEntity->toArray(TableMap::TYPE_FIELDNAME, true, [], true);
-        $data = $this->mapToSearchData($contentfulData, $contentfulEntity->getEntryLocale());
-
-        if ($contentfulEntity->getEntryTypeId() != 'textBlock') {
-            return;
+        /** @var \FondOfSpryker\Zed\ContentfulPageSearch\Business\Search\ContentfulPageSearchWriterPluginInterface $contentfulPageSearchWriterPlugin */
+        foreach ($this->contentfulPageSearchWriterPlugins as $contentfulPageSearchWriterPlugin) {
+            if ($contentfulEntity->getEntryTypeId() === $contentfulPageSearchWriterPlugin->getEntryTypeId()) {
+                $contentfulPageSearchWriterPlugin->extractEntry(
+                    $contentfulEntity,
+                    $contentfulPageSearchEntity
+                );
+            }
         }
-
-        $contentfulPageSearchEntity->setData($data);
-        $contentfulPageSearchEntity->setStructuredData($contentfulEntity->getEntryData());
-        $contentfulPageSearchEntity->setFkContentful($contentfulId);
-        $contentfulPageSearchEntity->setLocale($contentfulEntity->getEntryLocale());
-        $contentfulPageSearchEntity->save();
     }
 
     /**
