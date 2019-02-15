@@ -35,23 +35,49 @@ class ContentfulDataPageMapBuilder extends AbstractPlugin implements NamedPageMa
      */
     public function buildPageMap(PageMapBuilderInterface $pageMapBuilder, array $data, LocaleTransfer $locale): PageMapTransfer
     {
-        $pageMaptransfer = (new PageMapTransfer())
+        $pageMapTransfer = (new PageMapTransfer())
             ->setStore(Store::getInstance()->getStoreName())
             ->setLocale($locale->getLocaleName())
             ->setType(static::TYPE)
             ->setIsActive(true);
 
-        $pageMapBuilder
-            ->addSearchResultData($pageMaptransfer, 'ic_contentful', $data['id_contentful'])
-            ->addSearchResultData($pageMaptransfer, 'entry_id', $data['entry_id'])
-            ->addSearchResultData($pageMaptransfer, 'name', $data['entry_id'])
-            ->addSearchResultData($pageMaptransfer, 'type', $data['entry_type_id'])
-            ->addSearchResultData($pageMaptransfer, 'entry_locale', $data['entry_locale'])
-            ->addSearchResultData($pageMaptransfer, 'url', '/de')
-            ->addFullTextBoosted($pageMaptransfer, $data['entry_id'])
-            ->addFullTextBoosted($pageMaptransfer, $data['entry_type_id'])
-            ->addFullTextBoosted($pageMaptransfer, $data['entry_locale']);
+        foreach ($this->getFactory()->getContentfulPageSeachMapperTypes() as $contentfulPageSeachMapperType) {
+            if ($data['entry_type_id'] !== $contentfulPageSeachMapperType->getEntryTypeId()) {
+                continue;
+            }
 
-        return $pageMaptransfer;
+            $mapperTypes = $contentfulPageSeachMapperType->handle($data['id_contentful'], $pageMapBuilder);
+            return $this->mapSearchResults($pageMapBuilder, $pageMapTransfer, $data, $mapperTypes);
+        }
+
+        return $pageMapTransfer;
+    }
+
+    /**
+     * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface $pageMapBuilder
+     * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
+     * @param array $data
+     * @param array $mapperTypes
+     *
+     * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface
+     */
+    protected function mapSearchResults(PageMapBuilderInterface $pageMapBuilder, PageMapTransfer $pageMapTransfer, array $data, array $mapperTypes): PageMapBuilderInterface
+    {
+        $pageMapBuilder
+            ->addSearchResultData($pageMapTransfer, 'id_contentful', $data['id_contentful'])
+            ->addSearchResultData($pageMapTransfer, 'entry_id', $data['entry_id'])
+            ->addSearchResultData($pageMapTransfer, 'name', $data['entry_id'])
+            ->addSearchResultData($pageMapTransfer, 'type', $data['entry_type_id'])
+            ->addSearchResultData($pageMapTransfer, 'entry_locale', $data['entry_locale'])
+            ->addSearchResultData($pageMapTransfer, 'url', '/de')
+            ->addFullTextBoosted($pageMapTransfer, $data['entry_id'])
+            ->addFullTextBoosted($pageMapTransfer, $data['entry_type_id'])
+            ->addFullTextBoosted($pageMapTransfer, $data['entry_locale']);
+
+        foreach ($mapperTypes as $key => $item) {
+            $pageMapBuilder->addSearchResultData($pageMapTransfer, $key, $item);
+        }
+
+        return $pageMapBuilder;
     }
 }

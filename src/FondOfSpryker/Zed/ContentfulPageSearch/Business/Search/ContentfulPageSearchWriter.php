@@ -110,26 +110,10 @@ class ContentfulPageSearchWriter implements ContentfulPageSearchWriterInterface
         foreach ($this->contentfulPageSearchWriterPlugins as $contentfulPageSearchWriterPlugin) {
             if ($contentfulEntity->getEntryTypeId() === $contentfulPageSearchWriterPlugin->getEntryTypeId()) {
                 $contentfulPageSearchWriterPlugin->extractEntry(
-                    $contentfulEntity,
-                    $contentfulPageSearchEntity
+                    $contentfulEntity, $contentfulPageSearchEntity
                 );
             }
         }
-    }
-
-    /**
-     * @param array $fosContentfulData
-     * @param string $localeName
-     *
-     * @return array
-     */
-    public function mapToSearchData(array $fosContentfulData, string $localeName): array
-    {
-        return $this->searchFacade->transformPageMapToDocumentByMapperName(
-            $fosContentfulData,
-            (new LocaleTransfer())->setLocaleName($localeName),
-            ContentfulPageSearchConstants::CONTENTFUL_RESOURCE_NAME
-        );
     }
 
     /**
