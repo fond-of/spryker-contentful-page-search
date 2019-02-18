@@ -2,7 +2,7 @@
 
 namespace FondOfSpryker\Zed\ContentfulPageSearch\Communication;
 
-use FondOfSpryker\Zed\ContentfulPageSearch\Communication\Plugin\Search\SizeAdviserShoesGroupPageMapPlugin;
+use FondOfSpryker\Zed\ContentfulPageSearch\Communication\Plugin\Search\BlogPostPageMapPlugin;
 use FondOfSpryker\Zed\ContentfulPageSearch\ContentfulPageSearchDependencyProvider;
 use FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Facade\ContentfulPageSearchToStorageFacadeInterface;
 use FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Facade\ContentfulSearchPageToEventBehaviorFacadeInterface;
@@ -29,7 +29,7 @@ class ContentfulPageSearchCommunicationFactory extends AbstractCommunicationFact
     public function getContentfulPageSeachMapperTypes(): array
     {
         return [
-            new SizeAdviserShoesGroupPageMapPlugin(),
+            new BlogPostPageMapPlugin(),
         ];
     }
 

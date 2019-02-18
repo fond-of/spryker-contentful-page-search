@@ -2,11 +2,9 @@
 
 namespace FondOfSpryker\Zed\ContentfulPageSearch\Business\Search;
 
-use FondOfSpryker\Shared\ContentfulPageSearch\ContentfulPageSearchConstants;
 use FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Facade\ContentfulPageSearchToSearchFacadeInterface;
 use FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Facade\ContentfulPageSearchToStorageFacadeInterface;
 use FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Service\ContentfulPageSearchToUtilEncodingInterface;
-use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Contentful\Persistence\FosContentful;
 use Orm\Zed\Contentful\Persistence\FosContentfulQuery;
 use Orm\Zed\ContentfulPageSearch\Persistence\FosContentfulPageSearch;
@@ -110,7 +108,8 @@ class ContentfulPageSearchWriter implements ContentfulPageSearchWriterInterface
         foreach ($this->contentfulPageSearchWriterPlugins as $contentfulPageSearchWriterPlugin) {
             if ($contentfulEntity->getEntryTypeId() === $contentfulPageSearchWriterPlugin->getEntryTypeId()) {
                 $contentfulPageSearchWriterPlugin->extractEntry(
-                    $contentfulEntity, $contentfulPageSearchEntity
+                    $contentfulEntity,
+                    $contentfulPageSearchEntity
                 );
             }
         }

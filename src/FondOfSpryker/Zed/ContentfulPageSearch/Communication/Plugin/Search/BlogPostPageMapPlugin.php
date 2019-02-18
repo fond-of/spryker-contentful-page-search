@@ -8,16 +8,18 @@ use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInt
  * @method \FondOfSpryker\Zed\ContentfulPageSearch\Communication\ContentfulPageSearchCommunicationFactory getFactory()
  * @method \FondOfSpryker\Zed\ContentfulPageSearch\Business\ContentfulPageSearchFacade getFacade()
  */
-class SizeAdviserShoesGroupPageMapPlugin extends AbstractContentfulTypeMapperPlugin implements ContentfulTypeMapperPluginInterface
+class BlogPostPageMapPlugin extends AbstractContentfulTypeMapperPlugin implements ContentfulTypeMapperPluginInterface
 {
-    public const FIELD_ITEMS = 'items';
+    public const FIELD_ITEMS = 'categories';
+
     public const FIELD_ITEMS_TYPE = 'Reference';
-    public const SEARCH_NAME_FIELD = 'contentfulSizes';
+
+    public const SEARCH_NAME_FIELD = 'blog_categories';
 
     /**
      * @var string
      */
-    private $entryTypeId = 'sizeAdviserShoesGroup';
+    private $entryTypeId = 'blogPost';
 
     /**
      * @return string
@@ -36,33 +38,33 @@ class SizeAdviserShoesGroupPageMapPlugin extends AbstractContentfulTypeMapperPlu
     public function handle(int $idContentful, PageMapBuilderInterface $pageMapBuilder): array
     {
         $contentfulEntity = $this->getContentfulEntity($idContentful);
-        $storageEntry = $this->getFactory()->getStorageFacade()->get($contentfulEntity->getStorageKey());
+        $entryData = json_decode($contentfulEntity->getEntryData(), true);
 
-        return $this->extractEntries($storageEntry);
+        return $this->extractEntries($entryData);
     }
 
     /**
-     * @param array $storageEntry
+     * @param array $entryData
      *
      * @return array
      */
-    public function extractEntries(array $storageEntry): array
+    public function extractEntries(array $entryData): array
     {
         return [
-            static::SEARCH_NAME_FIELD => $this->extractFieldItemsReference($storageEntry),
+            static::SEARCH_NAME_FIELD => $this->extractFieldItemsReference($entryData),
         ];
     }
 
     /**
-     * @param array $storageEntry
+     * @param array $entryData
      *
      * @return array
      */
-    protected function extractFieldItemsReference(array $storageEntry): array
+    protected function extractFieldItemsReference(array $entryData): array
     {
         $items = [];
 
-        foreach ($storageEntry['fields'][static::FIELD_ITEMS]['value'] as $field) {
+        foreach ($entryData['fields'][static::FIELD_ITEMS]['value'] as $field) {
             if ($field['type'] === static::FIELD_ITEMS_TYPE) {
                 array_push($items, $this->getRelatedItemEntryId($field['value']));
             }

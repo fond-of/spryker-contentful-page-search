@@ -26,6 +26,7 @@ class ContentfulPageSearchDependencyProvider extends AbstractBundleDependencyPro
     public function provideCommunicationLayerDependencies(Container $container): Container
     {
         $container = $this->addEventBehaviourFacade($container);
+        $container = $this->addStorageFacade($container);
 
         return $container;
     }

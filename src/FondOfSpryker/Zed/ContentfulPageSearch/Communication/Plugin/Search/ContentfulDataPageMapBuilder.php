@@ -59,9 +59,9 @@ class ContentfulDataPageMapBuilder extends AbstractPlugin implements NamedPageMa
      * @param array $data
      * @param array $mapperTypes
      *
-     * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface
+     * @return \Generated\Shared\Transfer\PageMapTransfer
      */
-    protected function mapSearchResults(PageMapBuilderInterface $pageMapBuilder, PageMapTransfer $pageMapTransfer, array $data, array $mapperTypes): PageMapBuilderInterface
+    protected function mapSearchResults(PageMapBuilderInterface $pageMapBuilder, PageMapTransfer $pageMapTransfer, array $data, array $mapperTypes): PageMapTransfer
     {
         $pageMapBuilder
             ->addSearchResultData($pageMapTransfer, 'id_contentful', $data['id_contentful'])
@@ -78,6 +78,6 @@ class ContentfulDataPageMapBuilder extends AbstractPlugin implements NamedPageMa
             $pageMapBuilder->addSearchResultData($pageMapTransfer, $key, $item);
         }
 
-        return $pageMapBuilder;
+        return $pageMapTransfer;
     }
 }

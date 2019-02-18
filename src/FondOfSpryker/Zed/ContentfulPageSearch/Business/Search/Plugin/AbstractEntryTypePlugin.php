@@ -75,4 +75,15 @@ abstract class AbstractEntryTypePlugin
             ContentfulPageSearchConstants::CONTENTFUL_RESOURCE_NAME
         );
     }
+
+    /**
+     * @param \Orm\Zed\Contentful\Persistence\FosContentful $contentfulEntity
+     * @param \Orm\Zed\ContentfulPageSearch\Persistence\FosContentfulPageSearch $contentfulPageSearchEntity
+     *
+     * @return void
+     */
+    public function extractEntry(FosContentful $contentfulEntity, FosContentfulPageSearch $contentfulPageSearchEntity): void
+    {
+        $this->store($contentfulEntity, $contentfulPageSearchEntity);
+    }
 }

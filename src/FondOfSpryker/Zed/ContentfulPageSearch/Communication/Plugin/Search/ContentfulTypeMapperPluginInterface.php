@@ -15,9 +15,9 @@ interface ContentfulTypeMapperPluginInterface
      * @param int $idContetful
      * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface $pageMapBuilder
      *
-     * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface
+     * @return array
      */
-    public function handle(int $idContetful, PageMapBuilderInterface $pageMapBuilder): PageMapBuilderInterface;
+    public function handle(int $idContetful, PageMapBuilderInterface $pageMapBuilder): array;
 
     /**
      * @param array $storageEntry

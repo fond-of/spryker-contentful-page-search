@@ -3,7 +3,7 @@
 namespace FondOfSpryker\Zed\ContentfulPageSearch\Business;
 
 use FondOfSpryker\Zed\ContentfulPageSearch\Business\Search\ContentfulPageSearchWriter;
-use FondOfSpryker\Zed\ContentfulPageSearch\Business\Search\Plugin\SizeAdviserShoesGroupWriterPlugin;
+use FondOfSpryker\Zed\ContentfulPageSearch\Business\Search\Plugin\BlogPostWriterPlugin;
 use FondOfSpryker\Zed\ContentfulPageSearch\ContentfulPageSearchDependencyProvider;
 use FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Facade\ContentfulPageSearchToSearchFacadeInterface;
 use FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Facade\ContentfulPageSearchToStorageFacadeInterface;
@@ -41,12 +41,20 @@ class ContentfulPageSearchBusinessFactory extends AbstractBusinessFactory
     public function getContentfulPageSearchWriterPlugins(): array
     {
         return [
-            new SizeAdviserShoesGroupWriterPlugin(
-                $this->getStorageFacade(),
-                $this->getSearchFacade(),
-                $this->createContentfulQuery()
-            ),
+            $this->createBlogPostWriterPlugin(),
         ];
+    }
+
+    /**
+     * @return \FondOfSpryker\Zed\ContentfulPageSearch\Business\Search\Plugin\BlogPostWriterPlugin
+     */
+    protected function createBlogPostWriterPlugin(): BlogPostWriterPlugin
+    {
+        return new BlogPostWriterPlugin(
+            $this->getStorageFacade(),
+            $this->getSearchFacade(),
+            $this->createContentfulQuery()
+        );
     }
 
     /**
