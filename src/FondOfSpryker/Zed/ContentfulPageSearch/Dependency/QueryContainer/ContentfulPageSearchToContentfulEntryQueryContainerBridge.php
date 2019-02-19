@@ -4,7 +4,6 @@ namespace FondOfSpryker\Zed\ContentfulPageSearch\Dependency\QueryContainer;
 
 use ContentfulPageSearchToContentfulEntryQueryContainerInterface;
 use FondOfSpryker\Zed\Contentful\Persistence\ContentfulEntryQueryContainerInterface;
-use Orm\Zed\ContentfulPage\Persistence\FosContentfulEntry;
 
 class ContentfulPageSearchToContentfulEntryQueryContainerBridge implements ContentfulPageSearchToContentfulEntryQueryContainerInterface
 {
@@ -15,6 +14,7 @@ class ContentfulPageSearchToContentfulEntryQueryContainerBridge implements Conte
 
     /**
      * ContentfulPageSearchToContentfulEntryQueryContainerBridge constructor.
+     *
      * @param \FondOfSpryker\Zed\Contentful\Persistence\ContentfulEntryQueryContainerInterface $queryContainer
      */
     public function __construct(ContentfulEntryQueryContainerInterface $queryContainer)
