@@ -46,36 +46,12 @@ class ContentfulDataPageMapBuilder extends AbstractPlugin implements NamedPageMa
                 continue;
             }
 
-            $mapperTypes = $contentfulPageSeachMapperType->handle($data['id_contentful'], $pageMapBuilder);
-            return $this->mapSearchResults($pageMapBuilder, $pageMapTransfer, $data, $mapperTypes);
-        }
-
-        return $pageMapTransfer;
-    }
-
-    /**
-     * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface $pageMapBuilder
-     * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
-     * @param array $data
-     * @param array $mapperTypes
-     *
-     * @return \Generated\Shared\Transfer\PageMapTransfer
-     */
-    protected function mapSearchResults(PageMapBuilderInterface $pageMapBuilder, PageMapTransfer $pageMapTransfer, array $data, array $mapperTypes): PageMapTransfer
-    {
-        $pageMapBuilder
-            ->addSearchResultData($pageMapTransfer, 'id_contentful', $data['id_contentful'])
-            ->addSearchResultData($pageMapTransfer, 'entry_id', $data['entry_id'])
-            ->addSearchResultData($pageMapTransfer, 'name', $data['entry_id'])
-            ->addSearchResultData($pageMapTransfer, 'type', $data['entry_type_id'])
-            ->addSearchResultData($pageMapTransfer, 'entry_locale', $data['entry_locale'])
-            ->addSearchResultData($pageMapTransfer, 'url', '/de')
-            ->addFullTextBoosted($pageMapTransfer, $data['entry_id'])
-            ->addFullTextBoosted($pageMapTransfer, $data['entry_type_id'])
-            ->addFullTextBoosted($pageMapTransfer, $data['entry_locale']);
-
-        foreach ($mapperTypes as $key => $item) {
-            $pageMapBuilder->addSearchResultData($pageMapTransfer, $key, $item);
+            return $contentfulPageSeachMapperType->handle(
+                $data['id_contentful'],
+                $pageMapTransfer,
+                $pageMapBuilder,
+                $data
+            );
         }
 
         return $pageMapTransfer;

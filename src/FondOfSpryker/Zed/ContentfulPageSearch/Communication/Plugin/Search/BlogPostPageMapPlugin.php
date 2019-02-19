@@ -2,6 +2,7 @@
 
 namespace FondOfSpryker\Zed\ContentfulPageSearch\Communication\Plugin\Search;
 
+use Generated\Shared\Transfer\PageMapTransfer;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface;
 
 /**
@@ -10,9 +11,9 @@ use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInt
  */
 class BlogPostPageMapPlugin extends AbstractContentfulTypeMapperPlugin implements ContentfulTypeMapperPluginInterface
 {
-    public const FIELD_ITEMS = 'categories';
+    public const FIELD_CATEGORIES = 'categories';
 
-    public const FIELD_ITEMS_TYPE = 'Reference';
+    public const FIELD_CATEGORIES_TYPE = 'Reference';
 
     public const SEARCH_NAME_FIELD = 'blog_categories';
 
@@ -30,17 +31,24 @@ class BlogPostPageMapPlugin extends AbstractContentfulTypeMapperPlugin implement
     }
 
     /**
-     * @param int $idContentful
+     * @param int $idContetful
+     * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
      * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface $pageMapBuilder
+     * @param array $data
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\PageMapTransfer
      */
-    public function handle(int $idContentful, PageMapBuilderInterface $pageMapBuilder): array
-    {
+    public function handle(
+        int $idContentful,
+        PageMapTransfer $pageMapTransfer,
+        PageMapBuilderInterface $pageMapBuilder,
+        array $data
+    ): PageMapTransfer {
         $contentfulEntity = $this->getContentfulEntity($idContentful);
         $entryData = json_decode($contentfulEntity->getEntryData(), true);
+        $mapper = $this->extractEntries($entryData);
 
-        return $this->extractEntries($entryData);
+        return $this->mapSearchResults($pageMapBuilder, $pageMapTransfer, $data, $mapper);
     }
 
     /**
@@ -51,7 +59,7 @@ class BlogPostPageMapPlugin extends AbstractContentfulTypeMapperPlugin implement
     public function extractEntries(array $entryData): array
     {
         return [
-            static::SEARCH_NAME_FIELD => $this->extractFieldItemsReference($entryData),
+            static::SEARCH_NAME_FIELD => $this->extractFieldCategoriesReference($entryData),
         ];
     }
 
@@ -60,12 +68,12 @@ class BlogPostPageMapPlugin extends AbstractContentfulTypeMapperPlugin implement
      *
      * @return array
      */
-    protected function extractFieldItemsReference(array $entryData): array
+    protected function extractFieldCategoriesReference(array $entryData): array
     {
         $items = [];
 
-        foreach ($entryData['fields'][static::FIELD_ITEMS]['value'] as $field) {
-            if ($field['type'] === static::FIELD_ITEMS_TYPE) {
+        foreach ($entryData['fields'][static::FIELD_CATEGORIES]['value'] as $field) {
+            if ($field['type'] === static::FIELD_CATEGORIES_TYPE) {
                 array_push($items, $this->getRelatedItemEntryId($field['value']));
             }
         }
@@ -90,5 +98,28 @@ class BlogPostPageMapPlugin extends AbstractContentfulTypeMapperPlugin implement
         }
 
         return null;
+    }
+
+    /**
+     * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface $pageMapBuilder
+     * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
+     * @param array $data
+     * @param array $mapper
+     *
+     * @return \Generated\Shared\Transfer\PageMapTransfer
+     */
+    protected function mapSearchResults(PageMapBuilderInterface $pageMapBuilder, PageMapTransfer $pageMapTransfer, array $data, array $mapper): PageMapTransfer
+    {
+        $this->defaultMapSearchResults($pageMapBuilder, $pageMapTransfer, $data);
+
+        if (array_key_exists(static::SEARCH_NAME_FIELD, $mapper)) {
+            $pageMapTransfer->setBlogCategories($mapper[static::SEARCH_NAME_FIELD]);
+        }
+
+        foreach ($mapper as $key => $item) {
+            $pageMapBuilder->addSearchResultData($pageMapTransfer, $key, $item);
+        }
+
+        return $pageMapTransfer;
     }
 }
