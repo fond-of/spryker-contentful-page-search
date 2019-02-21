@@ -11,7 +11,8 @@ use Spryker\Client\Search\SearchClientInterface;
 
 class ContentfulPageSearchFactory extends AbstractFactory
 {
-    /**
+    /**ContentfulPageSearchFactory
+     *
      * @param string $searchString
      *
      * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
@@ -54,8 +55,16 @@ class ContentfulPageSearchFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[]
      */
-    public function getContentfulSearchQueryExpanderPlugins(): array
+    public function getContentfulSearchBlogCategoryQueryExpanderPlugins(): array
     {
-        return $this->getProvidedDependency(ContentfulPageSearchDependencyProvider::CONTENTFUL_SEARCH_QUERY_EXPANDER_PLUGINS);
+        return $this->getProvidedDependency(ContentfulPageSearchDependencyProvider::CONTENTFUL_SEARCH_BLOG_CATEGORY_QUERY_EXPANDER_PLUGINS);
+    }
+
+    /**
+     * @return \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface[]
+     */
+    public function getContentfulSearchBlogCategoryFormatterPlugins(): array
+    {
+        return $this->getProvidedDependency(ContentfulPageSearchDependencyProvider::CONTENTFUL_SEARCH_BLOG_CATEGORY_RESULT_FORMATTER_PLUGINS);
     }
 }

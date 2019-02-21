@@ -2,7 +2,6 @@
 
 namespace FondOfSpryker\Client\ContentfulPageSearch;
 
-use Elastica\ResultSet;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -15,9 +14,9 @@ class ContentfulPageSearchClient extends AbstractClient implements ContentfulPag
      * @param string $searchString
      * @param array $requestParameters
      *
-     * @return \Elastica\ResultSet
+     * @return array|\Elastica\ResultSet
      */
-    public function contentfulSearch(string $searchString, array $requestParameters): ResultSet
+    public function contentfulBlogCategorySearch(string $searchString, array $requestParameters)
     {
         $searchQuery = $this
             ->getFactory()
@@ -26,11 +25,15 @@ class ContentfulPageSearchClient extends AbstractClient implements ContentfulPag
         $searchQuery = $this
             ->getFactory()
             ->getSearchClient()
-            ->expandQuery($searchQuery, $this->getFactory()->getContentfulSearchQueryExpanderPlugins(), $requestParameters);
+            ->expandQuery($searchQuery, $this->getFactory()->getContentfulSearchBlogCategoryQueryExpanderPlugins(), $requestParameters);
+
+        $resultFormatters = $this
+            ->getFactory()
+            ->getContentfulSearchBlogCategoryFormatterPlugins();
 
         return $this
             ->getFactory()
             ->getSearchClient()
-            ->search($searchQuery, [], $requestParameters);
+            ->search($searchQuery, $resultFormatters, $requestParameters);
     }
 }
