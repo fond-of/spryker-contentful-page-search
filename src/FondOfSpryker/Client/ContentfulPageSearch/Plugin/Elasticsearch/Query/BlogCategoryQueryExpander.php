@@ -30,6 +30,8 @@ class BlogCategoryQueryExpander extends AbstractPlugin implements QueryExpanderP
             return $searchQuery;
         }
 
+        $this->addBlogPostFilter($searchQuery->getSearchQuery());
+
         if (!array_key_exists(ContentfulConstants::FIELD_ENTRY_ID, $requestParameters)) {
             return $searchQuery;
         }
@@ -40,6 +42,23 @@ class BlogCategoryQueryExpander extends AbstractPlugin implements QueryExpanderP
         );
 
         return $searchQuery;
+    }
+
+    /**
+     * @param \Elastica\Query $query
+     *
+     * @return void
+     */
+    protected function addBlogPostFilter(Query $query): void
+    {
+        $boolQuery = $this->getBoolQuery($query);
+
+        $matchQuery = $this->getFactory()
+            ->createQueryBuilder()
+            ->createMatchQuery()
+            ->setField(ContentfulConstants::FIELD_TYPE, 'contentful_blog_post');
+
+        $boolQuery->addMust($matchQuery);
     }
 
     /**

@@ -123,9 +123,12 @@ class BlogPostPageMapPlugin extends AbstractContentfulTypeMapperPlugin implement
      *
      * @return string
      */
-    protected function extractFieldImage(array $entryData): string
+    protected function extractFieldImage(array $entryData): array
     {
-        return $entryData['fields'][static::FIELD_IMAGE]['value'];
+        return [
+            'value' => $entryData['fields'][static::FIELD_IMAGE]['value'],
+            'title' => $entryData['fields'][static::FIELD_IMAGE]['title'],
+        ];
     }
 
     /**
