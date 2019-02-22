@@ -6,7 +6,7 @@ use Elastica\ResultSet;
 use Generated\Shared\Search\PageIndexMap;
 use Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter\AbstractElasticsearchResultFormatterPlugin;
 
-class BlogCategoryResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlugin
+class BlogPostResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlugin
 {
     private const NAME = 'results';
 

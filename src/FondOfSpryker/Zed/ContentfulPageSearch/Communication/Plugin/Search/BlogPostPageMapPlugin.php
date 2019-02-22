@@ -12,6 +12,7 @@ use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInt
 class BlogPostPageMapPlugin extends AbstractContentfulTypeMapperPlugin implements ContentfulTypeMapperPluginInterface
 {
     public const FIELD_CATEGORIES = 'categories';
+    public const FIELD_TAGS = 'tags';
     public const FIELD_HEADLINE = 'headline';
     public const FIELD_ID = 'id';
 
@@ -20,6 +21,7 @@ class BlogPostPageMapPlugin extends AbstractContentfulTypeMapperPlugin implement
     public const FIELD_TYPE_ASSET = 'Asset';
 
     public const SEARCH_FIELD_BLOG_CATEGORIES = 'blog_categories';
+    public const SEARCH_FIELD_BLOG_TAGS = 'blog_tags';
     public const SEARCH_FIELD_HEADLINE = self::FIELD_HEADLINE;
     public const SEARCH_FIELD_ID = self::FIELD_ID;
 
@@ -65,26 +67,9 @@ class BlogPostPageMapPlugin extends AbstractContentfulTypeMapperPlugin implement
     public function extractEntries(array $entryData): array
     {
         return [
-            static::SEARCH_FIELD_BLOG_CATEGORIES => $this->extractFieldCategoriesReference($entryData),
+            static::SEARCH_FIELD_BLOG_CATEGORIES => $this->extractReferenceField(static::FIELD_CATEGORIES, $entryData),
+            static::SEARCH_FIELD_BLOG_TAGS => $this->extractReferenceField(static::FIELD_TAGS, $entryData),
         ];
-    }
-
-    /**
-     * @param array $entryData
-     *
-     * @return array
-     */
-    protected function extractFieldCategoriesReference(array $entryData): array
-    {
-        $items = [];
-
-        foreach ($entryData['fields'][static::FIELD_CATEGORIES]['value'] as $field) {
-            if ($field['type'] === static::FIELD_TYPE_REFERENCE) {
-                array_push($items, $this->getRelatedItemEntryId($field['value']));
-            }
-        }
-
-        return $items;
     }
 
     /**
@@ -120,6 +105,12 @@ class BlogPostPageMapPlugin extends AbstractContentfulTypeMapperPlugin implement
 
         if (array_key_exists(static::SEARCH_FIELD_BLOG_CATEGORIES, $mapper)) {
             $pageMapTransfer->setBlogCategories($mapper[static::SEARCH_FIELD_BLOG_CATEGORIES]);
+        }
+
+        dump(array_key_exists(static::SEARCH_FIELD_BLOG_TAGS, $mapper));
+
+        if (array_key_exists(static::SEARCH_FIELD_BLOG_TAGS, $mapper)) {
+            $pageMapTransfer->setBlogTags($mapper[static::SEARCH_FIELD_BLOG_TAGS]);
         }
 
         foreach ($mapper as $key => $item) {

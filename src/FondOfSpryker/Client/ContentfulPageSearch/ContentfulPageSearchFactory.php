@@ -61,10 +61,26 @@ class ContentfulPageSearchFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[]
+     */
+    public function getContentfulSearchBlogTagQueryExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(ContentfulPageSearchDependencyProvider::CONTENTFUL_SEARCH_BLOG_TAG_QUERY_EXPANDER_PLUGINS);
+    }
+
+    /**
      * @return \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface[]
      */
     public function getContentfulSearchBlogCategoryFormatterPlugins(): array
     {
         return $this->getProvidedDependency(ContentfulPageSearchDependencyProvider::CONTENTFUL_SEARCH_BLOG_CATEGORY_RESULT_FORMATTER_PLUGINS);
+    }
+
+    /**
+     * @return \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface[]
+     */
+    public function getContentfulSearchBlogTagFormatterPlugins(): array
+    {
+        return $this->getProvidedDependency(ContentfulPageSearchDependencyProvider::CONTENTFUL_SEARCH_BLOG_TAG_RESULT_FORMATTER_PLUGINS);
     }
 }

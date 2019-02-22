@@ -14,7 +14,7 @@ use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
  * Class BlogCategoryQueryExpander
  * @method \FondOfSpryker\Client\ContentfulPageSearch\ContentfulPageSearchFactory getFactory()
  */
-class BlogCategoryQueryExpander extends AbstractPlugin implements QueryExpanderPluginInterface
+class BlogPostQueryExpander extends AbstractPlugin implements QueryExpanderPluginInterface
 {
     /**
      * @api
@@ -26,36 +26,24 @@ class BlogCategoryQueryExpander extends AbstractPlugin implements QueryExpanderP
      */
     public function expandQuery(QueryInterface $searchQuery, array $requestParameters = []): QueryInterface
     {
-        if (!array_key_exists(ContentfulConstants::FIELD_BLOG_CATEGORIES, $requestParameters)) {
-            return $searchQuery;
-        }
-
-        if (!array_key_exists(ContentfulConstants::FIELD_ENTRY_ID, $requestParameters)) {
-            return $searchQuery;
-        }
-
-        $this->addBlogCategoryFilter(
-            $searchQuery->getSearchQuery(),
-            $requestParameters[ContentfulConstants::FIELD_ENTRY_ID]
-        );
+        $this->addBlogPostFilter($searchQuery->getSearchQuery());
 
         return $searchQuery;
     }
 
     /**
      * @param \Elastica\Query $query
-     * @param string $entryId
      *
      * @return void
      */
-    protected function addBlogCategoryFilter(Query $query, string $entryId): void
+    protected function addBlogPostFilter(Query $query): void
     {
         $boolQuery = $this->getBoolQuery($query);
 
         $matchQuery = $this->getFactory()
             ->createQueryBuilder()
             ->createMatchQuery()
-            ->setField(ContentfulConstants::FIELD_BLOG_CATEGORIES, strtolower($entryId));
+            ->setField(ContentfulConstants::FIELD_TYPE, 'contentful_blog_post');
 
         $boolQuery->addMust($matchQuery);
     }

@@ -82,6 +82,25 @@ abstract class AbstractContentfulTypeMapperPlugin extends AbstractPlugin
     }
 
     /**
+     * @param string $name
+     * @param array $data
+     *
+     * @return array
+     */
+    protected function extractReferenceField(string $name, array $data): array
+    {
+        $items = [];
+
+        foreach ($data['fields'][$name]['value'] as $field) {
+            if ($field['type'] === static::FIELD_TYPE_REFERENCE) {
+                array_push($items, $this->getRelatedItemEntryId($field['value']));
+            }
+        }
+
+        return $items;
+    }
+
+    /**
      * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface $pageMapBuilder
      * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
      * @param array $data
