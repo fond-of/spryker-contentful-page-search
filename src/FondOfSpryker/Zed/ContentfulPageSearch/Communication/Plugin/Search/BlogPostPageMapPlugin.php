@@ -12,22 +12,16 @@ use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInt
 class BlogPostPageMapPlugin extends AbstractContentfulTypeMapperPlugin implements ContentfulTypeMapperPluginInterface
 {
     public const FIELD_CATEGORIES = 'categories';
-    public const FIELD_SUMMARY = 'summary';
     public const FIELD_HEADLINE = 'headline';
-    public const FIELD_IMAGE = 'image';
-    public const FIELD_IDENTIFIER = 'identifier';
-    public const FIELD_PUBLISH_AT = 'publishedAt';
+    public const FIELD_ID = 'id';
 
     public const FIELD_TYPE_REFERENCE = 'Reference';
     public const FIELD_TYPE_TEXT = 'Text';
     public const FIELD_TYPE_ASSET = 'Asset';
 
     public const SEARCH_FIELD_BLOG_CATEGORIES = 'blog_categories';
-    public const SEARCH_FIELD_SUMMARY = self::FIELD_SUMMARY;
     public const SEARCH_FIELD_HEADLINE = self::FIELD_HEADLINE;
-    public const SEARCH_FIELD_IMAGE = self::FIELD_IMAGE;
-    public const SEARCH_FIELD_IDENTIFIER = self::FIELD_IDENTIFIER;
-    public const SEARCH_FIELD_PUBLISH_AT = self::FIELD_PUBLISH_AT;
+    public const SEARCH_FIELD_ID = self::FIELD_ID;
 
     /**
      * @var string
@@ -72,11 +66,6 @@ class BlogPostPageMapPlugin extends AbstractContentfulTypeMapperPlugin implement
     {
         return [
             static::SEARCH_FIELD_BLOG_CATEGORIES => $this->extractFieldCategoriesReference($entryData),
-            static::SEARCH_FIELD_SUMMARY => $this->extractFieldSummary($entryData),
-            static::SEARCH_FIELD_HEADLINE => $this->extractFieldHeadline($entryData),
-            static::SEARCH_FIELD_IMAGE => $this->extractFieldImage($entryData),
-            static::SEARCH_FIELD_IDENTIFIER => $this->extractFieldIdentifier($entryData),
-            static::SEARCH_FIELD_PUBLISH_AT => $this->extractFieldPublishAt($entryData),
         ];
     }
 
@@ -96,59 +85,6 @@ class BlogPostPageMapPlugin extends AbstractContentfulTypeMapperPlugin implement
         }
 
         return $items;
-    }
-
-    /**
-     * @param array $entryData
-     *
-     * @return string
-     */
-    protected function extractFieldSummary(array $entryData): string
-    {
-        return $entryData['fields'][static::FIELD_SUMMARY]['value'];
-    }
-
-    /**
-     * @param array $entryData
-     *
-     * @return string
-     */
-    protected function extractFieldHeadline(array $entryData): string
-    {
-        return $entryData['fields'][static::FIELD_HEADLINE]['value'];
-    }
-
-    /**
-     * @param array $entryData
-     *
-     * @return string
-     */
-    protected function extractFieldImage(array $entryData): array
-    {
-        return [
-            'value' => $entryData['fields'][static::FIELD_IMAGE]['value'],
-            'title' => $entryData['fields'][static::FIELD_IMAGE]['title'],
-        ];
-    }
-
-    /**
-     * @param array $entryData
-     *
-     * @return string
-     */
-    protected function extractFieldPublishAt(array $entryData): string
-    {
-        return $entryData['fields'][static::FIELD_PUBLISH_AT]['value'];
-    }
-
-    /**
-     * @param array $entryData
-     *
-     * @return string
-     */
-    protected function extractFieldIdentifier(array $entryData): string
-    {
-        return $entryData['fields'][static::FIELD_IDENTIFIER]['value'];
     }
 
     /**

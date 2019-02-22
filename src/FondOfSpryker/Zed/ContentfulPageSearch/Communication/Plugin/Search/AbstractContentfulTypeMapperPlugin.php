@@ -42,7 +42,7 @@ abstract class AbstractContentfulTypeMapperPlugin extends AbstractPlugin
         $pageMapBuilder
             ->addSearchResultData($pageMapTransfer, static::ID_CONTENTFUL, $data[static::ID_CONTENTFUL])
             ->addSearchResultData($pageMapTransfer, static::ENTRY_ID, $data[static::ENTRY_ID])
-            ->addSearchResultData($pageMapTransfer, static::ENTRY_TYPE_ID, $data[static::ENTRY_ID])
+            ->addSearchResultData($pageMapTransfer, static::ENTRY_TYPE_ID, $data[static::ENTRY_TYPE_ID])
             ->addSearchResultData($pageMapTransfer, static::ENTRY_LOCALE, $data[static::ENTRY_LOCALE])
             ->addFullTextBoosted($pageMapTransfer, $data[static::ENTRY_ID])
             ->addFullTextBoosted($pageMapTransfer, $data[static::ENTRY_TYPE_ID])
