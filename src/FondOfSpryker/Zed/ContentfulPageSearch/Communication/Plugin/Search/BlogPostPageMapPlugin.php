@@ -107,8 +107,6 @@ class BlogPostPageMapPlugin extends AbstractContentfulTypeMapperPlugin implement
             $pageMapTransfer->setBlogCategories($mapper[static::SEARCH_FIELD_BLOG_CATEGORIES]);
         }
 
-        dump(array_key_exists(static::SEARCH_FIELD_BLOG_TAGS, $mapper));
-
         if (array_key_exists(static::SEARCH_FIELD_BLOG_TAGS, $mapper)) {
             $pageMapTransfer->setBlogTags($mapper[static::SEARCH_FIELD_BLOG_TAGS]);
         }
