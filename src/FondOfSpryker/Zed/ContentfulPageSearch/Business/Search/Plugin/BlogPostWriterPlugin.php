@@ -6,6 +6,9 @@ use FondOfSpryker\Zed\ContentfulPageSearch\Business\Search\ContentfulPageSearchW
 
 class BlogPostWriterPlugin extends AbstractEntryTypePlugin implements ContentfulPageSearchWriterPluginInterface
 {
+    /**
+     * @var string
+     */
     private $entryTypeId = 'blogPost';
 
     /**
