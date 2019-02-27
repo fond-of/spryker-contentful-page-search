@@ -15,12 +15,10 @@ use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInt
 abstract class AbstractContentfulTypeMapperPlugin extends AbstractPlugin
 {
     public const ID_CONTENTFUL = 'id_contentful';
-
     public const ENTRY_ID = 'entry_id';
-
     public const ENTRY_TYPE_ID = 'entry_type_id';
-
     public const ENTRY_LOCALE = 'entry_locale';
+    public const FIELD_TYPE_REFERENCE = 'Reference';
 
     /**
      * @return string

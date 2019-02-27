@@ -2,6 +2,7 @@
 
 namespace FondOfSpryker\Zed\ContentfulPageSearch\Communication\Plugin\Search;
 
+use Generated\Shared\Search\PageIndexMap;
 use Generated\Shared\Transfer\PageMapTransfer;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface;
 
@@ -13,17 +14,7 @@ class BlogPostPageMapPlugin extends AbstractContentfulTypeMapperPlugin implement
 {
     public const FIELD_CATEGORIES = 'categories';
     public const FIELD_TAGS = 'tags';
-    public const FIELD_HEADLINE = 'headline';
-    public const FIELD_ID = 'id';
-
-    public const FIELD_TYPE_REFERENCE = 'Reference';
-    public const FIELD_TYPE_TEXT = 'Text';
-    public const FIELD_TYPE_ASSET = 'Asset';
-
-    public const SEARCH_FIELD_BLOG_CATEGORIES = 'blog_categories';
-    public const SEARCH_FIELD_BLOG_TAGS = 'blog_tags';
-    public const SEARCH_FIELD_HEADLINE = self::FIELD_HEADLINE;
-    public const SEARCH_FIELD_ID = self::FIELD_ID;
+    public const FIELD_PUBLISH_AT = 'publishedAt';
 
     /**
      * @var string
@@ -67,8 +58,9 @@ class BlogPostPageMapPlugin extends AbstractContentfulTypeMapperPlugin implement
     public function extractEntries(array $entryData): array
     {
         return [
-            static::SEARCH_FIELD_BLOG_CATEGORIES => $this->extractReferenceField(static::FIELD_CATEGORIES, $entryData),
-            static::SEARCH_FIELD_BLOG_TAGS => $this->extractReferenceField(static::FIELD_TAGS, $entryData),
+            PageIndexMap::BLOG_CATEGORIES => $this->extractReferenceField(static::FIELD_CATEGORIES, $entryData),
+            PageIndexMap::BLOG_TAGS => $this->extractReferenceField(static::FIELD_TAGS, $entryData),
+            PageIndexMap::BLOG_POST_PUBLISHED_AT => $entryData['fields'][static::FIELD_PUBLISH_AT]['value'],
         ];
     }
 
@@ -103,12 +95,21 @@ class BlogPostPageMapPlugin extends AbstractContentfulTypeMapperPlugin implement
     {
         $this->defaultMapSearchResults($pageMapBuilder, $pageMapTransfer, $data);
 
-        if (array_key_exists(static::SEARCH_FIELD_BLOG_CATEGORIES, $mapper)) {
-            $pageMapTransfer->setBlogCategories($mapper[static::SEARCH_FIELD_BLOG_CATEGORIES]);
+        if (array_key_exists(PageIndexMap::BLOG_CATEGORIES, $mapper)) {
+            $pageMapTransfer->setBlogCategories($mapper[PageIndexMap::BLOG_CATEGORIES]);
         }
 
-        if (array_key_exists(static::SEARCH_FIELD_BLOG_TAGS, $mapper)) {
-            $pageMapTransfer->setBlogTags($mapper[static::SEARCH_FIELD_BLOG_TAGS]);
+        if (array_key_exists(PageIndexMap::BLOG_TAGS, $mapper)) {
+            $pageMapTransfer->setBlogTags($mapper[PageIndexMap::BLOG_TAGS]);
+        }
+
+        if (array_key_exists(PageIndexMap::BLOG_POST_PUBLISHED_AT, $mapper)) {
+            $pageMapTransfer->setBlogPostPublishedAt($mapper[PageIndexMap::BLOG_POST_PUBLISHED_AT]);
+            $pageMapBuilder->addStringSort(
+                $pageMapTransfer,
+                PageIndexMap::BLOG_POST_PUBLISHED_AT,
+                $mapper[PageIndexMap::BLOG_POST_PUBLISHED_AT]
+            );
         }
 
         foreach ($mapper as $key => $item) {

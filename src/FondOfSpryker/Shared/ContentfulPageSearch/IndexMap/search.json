@@ -1,6 +1,25 @@
 {
   "mappings": {
     "page": {
+      "dynamic_templates": [
+        {
+          "search-result-data": {
+            "mapping": {
+              "index": "false"
+            },
+            "path_match": "search-result-data.*"
+          }
+        },
+        {
+          "string_sort": {
+            "mapping": {
+              "analyzer": "lowercase_keyword_analyzer",
+              "type": "keyword"
+            },
+            "path_match": "string-sort.*"
+          }
+        }
+      ],
       "properties": {
         "blog_categories": {
           "type": "string",
@@ -11,6 +30,27 @@
           "type": "string",
           "index": "not_analyzed",
           "include_in_all": false
+        },
+        "blog_post_published_at": {
+          "type": "keyword",
+          "include_in_all": false
+        },
+        "string-sort": {
+          "type": "object",
+          "include_in_all": false,
+          "properties": { }
+        },
+        "string-facet": {
+          "type": "nested",
+          "include_in_all": false,
+          "properties": {
+            "facet-name": {
+              "type": "publishedAt"
+            },
+            "facet-value": {
+              "type": "keyword"
+            }
+          }
         }
       }
     }

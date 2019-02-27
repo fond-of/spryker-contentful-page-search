@@ -6,5 +6,6 @@
     <transfer name="PageMap">
         <property name="blogCategories" type="array" />
         <property name="blogTags" type="array" />
+        <property name="blogPostPublishedAt" type="string" />
     </transfer>
 </transfers>

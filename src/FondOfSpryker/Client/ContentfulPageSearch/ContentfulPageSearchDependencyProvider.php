@@ -4,6 +4,7 @@ namespace FondOfSpryker\Client\ContentfulPageSearch;
 
 use FondOfSpryker\Client\ContentfulPageSearch\Plugin\Elasticsearch\Query\BlogCategoryQueryExpander;
 use FondOfSpryker\Client\ContentfulPageSearch\Plugin\Elasticsearch\Query\BlogPostQueryExpander;
+use FondOfSpryker\Client\ContentfulPageSearch\Plugin\Elasticsearch\Query\BlogSortQueryExpander;
 use FondOfSpryker\Client\ContentfulPageSearch\Plugin\Elasticsearch\Query\BlogTagQueryExpander;
 use FondOfSpryker\Client\ContentfulPageSearch\Plugin\Elasticsearch\Query\ContentfulSearchQueryPlugin;
 use FondOfSpryker\Client\ContentfulPageSearch\Plugin\Elasticsearch\ResultFormatter\BlogPostResultFormatterPlugin;
@@ -146,6 +147,7 @@ class ContentfulPageSearchDependencyProvider extends AbstractDependencyProvider
             new LocalizedQueryExpanderPlugin(),
             new BlogPostQueryExpander(),
             new BlogCategoryQueryExpander(),
+            new BlogSortQueryExpander(),
         ];
     }
 
