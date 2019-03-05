@@ -3,16 +3,17 @@
 namespace FondOfSpryker\Client\ContentfulPageSearch;
 
 use FondOfSpryker\Client\ContentfulPageSearch\Plugin\Elasticsearch\Query\BlogCategoryQueryExpander;
+use FondOfSpryker\Client\ContentfulPageSearch\Plugin\Elasticsearch\Query\BlogPaginatedQueryExpanderPlugin;
 use FondOfSpryker\Client\ContentfulPageSearch\Plugin\Elasticsearch\Query\BlogPostQueryExpander;
 use FondOfSpryker\Client\ContentfulPageSearch\Plugin\Elasticsearch\Query\BlogSortQueryExpander;
 use FondOfSpryker\Client\ContentfulPageSearch\Plugin\Elasticsearch\Query\BlogTagQueryExpander;
 use FondOfSpryker\Client\ContentfulPageSearch\Plugin\Elasticsearch\Query\ContentfulSearchQueryPlugin;
+use FondOfSpryker\Client\ContentfulPageSearch\Plugin\Elasticsearch\ResultFormatter\BlogPaginatedResultFormatterPlugin;
 use FondOfSpryker\Client\ContentfulPageSearch\Plugin\Elasticsearch\ResultFormatter\BlogPostResultFormatterPlugin;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\LocalizedQueryExpanderPlugin;
 use Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\StoreQueryExpanderPlugin;
-use Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter\PaginatedResultFormatterPlugin;
 
 class ContentfulPageSearchDependencyProvider extends AbstractDependencyProvider
 {
@@ -148,6 +149,7 @@ class ContentfulPageSearchDependencyProvider extends AbstractDependencyProvider
             new BlogPostQueryExpander(),
             new BlogCategoryQueryExpander(),
             new BlogSortQueryExpander(),
+            new BlogPaginatedQueryExpanderPlugin(),
         ];
     }
 
@@ -161,6 +163,7 @@ class ContentfulPageSearchDependencyProvider extends AbstractDependencyProvider
             new LocalizedQueryExpanderPlugin(),
             new BlogPostQueryExpander(),
             new BlogTagQueryExpander(),
+            new BlogPaginatedQueryExpanderPlugin(),
         ];
     }
 
@@ -170,7 +173,7 @@ class ContentfulPageSearchDependencyProvider extends AbstractDependencyProvider
     protected function createContentfulSearchBlogCategoryResultFormatter(): array
     {
         return [
-            new PaginatedResultFormatterPlugin(),
+            new BlogPaginatedResultFormatterPlugin(),
             new BlogPostResultFormatterPlugin(),
         ];
     }
@@ -181,7 +184,7 @@ class ContentfulPageSearchDependencyProvider extends AbstractDependencyProvider
     protected function createContentfulSearchBlogTagResultFormatter(): array
     {
         return [
-            new PaginatedResultFormatterPlugin(),
+            new BlogPaginatedResultFormatterPlugin(),
             new BlogPostResultFormatterPlugin(),
         ];
     }

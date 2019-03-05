@@ -4,15 +4,41 @@ namespace FondOfSpryker\Client\ContentfulPageSearch;
 
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
+use Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface;
 use Spryker\Client\Search\Dependency\Plugin\SearchStringSetterInterface;
 use Spryker\Client\Search\Model\Elasticsearch\Query\QueryBuilder;
 use Spryker\Client\Search\Model\Elasticsearch\Query\QueryBuilderInterface;
+use Spryker\Client\Search\Plugin\Config\SearchConfig;
 use Spryker\Client\Search\SearchClientInterface;
 
 class ContentfulPageSearchFactory extends AbstractFactory
 {
-    /**ContentfulPageSearchFactory
-     *
+    /**
+     * @var \Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface
+     */
+    protected static $searchConfigInstance;
+
+    /**
+     * @return \Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface
+     */
+    public function getSearchConfig()
+    {
+        if (static::$searchConfigInstance === null) {
+            static::$searchConfigInstance = $this->createSearchConfig();
+        }
+
+        return static::$searchConfigInstance;
+    }
+
+    /**
+     * @return \Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface
+     */
+    public function createSearchConfig(): SearchConfigInterface
+    {
+        return new SearchConfig();
+    }
+
+    /**
      * @param string $searchString
      *
      * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
@@ -82,5 +108,13 @@ class ContentfulPageSearchFactory extends AbstractFactory
     public function getContentfulSearchBlogTagFormatterPlugins(): array
     {
         return $this->getProvidedDependency(ContentfulPageSearchDependencyProvider::CONTENTFUL_SEARCH_BLOG_TAG_RESULT_FORMATTER_PLUGINS);
+    }
+
+    /**
+     * @return \FondOfSpryker\Shared\ContentfulPageSearch\ContentfulPageSearchConfig
+     */
+    public function getContentfulPageSearchConfig(): ContentfulPageSearchConfig
+    {
+        return $this->getConfig();
     }
 }
