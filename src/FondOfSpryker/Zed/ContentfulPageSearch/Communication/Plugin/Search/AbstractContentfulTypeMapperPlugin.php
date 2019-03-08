@@ -89,6 +89,10 @@ abstract class AbstractContentfulTypeMapperPlugin extends AbstractPlugin
     {
         $items = [];
 
+        if (!isset($data['fields'][$name])) {
+            return $items;
+        }
+
         foreach ($data['fields'][$name]['value'] as $field) {
             if ($field['type'] === static::FIELD_TYPE_REFERENCE) {
                 array_push($items, $this->getRelatedItemEntryId($field['value']));

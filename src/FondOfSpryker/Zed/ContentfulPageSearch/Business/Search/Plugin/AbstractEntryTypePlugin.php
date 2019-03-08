@@ -51,7 +51,7 @@ abstract class AbstractEntryTypePlugin
      */
     protected function store(FosContentful $contentfulEntity, FosContentfulPageSearch $contentfulPageSearchEntity)
     {
-        $contentfulData = $contentfulEntity->toArray(TableMap::TYPE_FIELDNAME, true, [], true);
+        $contentfulData = $contentfulEntity->toArray(TableMap::TYPE_FIELDNAME, true, []);
         $data = $this->mapToSearchData($contentfulData, $contentfulEntity->getEntryLocale());
 
         $contentfulPageSearchEntity->setData($data);
