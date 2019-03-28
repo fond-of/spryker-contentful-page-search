@@ -10,7 +10,12 @@ use Orm\Zed\Contentful\Persistence\FosContentful;
 use Orm\Zed\Contentful\Persistence\FosContentfulQuery;
 use Orm\Zed\ContentfulPageSearch\Persistence\FosContentfulPageSearch;
 use Propel\Runtime\Map\TableMap;
+use Spryker\Shared\Kernel\Store;
 
+/**
+ * Class AbstractEntryTypePlugin
+ * @package FondOfSpryker\Zed\ContentfulPageSearch\Business\Search\Plugin
+ */
 abstract class AbstractEntryTypePlugin
 {
     /**
@@ -58,6 +63,7 @@ abstract class AbstractEntryTypePlugin
         $contentfulPageSearchEntity->setStructuredData($contentfulEntity->getEntryData());
         $contentfulPageSearchEntity->setFkContentful($contentfulEntity->getIdContentful());
         $contentfulPageSearchEntity->setLocale($contentfulEntity->getEntryLocale());
+        $contentfulPageSearchEntity->setStore(Store::getInstance()->getStoreName());
         $contentfulPageSearchEntity->save();
     }
 

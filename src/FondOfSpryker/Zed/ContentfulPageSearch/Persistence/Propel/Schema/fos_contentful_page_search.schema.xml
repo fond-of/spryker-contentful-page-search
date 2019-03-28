@@ -22,6 +22,7 @@
             <parameter name="locale" required="true"/>
             <parameter name="queue_group" value="sync.search.contentful"/>
             <parameter name="params" value='{"type":"page"}'/>
+            <parameter name="store" required="true"/>
         </behavior>
         <behavior name="timestampable"/>
     </table>

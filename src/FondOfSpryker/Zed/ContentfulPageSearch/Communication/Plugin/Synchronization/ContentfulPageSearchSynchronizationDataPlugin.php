@@ -37,7 +37,7 @@ class ContentfulPageSearchSynchronizationDataPlugin extends AbstractPlugin imple
      */
     public function hasStore(): bool
     {
-        return false;
+        return true;
     }
 
     /**
