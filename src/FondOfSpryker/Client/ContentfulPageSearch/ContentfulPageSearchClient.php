@@ -63,4 +63,31 @@ class ContentfulPageSearchClient extends AbstractClient implements ContentfulPag
             ->getSearchClient()
             ->search($searchQuery, $resultFormatters, $requestParameters);
     }
+    
+    /**
+     * @param string $searchString
+     * @param array $requestParameters
+     *
+     * @return array|\Elastica\ResultSet
+     */
+    public function contentfulCategoryNodeSearch(string $searchString, array $requestParameters)
+    {
+        $searchQuery = $this
+            ->getFactory()
+            ->createContentfulSearchQuery($searchString);
+
+        $searchQuery = $this
+            ->getFactory()
+            ->getSearchClient()
+            ->expandQuery($searchQuery, $this->getFactory()->getContentfulSearchCategoryNodeQueryExpanderPlugins(), $requestParameters);
+
+        $resultFormatter = $this
+            ->getFactory()
+            ->getContentfulSearchCategoryNodeFormatterPlugins();
+
+        return $this
+            ->getFactory()
+            ->getSearchClient()
+            ->search($searchQuery, $resultFormatter, $requestParameters);
+    }
 }

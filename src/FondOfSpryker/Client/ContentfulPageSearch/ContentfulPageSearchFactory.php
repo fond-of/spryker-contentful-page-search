@@ -95,6 +95,14 @@ class ContentfulPageSearchFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[]
+     */
+    public function getContentfulSearchCategoryNodeQueryExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(ContentfulPageSearchDependencyProvider::CONTENTFUL_SEARCH_CATEGORY_NODE_QUERY_EXPANDER_PLUGINS);
+    }
+
+    /**
      * @return \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface[]
      */
     public function getContentfulSearchBlogCategoryFormatterPlugins(): array
@@ -108,6 +116,14 @@ class ContentfulPageSearchFactory extends AbstractFactory
     public function getContentfulSearchBlogTagFormatterPlugins(): array
     {
         return $this->getProvidedDependency(ContentfulPageSearchDependencyProvider::CONTENTFUL_SEARCH_BLOG_TAG_RESULT_FORMATTER_PLUGINS);
+    }
+
+    /**
+     * @return \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface[]
+     */
+    public function getContentfulSearchCategoryNodeFormatterPlugins(): array
+    {
+        return $this->getProvidedDependency(ContentfulPageSearchDependencyProvider::CONTENTFUL_SEARCH_CATEGORY_NODE_QUERY_FORMATTER_PLUGINS);
     }
 
     /**

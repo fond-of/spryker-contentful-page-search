@@ -7,9 +7,11 @@ use FondOfSpryker\Client\ContentfulPageSearch\Plugin\Elasticsearch\Query\BlogPag
 use FondOfSpryker\Client\ContentfulPageSearch\Plugin\Elasticsearch\Query\BlogPostQueryExpander;
 use FondOfSpryker\Client\ContentfulPageSearch\Plugin\Elasticsearch\Query\BlogSortQueryExpander;
 use FondOfSpryker\Client\ContentfulPageSearch\Plugin\Elasticsearch\Query\BlogTagQueryExpander;
+use FondOfSpryker\Client\ContentfulPageSearch\Plugin\Elasticsearch\Query\CategoryNodeQueryExpanderPlugin;
 use FondOfSpryker\Client\ContentfulPageSearch\Plugin\Elasticsearch\Query\ContentfulSearchQueryPlugin;
 use FondOfSpryker\Client\ContentfulPageSearch\Plugin\Elasticsearch\ResultFormatter\BlogPaginatedResultFormatterPlugin;
 use FondOfSpryker\Client\ContentfulPageSearch\Plugin\Elasticsearch\ResultFormatter\BlogPostResultFormatterPlugin;
+use FondOfSpryker\Client\ContentfulPageSearch\Plugin\Elasticsearch\ResultFormatter\CategoryNodeResultFormatterPlugin;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\LocalizedQueryExpanderPlugin;
@@ -25,9 +27,13 @@ class ContentfulPageSearchDependencyProvider extends AbstractDependencyProvider
 
     public const CONTENTFUL_SEARCH_BLOG_TAG_QUERY_EXPANDER_PLUGINS = 'CONTENTFUL_SEARCH_BLOG_TAG_QUERY_EXPANDER_PLUGINS';
 
+    public const CONTENTFUL_SEARCH_CATEGORY_NODE_QUERY_EXPANDER_PLUGINS = 'CONTENTFUL_SEARCH_CATEGORY_NODE_QUERY_EXPANDER_PLUGINS';
+
     public const CONTENTFUL_SEARCH_BLOG_CATEGORY_RESULT_FORMATTER_PLUGINS = 'CONTENTFUL_SEARCH_BLOG_CATEGORY_RESULT_FORMATTER_PLUGINS';
 
     public const CONTENTFUL_SEARCH_BLOG_TAG_RESULT_FORMATTER_PLUGINS = 'CONTENTFUL_SEARCH_BLOG_TAG_RESULT_FORMATTER_PLUGINS';
+
+    public const CONTENTFUL_SEARCH_CATEGORY_NODE_QUERY_FORMATTER_PLUGINS = 'CONTENTFUL_SEARCH_CATEGORY_NODE_QUERY_FORMATTER_PLUGINS';
 
     public const PROVIDE_BLOG_CATEGORY_DEPENDENCIES = 'PROVIDE_BLOG_CATEGORY_DEPENDENCIES';
 
@@ -41,6 +47,8 @@ class ContentfulPageSearchDependencyProvider extends AbstractDependencyProvider
         $container = $this->addContentfulSearchBlogCategoryFormatterPlugins($container);
         $container = $this->addContentfulSearchBlogTagQueryExpanderPlugins($container);
         $container = $this->addContentfulSearchBlogTagFormatterPlugins($container);
+        $container = $this->addContentfulSearchCategoryNodeQueryExpanderPlugins($container);
+        $container = $this->addContentfulCategoryNodeFormatterPlugins($container);
         $container = $this->addSearchClient($container);
 
         return $container;
@@ -115,6 +123,20 @@ class ContentfulPageSearchDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
+    protected function addContentfulSearchCategoryNodeQueryExpanderPlugins(Container $container): Container
+    {
+        $container[static::CONTENTFUL_SEARCH_CATEGORY_NODE_QUERY_EXPANDER_PLUGINS] = function () {
+            return $this->createContentfulSearchCategoryNodeQueryExpanderPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
     protected function addContentfulSearchBlogCategoryFormatterPlugins(Container $container): Container
     {
         $container[static::CONTENTFUL_SEARCH_BLOG_CATEGORY_RESULT_FORMATTER_PLUGINS] = function () {
@@ -133,6 +155,20 @@ class ContentfulPageSearchDependencyProvider extends AbstractDependencyProvider
     {
         $container[static::CONTENTFUL_SEARCH_BLOG_TAG_RESULT_FORMATTER_PLUGINS] = function () {
             return $this->createContentfulSearchBlogTagResultFormatter();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addContentfulCategoryNodeFormatterPlugins(Container $container): Container
+    {
+        $container[static::CONTENTFUL_SEARCH_CATEGORY_NODE_QUERY_FORMATTER_PLUGINS] = function () {
+            return $this->createContentfulSearchCategoryNodeResultFormatter();
         };
 
         return $container;
@@ -168,6 +204,18 @@ class ContentfulPageSearchDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[]
+     */
+    protected function createContentfulSearchCategoryNodeQueryExpanderPlugins(): array
+    {
+        return [
+            new StoreQueryExpanderPlugin(),
+            new LocalizedQueryExpanderPlugin(),
+            new CategoryNodeQueryExpanderPlugin(),
+        ];
+    }
+
+    /**
      * @return \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface[]
      */
     protected function createContentfulSearchBlogCategoryResultFormatter(): array
@@ -186,6 +234,16 @@ class ContentfulPageSearchDependencyProvider extends AbstractDependencyProvider
         return [
             new BlogPaginatedResultFormatterPlugin(),
             new BlogPostResultFormatterPlugin(),
+        ];
+    }
+
+    /**
+     * @return \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface[]
+     */
+    protected function createContentfulSearchCategoryNodeResultFormatter(): array
+    {
+        return [
+            new CategoryNodeResultFormatterPlugin(),
         ];
     }
 }
