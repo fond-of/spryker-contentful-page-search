@@ -4,9 +4,14 @@ namespace FondOfSpryker\Zed\ContentfulPageSearch\Business;
 
 use FondOfSpryker\Zed\ContentfulPageSearch\Business\Search\ContentfulPageSearchWriter;
 use FondOfSpryker\Zed\ContentfulPageSearch\Business\Search\Plugin\BlogPostWriterPlugin;
+use FondOfSpryker\Zed\ContentfulPageSearch\Business\Validator\Structure\BlogPostStructureValidator;
+use FondOfSpryker\Zed\ContentfulPageSearch\Business\Validator\StructureValidatorCollection;
+use FondOfSpryker\Zed\ContentfulPageSearch\Business\Validator\StructureValidatorCollectionInterface;
 use FondOfSpryker\Zed\ContentfulPageSearch\ContentfulPageSearchDependencyProvider;
+use FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Facade\ContentfulPageSearchToContentfulFacadeInterface;
 use FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Facade\ContentfulPageSearchToSearchFacadeInterface;
 use FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Facade\ContentfulPageSearchToStorageFacadeInterface;
+use FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Facade\ContentfulPageSearchToStoreFacadeInterface;
 use FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Service\ContentfulPageSearchToUtilEncodingInterface;
 use Orm\Zed\Contentful\Persistence\FosContentfulQuery;
 use Orm\Zed\ContentfulPageSearch\Persistence\FosContentfulPageSearchQuery;
@@ -31,6 +36,8 @@ class ContentfulPageSearchBusinessFactory extends AbstractBusinessFactory
             $this->getSearchFacade(),
             $this->getStorageFacade(),
             $this->getUtilEncodingService(),
+            $this->getStoreFacade(),
+            $this->getStructureValidatorCollection(),
             $this->getContentfulPageSearchWriterPlugins()
         );
     }
@@ -96,4 +103,22 @@ class ContentfulPageSearchBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(ContentfulPageSearchDependencyProvider::FACADE_STORAGE);
     }
+
+    /**
+     * @return \FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Facade\ContentfulPageSearchToStoreFacadeInterface
+     */
+    public function getStoreFacade(): ContentfulPageSearchToStoreFacadeInterface
+    {
+        return $this->getProvidedDependency(ContentfulPageSearchDependencyProvider::FACADE_STORE);
+    }
+
+    /**
+     * @return \FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Facade\ContentfulPageSearchToContentfulFacadeInterface
+     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
+     */
+    public function getStructureValidatorCollection(): StructureValidatorCollectionInterface
+    {
+        return $this->getProvidedDependency(ContentfulPageSearchDependencyProvider::COLLECTION_STRUCTURE_VALIDATOR);
+    }
+
 }

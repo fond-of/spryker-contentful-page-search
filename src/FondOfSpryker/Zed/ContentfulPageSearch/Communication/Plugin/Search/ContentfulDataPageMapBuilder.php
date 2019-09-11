@@ -36,13 +36,13 @@ class ContentfulDataPageMapBuilder extends AbstractPlugin implements NamedPageMa
     public function buildPageMap(PageMapBuilderInterface $pageMapBuilder, array $data, LocaleTransfer $locale): PageMapTransfer
     {
         $pageMapTransfer = (new PageMapTransfer())
-            ->setStore(Store::getInstance()->getStoreName())
+            ->setStore($this->getStoreNameFromData($data))
             ->setLocale($locale->getLocaleName())
             ->setType(static::TYPE)
             ->setIsActive(true);
 
         foreach ($this->getFactory()->getContentfulPageSeachMapperTypes() as $contentfulPageSeachMapperType) {
-            if ($data['entry_type_id'] !== $contentfulPageSeachMapperType->getEntryTypeId()) {
+            if ($data['entry_type_id'] !== $contentfulPageSeachMapperType->getEntryTypeId() || !$contentfulPageSeachMapperType->isValidStructure($data)) {
                 continue;
             }
 
@@ -50,10 +50,37 @@ class ContentfulDataPageMapBuilder extends AbstractPlugin implements NamedPageMa
                 $data['id_contentful'],
                 $pageMapTransfer,
                 $pageMapBuilder,
-                $data
+                $this->clearStoreNameFromData($data)
             );
         }
 
         return $pageMapTransfer;
+    }
+
+    /**
+     * @param array $data
+     * @return string
+     */
+    protected function getStoreNameFromData(array $data): string
+    {
+        $storeName = Store::getInstance()->getStoreName();
+        if (array_key_exists(ContentfulPageSearchConstants::STORE_NAME_FIELD, $data)){
+            $storeName = $data[ContentfulPageSearchConstants::STORE_NAME_FIELD];
+        }
+
+        return $storeName;
+    }
+
+    /**
+     * @param array $data
+     * @return array
+     */
+    protected function clearStoreNameFromData(array $data): array
+    {
+        if (array_key_exists(ContentfulPageSearchConstants::STORE_NAME_FIELD, $data)){
+            unset($data[ContentfulPageSearchConstants::STORE_NAME_FIELD]);
+        }
+
+        return $data;
     }
 }

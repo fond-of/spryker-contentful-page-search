@@ -15,10 +15,11 @@ interface ContentfulPageSearchWriterPluginInterface
     public function getEntryTypeId(): string;
 
     /**
-     * @param \Orm\Zed\Contentful\Persistence\FosContentful $fosContentful
-     * @param \Orm\Zed\ContentfulPageSearch\Persistence\FosContentfulPageSearch $contentfulPageSearch
+     * @param \Orm\Zed\Contentful\Persistence\FosContentful $contentfulEntity
+     * @param \Orm\Zed\ContentfulPageSearch\Persistence\FosContentfulPageSearch $contentfulPageSearchEntity
+     * @param string $storeName
      *
      * @return void
      */
-    public function extractEntry(FosContentful $fosContentful, FosContentfulPageSearch $contentfulPageSearch): void;
+    public function extractEntry(FosContentful $contentfulEntity, FosContentfulPageSearch $contentfulPageSearchEntity, string $storeName): void;
 }

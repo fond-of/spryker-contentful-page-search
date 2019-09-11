@@ -31,7 +31,10 @@ class BlogPostResultFormatterPlugin extends AbstractElasticsearchResultFormatter
         $results = [];
 
         foreach ($searchResult->getResults() as $result) {
-            $results[] = $result->getSource()[PageIndexMap::SEARCH_RESULT_DATA];
+            $source = $result->getSource();
+            if (array_key_exists(PageIndexMap::SEARCH_RESULT_DATA, $source)){
+                $results[] = $source[PageIndexMap::SEARCH_RESULT_DATA];
+            }
         }
 
         return $results;
