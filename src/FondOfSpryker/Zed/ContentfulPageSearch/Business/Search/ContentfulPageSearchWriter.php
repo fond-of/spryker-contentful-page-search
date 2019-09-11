@@ -2,13 +2,19 @@
 
 namespace FondOfSpryker\Zed\ContentfulPageSearch\Business\Search;
 
+use FondOfSpryker\Zed\ContentfulPageSearch\Business\Validator\Structure\StructureValidatorInterface;
+use FondOfSpryker\Zed\ContentfulPageSearch\Business\Validator\StructureValidatorCollectionInterface;
 use FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Facade\ContentfulPageSearchToSearchFacadeInterface;
 use FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Facade\ContentfulPageSearchToStorageFacadeInterface;
+use FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Facade\ContentfulPageSearchToStoreFacadeBridge;
+use FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Facade\ContentfulPageSearchToStoreFacadeInterface;
 use FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Service\ContentfulPageSearchToUtilEncodingInterface;
+use FondOfSpryker\Zed\ContentfulPageSearch\Exception\StoreNotFoundException;
 use Orm\Zed\Contentful\Persistence\FosContentful;
 use Orm\Zed\Contentful\Persistence\FosContentfulQuery;
 use Orm\Zed\ContentfulPageSearch\Persistence\FosContentfulPageSearch;
 use Orm\Zed\ContentfulPageSearch\Persistence\FosContentfulPageSearchQuery;
+use Spryker\Zed\Store\Business\StoreFacadeInterface;
 
 class ContentfulPageSearchWriter implements ContentfulPageSearchWriterInterface
 {
@@ -38,16 +44,33 @@ class ContentfulPageSearchWriter implements ContentfulPageSearchWriterInterface
     protected $storageFacade;
 
     /**
+     * @var \FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Facade\ContentfulPageSearchToStoreFacadeInterface
+     */
+    protected $storeFacade;
+
+    /**
      * @var array
      */
     protected $contentfulPageSearchWriterPlugins;
 
     /**
+     * @var \FondOfSpryker\Zed\ContentfulPageSearch\Business\Validator\StructureValidatorCollectionInterface
+     */
+    protected $structureValidatorCollection;
+
+    /**
+     * @var array
+     */
+    protected $storeNameChache = [];
+
+    /**
+     * ContentfulPageSearchWriter constructor.
      * @param \Orm\Zed\Contentful\Persistence\FosContentfulQuery $contentfulQuery
      * @param \Orm\Zed\ContentfulPageSearch\Persistence\FosContentfulPageSearchQuery $contentfulPageSearchQuery
      * @param \FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Facade\ContentfulPageSearchToSearchFacadeInterface $searchFacade
      * @param \FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Facade\ContentfulPageSearchToStorageFacadeInterface $storageFacade
      * @param \FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Service\ContentfulPageSearchToUtilEncodingInterface $utilEncoding
+     * @param \FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Facade\ContentfulPageSearchToStoreFacadeInterface $storeFacade
      * @param array $contentfulPageSearchWriterPlugins
      */
     public function __construct(
@@ -56,13 +79,18 @@ class ContentfulPageSearchWriter implements ContentfulPageSearchWriterInterface
         ContentfulPageSearchToSearchFacadeInterface $searchFacade,
         ContentfulPageSearchToStorageFacadeInterface $storageFacade,
         ContentfulPageSearchToUtilEncodingInterface $utilEncoding,
+        ContentfulPageSearchToStoreFacadeInterface $storeFacade,
+        StructureValidatorCollectionInterface $structureValidatorCollection,
         array $contentfulPageSearchWriterPlugins
-    ) {
+    )
+    {
         $this->contentfulQuery = $contentfulQuery;
         $this->contentfulPageSearchQuery = $contentfulPageSearchQuery;
         $this->searchFacade = $searchFacade;
         $this->utilEncoding = $utilEncoding;
         $this->storageFacade = $storageFacade;
+        $this->storeFacade = $storeFacade;
+        $this->structureValidatorCollection = $structureValidatorCollection;
         $this->contentfulPageSearchWriterPlugins = $contentfulPageSearchWriterPlugins;
     }
 
@@ -106,13 +134,32 @@ class ContentfulPageSearchWriter implements ContentfulPageSearchWriterInterface
 
         /** @var \FondOfSpryker\Zed\ContentfulPageSearch\Business\Search\ContentfulPageSearchWriterPluginInterface $contentfulPageSearchWriterPlugin */
         foreach ($this->contentfulPageSearchWriterPlugins as $contentfulPageSearchWriterPlugin) {
-            if ($contentfulEntity->getEntryTypeId() === $contentfulPageSearchWriterPlugin->getEntryTypeId()) {
+            $validator = $this->getValidator($contentfulPageSearchWriterPlugin->getEntryTypeId());
+
+            if ($contentfulEntity->getEntryTypeId() === $contentfulPageSearchWriterPlugin->getEntryTypeId() && $validator !== null && $validator->validate($contentfulEntity->getEntryData())) {
                 $contentfulPageSearchWriterPlugin->extractEntry(
                     $contentfulEntity,
-                    $contentfulPageSearchEntity
+                    $contentfulPageSearchEntity,
+                    $this->getStoreNameById($contentfulEntity->getFkStore())
                 );
             }
         }
+    }
+
+    /**
+     * @param string $validatorName
+     * @return \FondOfSpryker\Zed\ContentfulPageSearch\Business\Validator\Structure\StructureValidatorInterface|null
+     * @throws \FondOfSpryker\Zed\ContentfulPageSearch\Exception\StructureValidatorNotFoundException
+     */
+    protected function getValidator(string $validatorName): ?StructureValidatorInterface
+    {
+        $validator = null;
+
+        if ($this->structureValidatorCollection->has($validatorName)) {
+            $validator = $this->structureValidatorCollection->get($validatorName);
+        }
+
+        return $validator;
     }
 
     /**
@@ -141,5 +188,25 @@ class ContentfulPageSearchWriter implements ContentfulPageSearchWriterInterface
         return $this->contentfulPageSearchQuery
             ->filterByFkContentful($contentfulId)
             ->findOneOrCreate();
+    }
+
+    /**
+     * @param int $storeId
+     * @return string
+     * @throws \FondOfSpryker\Zed\ContentfulPageSearch\Exception\StoreNotFoundException
+     * @throws \Spryker\Zed\Store\Business\Model\Exception\StoreNotFoundException
+     */
+    protected function getStoreNameById(int $storeId): string
+    {
+        if (!array_key_exists($storeId, $this->storeNameChache)) {
+            $store = $this->storeFacade->getStoreById($storeId);
+            $this->storeNameChache[$storeId] = $store->getName();
+        }
+
+        try {
+            return $this->storeNameChache[$storeId];
+        } catch (\Exception $exception) {
+            throw new StoreNotFoundException(sprintf('Store with id %s not found!', $storeId));
+        }
     }
 }

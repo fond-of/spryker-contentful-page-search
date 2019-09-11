@@ -2,8 +2,10 @@
 
 namespace FondOfSpryker\Zed\ContentfulPageSearch\Communication;
 
+use FondOfSpryker\Zed\ContentfulPageSearch\Business\Validator\StructureValidatorCollectionInterface;
 use FondOfSpryker\Zed\ContentfulPageSearch\Communication\Plugin\Search\BlogPostPageMapPlugin;
 use FondOfSpryker\Zed\ContentfulPageSearch\ContentfulPageSearchDependencyProvider;
+use FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Facade\ContentfulPageSearchToContentfulFacadeInterface;
 use FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Facade\ContentfulPageSearchToStorageFacadeInterface;
 use FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Facade\ContentfulSearchPageToEventBehaviorFacadeInterface;
 use Orm\Zed\Contentful\Persistence\FosContentfulQuery;
@@ -29,7 +31,7 @@ class ContentfulPageSearchCommunicationFactory extends AbstractCommunicationFact
     public function getContentfulPageSeachMapperTypes(): array
     {
         return [
-            new BlogPostPageMapPlugin(),
+            new BlogPostPageMapPlugin($this->getStructureValidatorCollection()),
         ];
     }
 
@@ -55,5 +57,23 @@ class ContentfulPageSearchCommunicationFactory extends AbstractCommunicationFact
     public function getStorageFacade(): ContentfulPageSearchToStorageFacadeInterface
     {
         return $this->getProvidedDependency(ContentfulPageSearchDependencyProvider::FACADE_STORAGE);
+    }
+
+    /**
+     * @return \FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Facade\ContentfulPageSearchToContentfulFacadeInterface
+     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
+     */
+    public function getContentfulFacade(): ContentfulPageSearchToContentfulFacadeInterface
+    {
+        return $this->getProvidedDependency(ContentfulPageSearchDependencyProvider::FACADE_CONTENTFUL);
+    }
+
+    /**
+     * @return \FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Facade\ContentfulPageSearchToContentfulFacadeInterface
+     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
+     */
+    public function getStructureValidatorCollection(): StructureValidatorCollectionInterface
+    {
+        return $this->getProvidedDependency(ContentfulPageSearchDependencyProvider::COLLECTION_STRUCTURE_VALIDATOR);
     }
 }

@@ -3,19 +3,16 @@
 namespace FondOfSpryker\Zed\ContentfulPageSearch\Business\Search\Plugin;
 
 use FondOfSpryker\Zed\ContentfulPageSearch\Business\Search\ContentfulPageSearchWriterPluginInterface;
+use FondOfSpryker\Zed\ContentfulPageSearch\Communication\Plugin\Search\BlogPostPageMapPlugin;
+use Orm\Zed\Contentful\Persistence\FosContentful;
 
 class BlogPostWriterPlugin extends AbstractEntryTypePlugin implements ContentfulPageSearchWriterPluginInterface
 {
-    /**
-     * @var string
-     */
-    private $entryTypeId = 'blogPost';
-
     /**
      * @return string
      */
     public function getEntryTypeId(): string
     {
-        return $this->entryTypeId;
+        return BlogPostPageMapPlugin::ENTRY_TYPE_ID_VALUE;
     }
 }
