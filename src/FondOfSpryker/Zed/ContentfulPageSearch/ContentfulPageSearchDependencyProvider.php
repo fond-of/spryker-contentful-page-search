@@ -181,6 +181,7 @@ class ContentfulPageSearchDependencyProvider extends AbstractBundleDependencyPro
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
+     *
      * @return \Spryker\Zed\Kernel\Container
      */
     private function addStructureValidatorCollection(Container $container): Container

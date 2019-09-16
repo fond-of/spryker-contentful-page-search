@@ -5,14 +5,11 @@ namespace FondOfSpryker\Zed\ContentfulPageSearch\Business\Search\Plugin;
 use FondOfSpryker\Shared\ContentfulPageSearch\ContentfulPageSearchConstants;
 use FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Facade\ContentfulPageSearchToSearchFacadeInterface;
 use FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Facade\ContentfulPageSearchToStorageFacadeInterface;
-use FondOfSpryker\Zed\ContentfulPageSearch\Exception\StoreNotFoundException;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Contentful\Persistence\FosContentful;
 use Orm\Zed\Contentful\Persistence\FosContentfulQuery;
 use Orm\Zed\ContentfulPageSearch\Persistence\FosContentfulPageSearch;
 use Propel\Runtime\Map\TableMap;
-use Spryker\Shared\Kernel\Store;
-use Spryker\Zed\Store\Business\StoreFacade;
 
 /**
  * Class AbstractEntryTypePlugin

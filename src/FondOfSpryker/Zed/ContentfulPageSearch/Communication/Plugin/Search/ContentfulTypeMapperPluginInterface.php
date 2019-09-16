@@ -14,6 +14,7 @@ interface ContentfulTypeMapperPluginInterface
 
     /**
      * @param array $data
+     *
      * @return bool
      */
     public function isValidStructure(array $data): bool;

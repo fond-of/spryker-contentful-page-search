@@ -8,7 +8,6 @@
 namespace FondOfSpryker\Zed\ContentfulPageSearch\Business\Validator;
 
 use FondOfSpryker\Zed\ContentfulPageSearch\Business\Validator\Structure\StructureValidatorInterface;
-use FondOfSpryker\Zed\ContentfulPageSearch\Exception\StructureValidatorNotFoundException;
 
 /**
  * Interface StructureValidatorCollectionInterface

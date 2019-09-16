@@ -61,7 +61,6 @@ class ContentfulPageSearchCommunicationFactory extends AbstractCommunicationFact
 
     /**
      * @return \FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Facade\ContentfulPageSearchToContentfulFacadeInterface
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      */
     public function getContentfulFacade(): ContentfulPageSearchToContentfulFacadeInterface
     {
@@ -70,7 +69,6 @@ class ContentfulPageSearchCommunicationFactory extends AbstractCommunicationFact
 
     /**
      * @return \FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Facade\ContentfulPageSearchToContentfulFacadeInterface
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      */
     public function getStructureValidatorCollection(): StructureValidatorCollectionInterface
     {

@@ -4,7 +4,6 @@ namespace FondOfSpryker\Zed\ContentfulPageSearch\Communication\Console;
 use Spryker\Zed\Kernel\Communication\Console\Console;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
@@ -19,6 +18,9 @@ class ContentfulPageSearchConsole extends Console
     public const IDS_OPTION = 'ids';
     public const IDS_OPTION_SHORTCUT = 'i';
 
+    /**
+     * @var int
+     */
     public $limit = 200;
 
     /**
@@ -53,16 +55,14 @@ class ContentfulPageSearchConsole extends Console
             $idsString = $input->getOption(static::IDS_OPTION);
             $ids = explode(',', $idsString);
             $this->getFacade()->publish($ids);
-        }
-        else{
+        } else {
             $count = $this->getFactory()->getContentfulFacade()->getContentfulEntryCount();
             $offset = 0;
-            while($count > $offset){
+            while ($count > $offset) {
                 $ids = $this->getFactory()->getContentfulFacade()->getContentfulEntryIds($this->limit, $offset);
                 $this->getFacade()->publish($ids);
                 $offset += $this->limit;
             }
-
         }
 
         $messenger->info(sprintf(

@@ -4,11 +4,8 @@ namespace FondOfSpryker\Zed\ContentfulPageSearch\Business;
 
 use FondOfSpryker\Zed\ContentfulPageSearch\Business\Search\ContentfulPageSearchWriter;
 use FondOfSpryker\Zed\ContentfulPageSearch\Business\Search\Plugin\BlogPostWriterPlugin;
-use FondOfSpryker\Zed\ContentfulPageSearch\Business\Validator\Structure\BlogPostStructureValidator;
-use FondOfSpryker\Zed\ContentfulPageSearch\Business\Validator\StructureValidatorCollection;
 use FondOfSpryker\Zed\ContentfulPageSearch\Business\Validator\StructureValidatorCollectionInterface;
 use FondOfSpryker\Zed\ContentfulPageSearch\ContentfulPageSearchDependencyProvider;
-use FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Facade\ContentfulPageSearchToContentfulFacadeInterface;
 use FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Facade\ContentfulPageSearchToSearchFacadeInterface;
 use FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Facade\ContentfulPageSearchToStorageFacadeInterface;
 use FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Facade\ContentfulPageSearchToStoreFacadeInterface;
@@ -20,7 +17,6 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 /**
  * Class ContentfulSearchPageBusinessFactory
  * @package FondOfSpryker\Zed\ContentfulPageSearch\Business
- * @method ContentfulSearchPageQu
  * @method \FondOfSpryker\Zed\ContentfulPageSearch\Persistence\ContentfulPageSearchQueryContainer getQueryContainer()
  */
 class ContentfulPageSearchBusinessFactory extends AbstractBusinessFactory
@@ -114,11 +110,9 @@ class ContentfulPageSearchBusinessFactory extends AbstractBusinessFactory
 
     /**
      * @return \FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Facade\ContentfulPageSearchToContentfulFacadeInterface
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      */
     public function getStructureValidatorCollection(): StructureValidatorCollectionInterface
     {
         return $this->getProvidedDependency(ContentfulPageSearchDependencyProvider::COLLECTION_STRUCTURE_VALIDATOR);
     }
-
 }

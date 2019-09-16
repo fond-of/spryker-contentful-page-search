@@ -2,7 +2,8 @@
 
 namespace FondOfSpryker\Zed\ContentfulPageSearch\Exception;
 
-class StoreNotFoundException extends \Exception
-{
+use Exception;
 
+class StoreNotFoundException extends Exception
+{
 }

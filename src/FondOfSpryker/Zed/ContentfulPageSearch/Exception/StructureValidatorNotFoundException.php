@@ -2,7 +2,8 @@
 
 namespace FondOfSpryker\Zed\ContentfulPageSearch\Exception;
 
-class StructureValidatorNotFoundException extends \Exception
-{
+use Exception;
 
+class StructureValidatorNotFoundException extends Exception
+{
 }

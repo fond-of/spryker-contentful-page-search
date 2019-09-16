@@ -12,6 +12,7 @@ interface StructureValidatorInterface
 
     /**
      * @param string $jsonData
+     *
      * @return bool
      */
     public function validate(string $jsonData): bool;

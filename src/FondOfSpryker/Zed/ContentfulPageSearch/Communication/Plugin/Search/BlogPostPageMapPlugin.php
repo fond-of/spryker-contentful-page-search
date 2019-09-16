@@ -2,7 +2,6 @@
 
 namespace FondOfSpryker\Zed\ContentfulPageSearch\Communication\Plugin\Search;
 
-use FondOfSpryker\Zed\ContentfulPageSearch\Business\Validator\StructureValidatorCollection;
 use FondOfSpryker\Zed\ContentfulPageSearch\Business\Validator\StructureValidatorCollectionInterface;
 use Generated\Shared\Search\PageIndexMap;
 use Generated\Shared\Transfer\PageMapTransfer;
@@ -28,6 +27,7 @@ class BlogPostPageMapPlugin extends AbstractContentfulTypeMapperPlugin implement
 
     /**
      * BlogPostPageMapPlugin constructor.
+     *
      * @param \FondOfSpryker\Zed\ContentfulPageSearch\Business\Validator\StructureValidatorCollectionInterface $structureValidatorCollection
      */
     public function __construct(StructureValidatorCollectionInterface $structureValidatorCollection)
@@ -45,6 +45,7 @@ class BlogPostPageMapPlugin extends AbstractContentfulTypeMapperPlugin implement
 
     /**
      * @param array $data
+     *
      * @return bool
      */
     public function isValidStructure(array $data): bool
@@ -54,7 +55,7 @@ class BlogPostPageMapPlugin extends AbstractContentfulTypeMapperPlugin implement
     }
 
     /**
-     * @param int $idContetful
+     * @param int $idContentful
      * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
      * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface $pageMapBuilder
      * @param array $data
@@ -66,8 +67,7 @@ class BlogPostPageMapPlugin extends AbstractContentfulTypeMapperPlugin implement
         PageMapTransfer $pageMapTransfer,
         PageMapBuilderInterface $pageMapBuilder,
         array $data
-    ): PageMapTransfer
-    {
+    ): PageMapTransfer {
         $contentfulEntity = $this->getContentfulEntity($idContentful);
         $entryData = json_decode($contentfulEntity->getEntryData(), true);
         $mapper = $this->extractEntries($entryData);

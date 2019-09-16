@@ -37,7 +37,6 @@ class CategoryNodeQueryExpanderPlugin extends AbstractPlugin implements QueryExp
 
         $boolQuery->addMust($matchQuery);
 
-
         return $searchQuery;
     }
 

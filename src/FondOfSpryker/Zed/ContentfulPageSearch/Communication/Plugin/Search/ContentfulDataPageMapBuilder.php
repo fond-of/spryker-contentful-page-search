@@ -59,12 +59,13 @@ class ContentfulDataPageMapBuilder extends AbstractPlugin implements NamedPageMa
 
     /**
      * @param array $data
+     *
      * @return string
      */
     protected function getStoreNameFromData(array $data): string
     {
         $storeName = Store::getInstance()->getStoreName();
-        if (array_key_exists(ContentfulPageSearchConstants::STORE_NAME_FIELD, $data)){
+        if (array_key_exists(ContentfulPageSearchConstants::STORE_NAME_FIELD, $data)) {
             $storeName = $data[ContentfulPageSearchConstants::STORE_NAME_FIELD];
         }
 
@@ -73,11 +74,12 @@ class ContentfulDataPageMapBuilder extends AbstractPlugin implements NamedPageMa
 
     /**
      * @param array $data
+     *
      * @return array
      */
     protected function clearStoreNameFromData(array $data): array
     {
-        if (array_key_exists(ContentfulPageSearchConstants::STORE_NAME_FIELD, $data)){
+        if (array_key_exists(ContentfulPageSearchConstants::STORE_NAME_FIELD, $data)) {
             unset($data[ContentfulPageSearchConstants::STORE_NAME_FIELD]);
         }
 
