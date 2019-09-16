@@ -3,10 +3,7 @@
 namespace FondOfSpryker\Client\ContentfulPageSearch\Plugin\Elasticsearch\Query;
 
 use Elastica\Query;
-use Elastica\Query\BoolQuery;
-use FondOfSpryker\Shared\Contentful\ContentfulConstants;
 use Generated\Shared\Search\PageIndexMap;
-use InvalidArgumentException;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface;
 use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
@@ -33,7 +30,8 @@ class BlogSortQueryExpander extends AbstractPlugin implements QueryExpanderPlugi
     }
 
     /**
-     * @param \Spryker\Client\Search\Dependency\Plugin\QueryInterface $searchQuery
+     * @param \Elastica\Query $query
+     *
      * @return \Elastica\Query
      */
     protected function addSort(Query $query): Query

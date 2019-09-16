@@ -13,6 +13,13 @@ interface ContentfulTypeMapperPluginInterface
     public function getEntryTypeId(): string;
 
     /**
+     * @param array $data
+     *
+     * @return bool
+     */
+    public function isValidStructure(array $data): bool;
+
+    /**
      * @param int $idContetful
      * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
      * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface $pageMapBuilder
