@@ -2,6 +2,7 @@
 
 namespace FondOfSpryker\Zed\ContentfulPageSearch\Communication\Plugin\Search;
 
+use FondOfSpryker\Zed\ContentfulPageSearch\Business\Validator\StructureValidatorCollectionInterface;
 use Generated\Shared\Search\PageIndexMap;
 use Generated\Shared\Transfer\PageMapTransfer;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface;
@@ -15,22 +16,46 @@ class BlogPostPageMapPlugin extends AbstractContentfulTypeMapperPlugin implement
     public const FIELD_CATEGORIES = 'categories';
     public const FIELD_TAGS = 'tags';
     public const FIELD_PUBLISH_AT = 'publishedAt';
+    public const FIELDS = 'fields';
+    public const FIELD_ENTRY_DATA = 'entry_data';
+    public const ENTRY_TYPE_ID_VALUE = 'blogPost';
 
     /**
-     * @var string
+     * @var \FondOfSpryker\Zed\ContentfulPageSearch\Business\Validator\StructureValidatorCollectionInterface
      */
-    private $entryTypeId = 'blogPost';
+    private $structureValidatorCollection;
+
+    /**
+     * BlogPostPageMapPlugin constructor.
+     *
+     * @param \FondOfSpryker\Zed\ContentfulPageSearch\Business\Validator\StructureValidatorCollectionInterface $structureValidatorCollection
+     */
+    public function __construct(StructureValidatorCollectionInterface $structureValidatorCollection)
+    {
+        $this->structureValidatorCollection = $structureValidatorCollection;
+    }
 
     /**
      * @return string
      */
     public function getEntryTypeId(): string
     {
-        return $this->entryTypeId;
+        return self::ENTRY_TYPE_ID_VALUE;
     }
 
     /**
-     * @param int $idContetful
+     * @param array $data
+     *
+     * @return bool
+     */
+    public function isValidStructure(array $data): bool
+    {
+        $validator = $this->structureValidatorCollection->get($this->getEntryTypeId());
+        return $validator->validate($data[self::FIELD_ENTRY_DATA]);
+    }
+
+    /**
+     * @param int $idContentful
      * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
      * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface $pageMapBuilder
      * @param array $data
@@ -60,7 +85,7 @@ class BlogPostPageMapPlugin extends AbstractContentfulTypeMapperPlugin implement
         return [
             PageIndexMap::BLOG_CATEGORIES => $this->extractReferenceField(static::FIELD_CATEGORIES, $entryData),
             PageIndexMap::BLOG_TAGS => $this->extractReferenceField(static::FIELD_TAGS, $entryData),
-            PageIndexMap::BLOG_POST_PUBLISHED_AT => $entryData['fields'][static::FIELD_PUBLISH_AT]['value'],
+            PageIndexMap::BLOG_POST_PUBLISHED_AT => $entryData[self::FIELDS][static::FIELD_PUBLISH_AT]['value'],
         ];
     }
 

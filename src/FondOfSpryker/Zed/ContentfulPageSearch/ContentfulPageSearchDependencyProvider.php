@@ -2,8 +2,13 @@
 
 namespace FondOfSpryker\Zed\ContentfulPageSearch;
 
+use FondOfSpryker\Zed\ContentfulPageSearch\Business\Validator\Structure\BlogPostStructureValidator;
+use FondOfSpryker\Zed\ContentfulPageSearch\Business\Validator\StructureValidatorCollection;
+use FondOfSpryker\Zed\ContentfulPageSearch\Business\Validator\StructureValidatorCollectionInterface;
+use FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Facade\ContentfulPageSearchToContentfulFacadeBridge;
 use FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Facade\ContentfulPageSearchToSearchFacadeBridge;
 use FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Facade\ContentfulPageSearchToStorageFacadeBridge;
+use FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Facade\ContentfulPageSearchToStoreFacadeBridge;
 use FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Facade\ContentfulSearchPageToEventBehaviorFacadeBridge;
 use FondOfSpryker\Zed\ContentfulPageSearch\Dependency\QueryContainer\ContentfulPageSearchToContentfulEntryQueryContainerBridge;
 use FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Service\ContentfulPageSearchToUtilEncodingBridge;
@@ -17,6 +22,9 @@ class ContentfulPageSearchDependencyProvider extends AbstractBundleDependencyPro
     public const FACADE_STORAGE = 'FACADE_STORAGE';
     public const QUERY_CONTAINER_CONTENTFUL_ENTRY = 'QUERY_CONTAINER_CONTENTFUL_ENTRY';
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+    public const FACADE_STORE = 'FACADE_STORE';
+    public const FACADE_CONTENTFUL = 'FACADE_CONTENTFUL';
+    public const COLLECTION_STRUCTURE_VALIDATOR = 'COLLECTION_STRUCTURE_VALIDATOR';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -27,6 +35,8 @@ class ContentfulPageSearchDependencyProvider extends AbstractBundleDependencyPro
     {
         $container = $this->addEventBehaviourFacade($container);
         $container = $this->addStorageFacade($container);
+        $container = $this->addContentfulFacade($container);
+        $container = $this->addStructureValidatorCollection($container);
 
         return $container;
     }
@@ -38,7 +48,7 @@ class ContentfulPageSearchDependencyProvider extends AbstractBundleDependencyPro
      */
     public function providePersistenceLayerDependencies(Container $container): Container
     {
-        $container = $this->addContentfulEntryQueryContainer();
+        $container = $this->addContentfulEntryQueryContainer($container);
 
         return $container;
     }
@@ -53,7 +63,9 @@ class ContentfulPageSearchDependencyProvider extends AbstractBundleDependencyPro
         $container = $this->addSearchFacade($container);
         $container = $this->addStorageFacade($container);
         $container = $this->addUtilEncodingService($container);
-        
+        $container = $this->addStoreFacade($container);
+        $container = $this->addStructureValidatorCollection($container);
+
         return $container;
     }
 
@@ -130,6 +142,56 @@ class ContentfulPageSearchDependencyProvider extends AbstractBundleDependencyPro
             return new ContentfulPageSearchToUtilEncodingBridge(
                 $container->getLocator()->utilEncoding()->service()
             );
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addStoreFacade(Container $container): Container
+    {
+        $container[static::FACADE_STORE] = function (Container $container) {
+            return new ContentfulPageSearchToStoreFacadeBridge(
+                $container->getLocator()->store()->facade()
+            );
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addContentfulFacade(Container $container): Container
+    {
+        $container[static::FACADE_CONTENTFUL] = function (Container $container) {
+            return new ContentfulPageSearchToContentfulFacadeBridge(
+                $container->getLocator()->contentful()->facade()
+            );
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    private function addStructureValidatorCollection(Container $container): Container
+    {
+        $container[self::COLLECTION_STRUCTURE_VALIDATOR] = function (Container $container): StructureValidatorCollectionInterface {
+            $collection = new StructureValidatorCollection();
+
+            $collection->add(new BlogPostStructureValidator());
+
+            return $collection;
         };
 
         return $container;

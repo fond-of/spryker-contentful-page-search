@@ -13,4 +13,6 @@ interface ContentfulPageSearchConstants
     public const BLOG_PAGINATION_ITEMS_PER_PAGE = 'BLOG_PAGINATION_ITEMS_PER_PAGE';
 
     public const BLOG_BLOG_PAGINATION_PAGE_REQ_PARAM = 'page';
+
+    public const STORE_NAME_FIELD = 'store_name';
 }

@@ -38,7 +38,9 @@ class ContentfulPageSearchDependencyProvider extends AbstractDependencyProvider
     public const PROVIDE_BLOG_CATEGORY_DEPENDENCIES = 'PROVIDE_BLOG_CATEGORY_DEPENDENCIES';
 
     /**
-     * @return void
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
      */
     public function provideServiceLayerDependencies(Container $container): Container
     {

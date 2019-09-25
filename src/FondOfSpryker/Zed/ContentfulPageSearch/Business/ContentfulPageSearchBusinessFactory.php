@@ -4,9 +4,11 @@ namespace FondOfSpryker\Zed\ContentfulPageSearch\Business;
 
 use FondOfSpryker\Zed\ContentfulPageSearch\Business\Search\ContentfulPageSearchWriter;
 use FondOfSpryker\Zed\ContentfulPageSearch\Business\Search\Plugin\BlogPostWriterPlugin;
+use FondOfSpryker\Zed\ContentfulPageSearch\Business\Validator\StructureValidatorCollectionInterface;
 use FondOfSpryker\Zed\ContentfulPageSearch\ContentfulPageSearchDependencyProvider;
 use FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Facade\ContentfulPageSearchToSearchFacadeInterface;
 use FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Facade\ContentfulPageSearchToStorageFacadeInterface;
+use FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Facade\ContentfulPageSearchToStoreFacadeInterface;
 use FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Service\ContentfulPageSearchToUtilEncodingInterface;
 use Orm\Zed\Contentful\Persistence\FosContentfulQuery;
 use Orm\Zed\ContentfulPageSearch\Persistence\FosContentfulPageSearchQuery;
@@ -15,7 +17,6 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 /**
  * Class ContentfulSearchPageBusinessFactory
  * @package FondOfSpryker\Zed\ContentfulPageSearch\Business
- * @method ContentfulSearchPageQu
  * @method \FondOfSpryker\Zed\ContentfulPageSearch\Persistence\ContentfulPageSearchQueryContainer getQueryContainer()
  */
 class ContentfulPageSearchBusinessFactory extends AbstractBusinessFactory
@@ -31,6 +32,8 @@ class ContentfulPageSearchBusinessFactory extends AbstractBusinessFactory
             $this->getSearchFacade(),
             $this->getStorageFacade(),
             $this->getUtilEncodingService(),
+            $this->getStoreFacade(),
+            $this->getStructureValidatorCollection(),
             $this->getContentfulPageSearchWriterPlugins()
         );
     }
@@ -95,5 +98,21 @@ class ContentfulPageSearchBusinessFactory extends AbstractBusinessFactory
     public function getStorageFacade(): ContentfulPageSearchToStorageFacadeInterface
     {
         return $this->getProvidedDependency(ContentfulPageSearchDependencyProvider::FACADE_STORAGE);
+    }
+
+    /**
+     * @return \FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Facade\ContentfulPageSearchToStoreFacadeInterface
+     */
+    public function getStoreFacade(): ContentfulPageSearchToStoreFacadeInterface
+    {
+        return $this->getProvidedDependency(ContentfulPageSearchDependencyProvider::FACADE_STORE);
+    }
+
+    /**
+     * @return \FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Facade\ContentfulPageSearchToContentfulFacadeInterface
+     */
+    public function getStructureValidatorCollection(): StructureValidatorCollectionInterface
+    {
+        return $this->getProvidedDependency(ContentfulPageSearchDependencyProvider::COLLECTION_STRUCTURE_VALIDATOR);
     }
 }
