@@ -26,10 +26,10 @@
     "spryker/storage": "^3.10.0",
     "spryker/locale": "^3.3.0",
     "spryker/store": "^1.9.0",
-    "contentful/contentful": "3.4.0",
+    "contentful/contentful": "dev-spryker_upgrade",
     "aptoma/twig-markdown": "2.0.0",
     "michelf/php-markdown": "1.8",
-    "fond-of-spryker/contentful": "^4.6.3"
+    "fond-of-spryker/contentful": "dev-spryker_upgrade"
   },
   "require-dev": {
     "spryker/code-sniffer": "^0.14.7",
