@@ -26,7 +26,7 @@
     "spryker/storage": "^3.10.0",
     "spryker/locale": "^3.3.0",
     "spryker/store": "^1.9.0",
-    "contentful/contentful": "dev-spryker_upgrade",
+    "contentful/contentful": "3.4.0",
     "aptoma/twig-markdown": "2.0.0",
     "michelf/php-markdown": "1.8",
     "fond-of-spryker/contentful": "dev-spryker_upgrade"
