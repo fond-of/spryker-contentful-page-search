@@ -8,6 +8,7 @@ use Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGenerato
 
 /**
  * Class ContentfulStorageKeyGeneratorPlugin
+ *
  * @package FondOfSpryker\Service\ContentfulStorage\Plugin
  * @method \FondOfSpryker\Service\ContentfulPageSearch\ContentfulPageSearchServiceFactory getFactory()
  */

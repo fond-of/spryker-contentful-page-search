@@ -1,6 +1,5 @@
 <?php
 
-
 namespace FondOfSpryker\Zed\ContentfulPageSearch\Business\Validator\Structure;
 
 interface StructureValidatorInterface

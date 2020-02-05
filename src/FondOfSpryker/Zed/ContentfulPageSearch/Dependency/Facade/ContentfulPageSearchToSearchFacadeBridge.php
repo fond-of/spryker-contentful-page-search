@@ -13,8 +13,6 @@ class ContentfulPageSearchToSearchFacadeBridge implements ContentfulPageSearchTo
     protected $searchFacade;
 
     /**
-     * ContentfulPageSearchToSearchBridge constructor.
-     *
      * @param \Spryker\Zed\Search\Business\SearchFacadeInterface $searchFacade
      */
     public function __construct(SearchFacadeInterface $searchFacade)

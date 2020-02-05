@@ -12,8 +12,6 @@ class ContentfulPageSearchToContentfulFacadeBridge implements ContentfulPageSear
     protected $contentfulFacade;
 
     /**
-     * ContentfulPageSearchToContentfulFacadeBridge constructor.
-     *
      * @param \FondOfSpryker\Zed\Contentful\Business\ContentfulFacadeInterface $contentfulFacade
      */
     public function __construct(ContentfulFacadeInterface $contentfulFacade)

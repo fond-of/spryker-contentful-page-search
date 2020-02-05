@@ -127,7 +127,7 @@ class ContentfulPageSearchFactory extends AbstractFactory
     }
 
     /**
-     * @return \FondOfSpryker\Shared\ContentfulPageSearch\ContentfulPageSearchConfig
+     * @return \FondOfSpryker\Client\ContentfulPageSearch\ContentfulPageSearchConfig
      */
     public function getContentfulPageSearchConfig(): ContentfulPageSearchConfig
     {

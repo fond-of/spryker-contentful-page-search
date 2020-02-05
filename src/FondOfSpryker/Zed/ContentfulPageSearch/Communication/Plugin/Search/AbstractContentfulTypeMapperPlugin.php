@@ -21,6 +21,11 @@ abstract class AbstractContentfulTypeMapperPlugin extends AbstractPlugin
     public const FIELD_TYPE_REFERENCE = 'Reference';
 
     /**
+     * @var string
+     */
+    protected $entryTypeId;
+
+    /**
      * @return string
      */
     public function getEntryTypeId(): string
@@ -74,7 +79,7 @@ abstract class AbstractContentfulTypeMapperPlugin extends AbstractPlugin
         $contentfulPageSearchQuery = $this->getFactory()->createContentfulPageSearchQuery();
         $contentfulPageSearchQuery->clear();
 
-        return $this->contentfulPageSearchQuery
+        return $contentfulPageSearchQuery
             ->filterByFkContentful($contentfulId)
             ->findOneOrCreate();
     }
@@ -101,6 +106,13 @@ abstract class AbstractContentfulTypeMapperPlugin extends AbstractPlugin
 
         return $items;
     }
+
+    /**
+     * @param string $entryId
+     *
+     * @return string|null
+     */
+    abstract protected function getRelatedItemEntryId(string $entryId): ?string;
 
     /**
      * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface $pageMapBuilder

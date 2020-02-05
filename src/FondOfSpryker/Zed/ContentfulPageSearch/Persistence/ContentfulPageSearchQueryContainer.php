@@ -7,15 +7,15 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
  * Class ContentfulPageSearchQueryContainer
+ *
  * @package FondOfSpryker\Zed\ContentfulPageSearch\Persistence
  * @method \FondOfSpryker\Zed\ContentfulPageSearch\Persistence\ContentfulPageSearchPersistenceFactory getFactory()
  */
 class ContentfulPageSearchQueryContainer extends AbstractQueryContainer implements ContentfulPageSearchQueryContainerInterface
 {
     /**
-     * @param array $contentfulEntryIds
-     *
-     * @return array|null
+     * @param  array  $contentfulEntryIds
+     * @return \Orm\Zed\ContentfulPageSearch\Persistence\FosContentfulPageSearchQuery
      */
     public function queryContentfulPageSearchByIds(array $contentfulEntryIds): FosContentfulPageSearchQuery
     {

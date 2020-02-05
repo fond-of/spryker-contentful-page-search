@@ -8,6 +8,7 @@ use Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter\AbstractElasticse
 
 /**
  * Class BlogPaginatedResultFormatterPlugin
+ *
  * @package FondOfSpryker\Client\ContentfulPageSearch\Plugin\Elasticsearch\ResultFormatter
  * @method \FondOfSpryker\Client\ContentfulPageSearch\ContentfulPageSearchFactory getFactory()
  */
