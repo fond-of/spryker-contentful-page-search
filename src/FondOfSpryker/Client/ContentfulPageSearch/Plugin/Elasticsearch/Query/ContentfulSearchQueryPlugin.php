@@ -8,15 +8,24 @@ use Elastica\Query\BoolQuery;
 use Elastica\Query\MatchAll;
 use Elastica\Query\MultiMatch;
 use Generated\Shared\Search\PageIndexMap;
+use Generated\Shared\Transfer\SearchContextTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 use Spryker\Client\Search\Dependency\Plugin\SearchStringGetterInterface;
 use Spryker\Client\Search\Dependency\Plugin\SearchStringSetterInterface;
+use Spryker\Client\SearchExtension\Dependency\Plugin\SearchContextAwareQueryInterface;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Search\SearchConstants;
 
-class ContentfulSearchQueryPlugin extends AbstractPlugin implements QueryInterface, SearchStringSetterInterface, SearchStringGetterInterface
+class ContentfulSearchQueryPlugin extends AbstractPlugin implements SearchContextAwareQueryInterface, QueryInterface, SearchStringSetterInterface, SearchStringGetterInterface
 {
+    protected const SOURCE_IDENTIFIER = 'page';
+
+    /**
+     * @var \Generated\Shared\Transfer\SearchContextTransfer
+     */
+    protected $searchContextTransfer;
+
     /**
      * @var \Elastica\Query
      */
@@ -26,7 +35,7 @@ class ContentfulSearchQueryPlugin extends AbstractPlugin implements QueryInterfa
      * @var string
      */
     protected $searchString;
-    
+
     public function __construct()
     {
         $this->query = $this->createSearchQuery();
@@ -57,6 +66,28 @@ class ContentfulSearchQueryPlugin extends AbstractPlugin implements QueryInterfa
     public function getSearchString(): string
     {
         return $this->searchString;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\SearchContextTransfer
+     */
+    public function getSearchContext(): SearchContextTransfer
+    {
+        if (!$this->hasSearchContext()) {
+            $this->setupDefaultSearchContext();
+        }
+
+        return $this->searchContextTransfer;
+    }
+
+    /**
+     * @param  \Generated\Shared\Transfer\SearchContextTransfer  $searchContextTransfer
+     *
+     * @return void
+     */
+    public function setSearchContext(SearchContextTransfer $searchContextTransfer): void
+    {
+        $this->searchContextTransfer = $searchContextTransfer;
     }
 
     /**
@@ -120,5 +151,24 @@ class ContentfulSearchQueryPlugin extends AbstractPlugin implements QueryInterfa
         $boolQuery->addMust($matchQuery);
 
         return $boolQuery;
+    }
+
+    /**
+     * @return bool
+     */
+    protected function hasSearchContext(): bool
+    {
+        return (bool)$this->searchContextTransfer;
+    }
+
+    /**
+     * @return void
+     */
+    protected function setupDefaultSearchContext(): void
+    {
+        $searchContextTransfer = new SearchContextTransfer();
+        $searchContextTransfer->setSourceIdentifier(static::SOURCE_IDENTIFIER);
+
+        $this->searchContextTransfer = $searchContextTransfer;
     }
 }
