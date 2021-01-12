@@ -22,14 +22,10 @@
   ],
   "require": {
     "php": ">=7.2",
-    "spryker/twig": "^3.8.2",
     "spryker/storage": "^3.14.0",
     "spryker/locale": "^3.3.0",
     "spryker/store": "^1.12.1",
-    "contentful/contentful": "^6.0.0",
-    "aptoma/twig-markdown": "^2.0.0",
-    "michelf/php-markdown": "^1.9",
-    "fond-of-spryker/contentful": "dev-spryker_upgrade"
+    "fond-of-spryker/contentful": "dev-feature/upgrade-contentful"
   },
   "require-dev": {
     "spryker/code-sniffer": "^0.14.7",
