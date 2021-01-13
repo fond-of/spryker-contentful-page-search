@@ -25,7 +25,7 @@
     "spryker/storage": "^3.14.0",
     "spryker/locale": "^3.3.0",
     "spryker/store": "^1.12.1",
-    "fond-of-spryker/contentful": "dev-feature/spryker_upgrade"
+    "fond-of-spryker/contentful": "dev-spryker_upgrade"
   },
   "require-dev": {
     "spryker/code-sniffer": "^0.14.7",
