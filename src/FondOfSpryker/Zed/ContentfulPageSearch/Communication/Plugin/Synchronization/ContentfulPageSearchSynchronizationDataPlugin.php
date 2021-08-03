@@ -98,6 +98,6 @@ class ContentfulPageSearchSynchronizationDataPlugin extends AbstractPlugin imple
             $query->clear();
         }
 
-        return $query;
+        return $query->orderByIdContentfulPageSearch();
     }
 }

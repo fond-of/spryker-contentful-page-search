@@ -1,10 +1,5 @@
 <?php
 
-/**
- * This file is part of the Spryker Suite.
- * For full license information, please view the LICENSE file that was distributed with this source code.
- */
-
 namespace FondOfSpryker\Zed\ContentfulPageSearch\Business\Validator;
 
 use FondOfSpryker\Zed\ContentfulPageSearch\Business\Validator\Structure\StructureValidatorInterface;
@@ -28,6 +23,7 @@ class StructureValidatorCollection implements StructureValidatorCollectionInterf
     public function add(StructureValidatorInterface $validator)
     {
         $this->validator[$validator->getName()] = $validator;
+
         return $this;
     }
 
@@ -61,6 +57,7 @@ class StructureValidatorCollection implements StructureValidatorCollectionInterf
         if (empty($this->validator[$ident])) {
             throw new StructureValidatorNotFoundException($ident);
         }
+
         return $this->validator[$ident];
     }
 }

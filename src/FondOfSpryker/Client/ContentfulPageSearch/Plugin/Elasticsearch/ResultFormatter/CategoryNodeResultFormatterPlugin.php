@@ -1,6 +1,5 @@
 <?php
 
-
 namespace FondOfSpryker\Client\ContentfulPageSearch\Plugin\Elasticsearch\ResultFormatter;
 
 use Elastica\ResultSet;

@@ -1,4 +1,5 @@
 <?php
+
 namespace FondOfSpryker\Zed\ContentfulPageSearch\Communication\Console;
 
 use Spryker\Zed\Kernel\Communication\Console\Console;
@@ -9,7 +10,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * @method \FondOfSpryker\Zed\ContentfulPageSearch\Business\ContentfulPageSearchFacadeInterface getFacade()
  * @method \FondOfSpryker\Zed\ContentfulPageSearch\Communication\ContentfulPageSearchCommunicationFactory getFactory()
- * @method \FondOfSpryker\Zed\ContentfulPageSearch\Persistence\ContentfulPageSearchToContentfulEntryQueryContainerInterface getQueryContainer()
+ * @method \FondOfSpryker\Zed\ContentfulPageSearch\Persistence\ContentfulPageSearchToContentfulQueryContainerInterface getQueryContainer()
  */
 class ContentfulPageSearchConsole extends Console
 {

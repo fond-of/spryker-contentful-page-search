@@ -22,6 +22,7 @@ class BlogPostStructureValidator implements StructureValidatorInterface
     public function validate(string $jsonData): bool
     {
         $entryData = json_decode($jsonData, true);
+
         return array_key_exists(BlogPostPageMapPlugin::FIELDS, $entryData)
             && array_key_exists(BlogPostPageMapPlugin::FIELD_CATEGORIES, $entryData[BlogPostPageMapPlugin::FIELDS])
             && array_key_exists(BlogPostPageMapPlugin::FIELD_TAGS, $entryData[BlogPostPageMapPlugin::FIELDS])

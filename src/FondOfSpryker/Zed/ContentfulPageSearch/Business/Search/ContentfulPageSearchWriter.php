@@ -28,7 +28,7 @@ class ContentfulPageSearchWriter implements ContentfulPageSearchWriterInterface
     protected $contentfulQuery;
 
     /**
-     * @var \FondOfSpryker\Zed\ContentfulPageSearch\Business\Search\ContentfulPageSearchToSearchFacadeInterface
+     * @var \FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Facade\ContentfulPageSearchToSearchFacadeInterface
      */
     protected $searchFacade;
 
@@ -63,8 +63,6 @@ class ContentfulPageSearchWriter implements ContentfulPageSearchWriterInterface
     protected $storeNameChache = [];
 
     /**
-     * ContentfulPageSearchWriter constructor.
-     *
      * @param \Orm\Zed\Contentful\Persistence\FosContentfulQuery $contentfulQuery
      * @param \Orm\Zed\ContentfulPageSearch\Persistence\FosContentfulPageSearchQuery $contentfulPageSearchQuery
      * @param \FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Facade\ContentfulPageSearchToSearchFacadeInterface $searchFacade
@@ -177,9 +175,10 @@ class ContentfulPageSearchWriter implements ContentfulPageSearchWriterInterface
     }
 
     /**
-     * @param int $contentfulId
-     *
-     * @return \Orm\Zed\ContentfulPageSearch\Persistence\Base\FosContentfulPageSearch
+     * @param  int  $contentfulId
+     * @return \Orm\Zed\ContentfulPageSearch\Persistence\FosContentfulPageSearch
+     * @throws \Propel\Runtime\Exception\PropelException
+     * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
      */
     protected function getContentfulPageSearchEntity(int $contentfulId): FosContentfulPageSearch
     {

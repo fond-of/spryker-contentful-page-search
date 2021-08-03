@@ -7,7 +7,6 @@ use Spryker\Client\Kernel\AbstractClient;
 /**
  * @method \FondOfSpryker\Client\ContentfulPageSearch\ContentfulPageSearchFactory getFactory()
  */
-
 class ContentfulPageSearchClient extends AbstractClient implements ContentfulPageSearchClientInterface
 {
     /**

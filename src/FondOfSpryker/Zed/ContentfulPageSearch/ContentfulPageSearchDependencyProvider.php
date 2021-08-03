@@ -10,7 +10,7 @@ use FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Facade\ContentfulPageSearc
 use FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Facade\ContentfulPageSearchToStorageFacadeBridge;
 use FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Facade\ContentfulPageSearchToStoreFacadeBridge;
 use FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Facade\ContentfulSearchPageToEventBehaviorFacadeBridge;
-use FondOfSpryker\Zed\ContentfulPageSearch\Dependency\QueryContainer\ContentfulPageSearchToContentfulEntryQueryContainerBridge;
+use FondOfSpryker\Zed\ContentfulPageSearch\Dependency\QueryContainer\ContentfulPageSearchToContentfulQueryContainerBridge;
 use FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Service\ContentfulPageSearchToUtilEncodingBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
@@ -107,7 +107,7 @@ class ContentfulPageSearchDependencyProvider extends AbstractBundleDependencyPro
     protected function addContentfulEntryQueryContainer(Container $container): Container
     {
         $container[static::QUERY_CONTAINER_CONTENTFUL_ENTRY] = function (Container $container) {
-            return new ContentfulPageSearchToContentfulEntryQueryContainerBridge(
+            return new ContentfulPageSearchToContentfulQueryContainerBridge(
                 $container->getLocator()->contentful()->queryContainer()
             );
         };
