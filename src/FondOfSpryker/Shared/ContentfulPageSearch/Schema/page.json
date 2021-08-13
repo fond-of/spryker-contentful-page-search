@@ -22,27 +22,20 @@
       ],
       "properties": {
         "blog_categories": {
-          "type": "string",
-          "index": "not_analyzed",
-          "include_in_all": false
+          "type": "keyword"
         },
         "blog_tags": {
-          "type": "string",
-          "index": "not_analyzed",
-          "include_in_all": false
+          "type": "keyword"
         },
         "blog_post_published_at": {
           "type": "keyword",
-          "include_in_all": false
         },
         "string-sort": {
           "type": "object",
-          "include_in_all": false,
           "properties": { }
         },
         "string-facet": {
           "type": "nested",
-          "include_in_all": false,
           "properties": {
             "facet-name": {
               "type": "keyword"
@@ -57,9 +50,7 @@
     "category": {
       "properties": {
         "id_category": {
-          "type": "string",
-          "index": "not_analyzed",
-          "include_in_all": false
+          "type": "keyword"
         }
       }
     }
