@@ -28,7 +28,7 @@
           "type": "keyword"
         },
         "blog_post_published_at": {
-          "type": "keyword",
+          "type": "keyword"
         },
         "string-sort": {
           "type": "object",
