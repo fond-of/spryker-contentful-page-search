@@ -21,11 +21,11 @@
     }
   ],
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "spryker/storage": "^3.14.0",
     "spryker/locale": "^3.3.0",
     "spryker/store": "^1.12.1",
-    "fond-of-spryker/contentful": "dev-spryker_upgrade"
+    "fond-of-spryker/contentful": "dev-2022-spryker-upgrade"
   },
   "require-dev": {
     "spryker/code-sniffer": "^0.11",
