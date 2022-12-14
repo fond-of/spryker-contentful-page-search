@@ -26,8 +26,6 @@ class BlogPostPageMapPlugin extends AbstractContentfulTypeMapperPlugin implement
     private $structureValidatorCollection;
 
     /**
-     * BlogPostPageMapPlugin constructor.
-     *
      * @param \FondOfSpryker\Zed\ContentfulPageSearch\Business\Validator\StructureValidatorCollectionInterface $structureValidatorCollection
      */
     public function __construct(StructureValidatorCollectionInterface $structureValidatorCollection)
@@ -51,6 +49,7 @@ class BlogPostPageMapPlugin extends AbstractContentfulTypeMapperPlugin implement
     public function isValidStructure(array $data): bool
     {
         $validator = $this->structureValidatorCollection->get($this->getEntryTypeId());
+
         return $validator->validate($data[self::FIELD_ENTRY_DATA]);
     }
 

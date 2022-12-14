@@ -6,6 +6,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * Class ContentfulPageSearchFacade
+ *
  * @package FondOfSpryker\Zed\ContentfulPageSearch\Business
  * @method \FondOfSpryker\Zed\ContentfulPageSearch\Business\ContentfulPageSearchBusinessFactory getFactory()
  */

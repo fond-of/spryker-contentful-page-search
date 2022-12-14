@@ -1,16 +1,12 @@
 <?php
 
-/**
- * This file is part of the Spryker Suite.
- * For full license information, please view the LICENSE file that was distributed with this source code.
- */
-
 namespace FondOfSpryker\Zed\ContentfulPageSearch\Business\Validator;
 
 use FondOfSpryker\Zed\ContentfulPageSearch\Business\Validator\Structure\StructureValidatorInterface;
 
 /**
  * Interface StructureValidatorCollectionInterface
+ *
  * @package FondOfSpryker\Zed\ContentfulPageSearch\Business\Validator
  */
 interface StructureValidatorCollectionInterface

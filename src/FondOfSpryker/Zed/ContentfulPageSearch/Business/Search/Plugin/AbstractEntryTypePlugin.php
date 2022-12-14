@@ -13,6 +13,7 @@ use Propel\Runtime\Map\TableMap;
 
 /**
  * Class AbstractEntryTypePlugin
+ *
  * @package FondOfSpryker\Zed\ContentfulPageSearch\Business\Search\Plugin
  */
 abstract class AbstractEntryTypePlugin
@@ -26,6 +27,11 @@ abstract class AbstractEntryTypePlugin
      * @var \Orm\Zed\Contentful\Persistence\FosContentfulQuery
      */
     protected $contentfulQuery;
+
+    /**
+     * @var \FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Facade\ContentfulPageSearchToSearchFacadeInterface 
+     */
+    protected $searchFacade;
 
     /**
      * @param \FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Facade\ContentfulPageSearchToStorageFacadeInterface $storageFacade

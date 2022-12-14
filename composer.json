@@ -21,15 +21,11 @@
     }
   ],
   "require": {
-    "php": ">=7.1",
-    "spryker/twig": "^3.0.0",
-    "spryker/storage": "^3.0.0",
-    "spryker/locale": "^3.0.0",
-    "spryker/store": "^1.9.0",
-    "contentful/contentful": "3.4.0",
-    "aptoma/twig-markdown": "2.0.0",
-    "michelf/php-markdown": "1.8",
-    "fond-of-spryker/contentful": "^4.6.3"
+    "php": ">=7.3",
+    "spryker/storage": "^3.14.0",
+    "spryker/locale": "^3.3.0",
+    "spryker/store": "^1.12.1",
+    "fond-of-spryker/contentful": "dev-2022-spryker-upgrade"
   },
   "require-dev": {
     "spryker/code-sniffer": "^0.11",

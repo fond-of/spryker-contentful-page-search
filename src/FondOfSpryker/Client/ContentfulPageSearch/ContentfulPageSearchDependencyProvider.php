@@ -85,7 +85,7 @@ class ContentfulPageSearchDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return \FondOfSpryker\Client\Contentful\Plugin\Elasticsearch\Query\ContentfulSearchQueryPlugin
+     * @return \FondOfSpryker\Client\ContentfulPageSearch\Plugin\Elasticsearch\Query\ContentfulSearchQueryPlugin
      */
     protected function createContentfulSearchQueryPlugin(): ContentfulSearchQueryPlugin
     {

@@ -8,9 +8,8 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 interface ContentfulPageSearchQueryContainerInterface extends QueryContainerInterface
 {
     /**
-     * @param array $contentfulEntryIds
-     *
-     * @return array|null
+     * @param  array  $contentfulEntryIds
+     * @return \Orm\Zed\ContentfulPageSearch\Persistence\FosContentfulPageSearchQuery
      */
     public function queryContentfulPageSearchByIds(array $contentfulEntryIds): FosContentfulPageSearchQuery;
 }

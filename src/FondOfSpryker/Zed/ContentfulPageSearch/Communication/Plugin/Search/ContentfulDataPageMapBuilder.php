@@ -13,10 +13,11 @@ use Spryker\Zed\Search\Dependency\Plugin\NamedPageMapInterface;
 /**
  * @method \FondOfSpryker\Zed\ContentfulPageSearch\Business\ContentfulPageSearchFacade getFacade()
  * @method \FondOfSpryker\Zed\ContentfulPageSearch\Communication\ContentfulPageSearchCommunicationFactory getFactory()
+ * @method \FondOfSpryker\Zed\ContentfulPageSearch\Persistence\ContentfulPageSearchQueryContainerInterface getQueryContainer()
  */
 class ContentfulDataPageMapBuilder extends AbstractPlugin implements NamedPageMapInterface
 {
-    const TYPE = 'contentful_blog_post';
+    public const TYPE = 'contentful_blog_post';
 
     /**
      * @return string

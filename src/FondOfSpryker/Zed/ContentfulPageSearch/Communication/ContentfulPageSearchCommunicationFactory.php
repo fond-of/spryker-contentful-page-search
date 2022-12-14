@@ -14,6 +14,7 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
  * @method \FondOfSpryker\Zed\ContentfulPageSearch\Persistence\ContentfulPageSearchQueryContainer getQueryContainer()
+ * @method \FondOfSpryker\Zed\ContentfulPageSearch\Business\ContentfulPageSearchFacadeInterface getFacade()
  */
 class ContentfulPageSearchCommunicationFactory extends AbstractCommunicationFactory
 {

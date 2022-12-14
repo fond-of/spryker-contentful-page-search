@@ -12,6 +12,7 @@ use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 
 /**
  * Class BlogCategoryQueryExpander
+ *
  * @method \FondOfSpryker\Client\ContentfulPageSearch\ContentfulPageSearchFactory getFactory()
  */
 class BlogPostQueryExpander extends AbstractPlugin implements QueryExpanderPluginInterface

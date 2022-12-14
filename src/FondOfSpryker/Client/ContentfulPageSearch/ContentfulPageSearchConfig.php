@@ -3,8 +3,8 @@
 namespace FondOfSpryker\Client\ContentfulPageSearch;
 
 use FondOfSpryker\Shared\ContentfulPageSearch\ContentfulPageSearchConstants;
-use Pyz\Client\Search\SearchConfig;
 use Spryker\Client\Kernel\AbstractBundleConfig;
+use Spryker\Client\Search\SearchConfig;
 
 class ContentfulPageSearchConfig extends AbstractBundleConfig
 {
@@ -34,7 +34,7 @@ class ContentfulPageSearchConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return \Pyz\Client\Search\SearchConfig
+     * @return \Spryker\Client\Search\SearchConfig
      */
     public function createSearchConfig(): AbstractBundleConfig
     {
