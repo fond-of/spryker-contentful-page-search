@@ -7,8 +7,8 @@ use Elastica\Query\BoolQuery;
 use FondOfSpryker\Shared\Contentful\ContentfulConstants;
 use InvalidArgumentException;
 use Spryker\Client\Kernel\AbstractPlugin;
-use Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface;
-use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
+use Spryker\Client\SearchExtension\Dependency\Plugin\QueryExpanderPluginInterface;
+use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 
 /**
  * Class BlogCategoryQueryExpander
@@ -20,10 +20,10 @@ class BlogTagQueryExpander extends AbstractPlugin implements QueryExpanderPlugin
     /**
      * @api
      *
-     * @param \Spryker\Client\Search\Dependency\Plugin\QueryInterface $searchQuery
+     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $searchQuery
      * @param array $requestParameters
      *
-     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
+     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
      */
     public function expandQuery(QueryInterface $searchQuery, array $requestParameters = []): QueryInterface
     {
@@ -53,10 +53,12 @@ class BlogTagQueryExpander extends AbstractPlugin implements QueryExpanderPlugin
     {
         $boolQuery = $this->getBoolQuery($query);
 
+        /** @var \Elastica\Query\MatchQuery $matchQuery */
         $matchQuery = $this->getFactory()
             ->createQueryBuilder()
-            ->createMatchQuery()
-            ->setField(ContentfulConstants::FIELD_BLOG_TAGS, strtolower($entryId));
+            ->createMatchQuery();
+
+        $matchQuery->setField(ContentfulConstants::FIELD_BLOG_TAGS, strtolower($entryId));
 
         $boolQuery->addMust($matchQuery);
     }

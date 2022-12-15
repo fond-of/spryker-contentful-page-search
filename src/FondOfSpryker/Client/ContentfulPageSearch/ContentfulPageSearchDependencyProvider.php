@@ -2,20 +2,9 @@
 
 namespace FondOfSpryker\Client\ContentfulPageSearch;
 
-use FondOfSpryker\Client\ContentfulPageSearch\Plugin\Elasticsearch\Query\BlogCategoryQueryExpander;
-use FondOfSpryker\Client\ContentfulPageSearch\Plugin\Elasticsearch\Query\BlogPaginatedQueryExpanderPlugin;
-use FondOfSpryker\Client\ContentfulPageSearch\Plugin\Elasticsearch\Query\BlogPostQueryExpander;
-use FondOfSpryker\Client\ContentfulPageSearch\Plugin\Elasticsearch\Query\BlogSortQueryExpander;
-use FondOfSpryker\Client\ContentfulPageSearch\Plugin\Elasticsearch\Query\BlogTagQueryExpander;
-use FondOfSpryker\Client\ContentfulPageSearch\Plugin\Elasticsearch\Query\CategoryNodeQueryExpanderPlugin;
 use FondOfSpryker\Client\ContentfulPageSearch\Plugin\Elasticsearch\Query\ContentfulSearchQueryPlugin;
-use FondOfSpryker\Client\ContentfulPageSearch\Plugin\Elasticsearch\ResultFormatter\BlogPaginatedResultFormatterPlugin;
-use FondOfSpryker\Client\ContentfulPageSearch\Plugin\Elasticsearch\ResultFormatter\BlogPostResultFormatterPlugin;
-use FondOfSpryker\Client\ContentfulPageSearch\Plugin\Elasticsearch\ResultFormatter\CategoryNodeResultFormatterPlugin;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
-use Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\LocalizedQueryExpanderPlugin;
-use Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\StoreQueryExpanderPlugin;
 
 class ContentfulPageSearchDependencyProvider extends AbstractDependencyProvider
 {
@@ -204,75 +193,50 @@ class ContentfulPageSearchDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return array<\Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface>
+     * @return array<\Spryker\Client\SearchExtension\Dependency\Plugin\QueryExpanderPluginInterface>
      */
     protected function createContentfulBlogCategorySearchQueryExpanderPlugins(): array
     {
-        return [
-            new StoreQueryExpanderPlugin(),
-            new LocalizedQueryExpanderPlugin(),
-            new BlogPostQueryExpander(),
-            new BlogCategoryQueryExpander(),
-            new BlogSortQueryExpander(),
-            new BlogPaginatedQueryExpanderPlugin(),
-        ];
+        return [];
     }
 
     /**
-     * @return array<\Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface>
+     * @return array<\Spryker\Client\SearchExtension\Dependency\Plugin\QueryExpanderPluginInterface>
      */
     protected function createContentfulBlogTagSearchQueryExpanderPlugins(): array
     {
-        return [
-            new StoreQueryExpanderPlugin(),
-            new LocalizedQueryExpanderPlugin(),
-            new BlogPostQueryExpander(),
-            new BlogTagQueryExpander(),
-            new BlogPaginatedQueryExpanderPlugin(),
-        ];
+        return [];
     }
 
     /**
-     * @return array<\Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface>
+     * @return array<\Spryker\Client\SearchExtension\Dependency\Plugin\QueryExpanderPluginInterface>
      */
     protected function createContentfulSearchCategoryNodeQueryExpanderPlugins(): array
     {
-        return [
-            new StoreQueryExpanderPlugin(),
-            new LocalizedQueryExpanderPlugin(),
-            new CategoryNodeQueryExpanderPlugin(),
-        ];
+        return [];
     }
 
     /**
-     * @return array<\Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface>
+     * @return array<\Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface>
      */
     protected function createContentfulSearchBlogCategoryResultFormatter(): array
     {
-        return [
-            new BlogPaginatedResultFormatterPlugin(),
-            new BlogPostResultFormatterPlugin(),
-        ];
+        return [];
     }
 
     /**
-     * @return array<\Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface>
+     * @return array<\Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface>
      */
     protected function createContentfulSearchBlogTagResultFormatter(): array
     {
-        return [
-            new BlogPaginatedResultFormatterPlugin(),
-            new BlogPostResultFormatterPlugin(),
-        ];
+        return [];
     }
 
     /**
-     * @return array<\Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface>
+     * @return array<\Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface>
      */
     protected function createContentfulSearchCategoryNodeResultFormatter(): array
     {
-        return [
-            new CategoryNodeResultFormatterPlugin(),
-        ];
+        return [];
     }
 }

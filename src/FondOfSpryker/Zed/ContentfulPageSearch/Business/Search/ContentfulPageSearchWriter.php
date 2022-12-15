@@ -107,7 +107,7 @@ class ContentfulPageSearchWriter implements ContentfulPageSearchWriterInterface
 
         /** @var \Orm\Zed\Contentful\Persistence\FosContentful $entry */
         foreach ($contentfulEntries as $entry) {
-            $this->store($entry->getPrimaryKey());
+            $this->store((int)$entry->getPrimaryKey());
         }
     }
 
@@ -203,10 +203,10 @@ class ContentfulPageSearchWriter implements ContentfulPageSearchWriterInterface
             $this->storeNameChache[$storeId] = $store->getName();
         }
 
-        try {
+        if (array_key_exists($storeId, $this->storeNameChache)) {
             return $this->storeNameChache[$storeId];
-        } catch (Exception $exception) {
-            throw new StoreNotFoundException(sprintf('Store with id %s not found!', $storeId));
         }
+
+        throw new StoreNotFoundException(sprintf('Store with id %s not found!', $storeId));
     }
 }

@@ -120,7 +120,7 @@ class BlogPostPageMapPlugin extends AbstractContentfulTypeMapperPlugin implement
     {
         /** @var array<\Orm\Zed\Contentful\Persistence\FosContentful> $storageEntries */
         $storageEntries = $this->getFactory()
-            ->createContentfulQuery()
+            ->getContentfulQuery()
             ->filterByEntryId(strtolower($entryId));
 
         foreach ($storageEntries as $entry) {

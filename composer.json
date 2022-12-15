@@ -17,11 +17,15 @@
     }
   ],
   "require": {
-    "php": ">=7.3",
-    "spryker/storage": "^3.14.0",
+    "php": ">=7.4",
+    "ext-json": "*",
+    "fond-of-spryker/configurable-pagination": "dev-spryker_upgrade",
+    "fond-of-spryker/contentful": "dev-master",
     "spryker/locale": "^3.3.0",
-    "spryker/store": "^1.12.1",
-    "fond-of-spryker/contentful": "dev-master"
+    "spryker/search-elasticsearch": "^1.14.0",
+    "spryker/search-extension": "^1.1.0",
+    "spryker/storage": "^3.19.0",
+    "spryker/store": "^1.16.0"
   },
   "require-dev": {
     "fond-of-codeception/spryker": "^1.0",

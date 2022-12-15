@@ -80,27 +80,12 @@ abstract class AbstractContentfulTypeMapperPlugin extends AbstractPlugin
      */
     protected function getContentfulEntity(int $contentfulId): FosContentful
     {
-        $contentfulQuery = $this->getFactory()->createContentfulQuery();
+        $contentfulQuery = $this->getFactory()->getContentfulQuery();
         $contentfulQuery->clear();
 
         return $contentfulQuery
             ->filterByIdContentful($contentfulId)
             ->findOne();
-    }
-
-    /**
-     * @param int $contentfulId
-     *
-     * @return \Orm\Zed\ContentfulPageSearch\Persistence\Base\FosContentfulPageSearch
-     */
-    protected function getContentfulPageSearchEntity(int $contentfulId): FosContentfulPageSearch
-    {
-        $contentfulPageSearchQuery = $this->getFactory()->createContentfulPageSearchQuery();
-        $contentfulPageSearchQuery->clear();
-
-        return $contentfulPageSearchQuery
-            ->filterByFkContentful($contentfulId)
-            ->findOneOrCreate();
     }
 
     /**
@@ -119,7 +104,7 @@ abstract class AbstractContentfulTypeMapperPlugin extends AbstractPlugin
 
         foreach ($data['fields'][$name]['value'] as $field) {
             if ($field['type'] === static::FIELD_TYPE_REFERENCE) {
-                array_push($items, $this->getRelatedItemEntryId($field['value']));
+                $items[] = $this->getRelatedItemEntryId($field['value']);
             }
         }
 
