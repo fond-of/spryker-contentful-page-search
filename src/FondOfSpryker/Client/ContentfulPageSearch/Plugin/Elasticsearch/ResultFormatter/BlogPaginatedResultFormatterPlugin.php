@@ -14,6 +14,9 @@ use Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter\AbstractElasticse
  */
 class BlogPaginatedResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlugin
 {
+    /**
+     * @var string
+     */
     public const NAME = 'pagination';
 
     /**

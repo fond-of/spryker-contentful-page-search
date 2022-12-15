@@ -79,7 +79,7 @@ class ContentfulPageSearchFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[]
+     * @return array<\Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface>
      */
     public function getContentfulSearchBlogCategoryQueryExpanderPlugins(): array
     {
@@ -87,7 +87,7 @@ class ContentfulPageSearchFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[]
+     * @return array<\Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface>
      */
     public function getContentfulSearchBlogTagQueryExpanderPlugins(): array
     {
@@ -95,7 +95,7 @@ class ContentfulPageSearchFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[]
+     * @return array<\Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface>
      */
     public function getContentfulSearchCategoryNodeQueryExpanderPlugins(): array
     {
@@ -103,7 +103,7 @@ class ContentfulPageSearchFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface[]
+     * @return array<\Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface>
      */
     public function getContentfulSearchBlogCategoryFormatterPlugins(): array
     {
@@ -111,7 +111,7 @@ class ContentfulPageSearchFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface[]
+     * @return array<\Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface>
      */
     public function getContentfulSearchBlogTagFormatterPlugins(): array
     {
@@ -119,7 +119,7 @@ class ContentfulPageSearchFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface[]
+     * @return array<\Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface>
      */
     public function getContentfulSearchCategoryNodeFormatterPlugins(): array
     {

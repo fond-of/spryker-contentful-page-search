@@ -37,7 +37,7 @@ class BlogCategoryQueryExpander extends AbstractPlugin implements QueryExpanderP
 
         $this->addBlogCategoryFilter(
             $searchQuery->getSearchQuery(),
-            $requestParameters[ContentfulConstants::FIELD_ENTRY_ID]
+            $requestParameters[ContentfulConstants::FIELD_ENTRY_ID],
         );
 
         return $searchQuery;
@@ -75,7 +75,7 @@ class BlogCategoryQueryExpander extends AbstractPlugin implements QueryExpanderP
             throw new InvalidArgumentException(sprintf(
                 'Localized query expander available only with %s, got: %s',
                 BoolQuery::class,
-                get_class($boolQuery)
+                get_class($boolQuery),
             ));
         }
 

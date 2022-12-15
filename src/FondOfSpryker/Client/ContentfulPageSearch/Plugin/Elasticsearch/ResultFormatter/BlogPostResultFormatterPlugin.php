@@ -8,6 +8,9 @@ use Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter\AbstractElasticse
 
 class BlogPostResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlugin
 {
+    /**
+     * @var string
+     */
     private const NAME = 'results';
 
     /**

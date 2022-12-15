@@ -43,7 +43,7 @@ class BlogSortQueryExpander extends AbstractPlugin implements QueryExpanderPlugi
                     'order' => 'DESC',
                     'mode' => 'min',
                 ],
-            ]
+            ],
         );
     }
 }

@@ -7,6 +7,9 @@ use Orm\Zed\ContentfulPageSearch\Persistence\FosContentfulPageSearch;
 
 interface ContentfulPageSearchWriterPluginInterface
 {
+    /**
+     * @var string
+     */
     public const FIELD_TYPE_REFERENCE = 'Reference';
 
     /**

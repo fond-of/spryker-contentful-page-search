@@ -18,7 +18,7 @@ class ContentfulSearchPageToEventBehaviorFacadeBridge implements ContentfulSearc
     }
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
      * @return array
      */
@@ -28,7 +28,7 @@ class ContentfulSearchPageToEventBehaviorFacadeBridge implements ContentfulSearc
     }
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      * @param string $foreignKeyColumnName
      *
      * @return array

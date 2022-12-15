@@ -63,7 +63,7 @@ class BlogPostQueryExpander extends AbstractPlugin implements QueryExpanderPlugi
             throw new InvalidArgumentException(sprintf(
                 'Localized query expander available only with %s, got: %s',
                 BoolQuery::class,
-                get_class($boolQuery)
+                get_class($boolQuery),
             ));
         }
 

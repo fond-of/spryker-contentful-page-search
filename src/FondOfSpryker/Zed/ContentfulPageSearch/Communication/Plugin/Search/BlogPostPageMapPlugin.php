@@ -13,11 +13,34 @@ use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInt
  */
 class BlogPostPageMapPlugin extends AbstractContentfulTypeMapperPlugin implements ContentfulTypeMapperPluginInterface
 {
+    /**
+     * @var string
+     */
     public const FIELD_CATEGORIES = 'categories';
+
+    /**
+     * @var string
+     */
     public const FIELD_TAGS = 'tags';
+
+    /**
+     * @var string
+     */
     public const FIELD_PUBLISH_AT = 'publishedAt';
+
+    /**
+     * @var string
+     */
     public const FIELDS = 'fields';
+
+    /**
+     * @var string
+     */
     public const FIELD_ENTRY_DATA = 'entry_data';
+
+    /**
+     * @var string
+     */
     public const ENTRY_TYPE_ID_VALUE = 'blogPost';
 
     /**
@@ -95,7 +118,7 @@ class BlogPostPageMapPlugin extends AbstractContentfulTypeMapperPlugin implement
      */
     protected function getRelatedItemEntryId(string $entryId): ?string
     {
-        /** @var \Orm\Zed\Contentful\Persistence\FosContentful[] $storageEntries */
+        /** @var array<\Orm\Zed\Contentful\Persistence\FosContentful> $storageEntries */
         $storageEntries = $this->getFactory()
             ->createContentfulQuery()
             ->filterByEntryId(strtolower($entryId));
@@ -132,7 +155,7 @@ class BlogPostPageMapPlugin extends AbstractContentfulTypeMapperPlugin implement
             $pageMapBuilder->addStringSort(
                 $pageMapTransfer,
                 PageIndexMap::BLOG_POST_PUBLISHED_AT,
-                $mapper[PageIndexMap::BLOG_POST_PUBLISHED_AT]
+                $mapper[PageIndexMap::BLOG_POST_PUBLISHED_AT],
             );
         }
 

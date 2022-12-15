@@ -19,6 +19,9 @@ use Spryker\Shared\Search\SearchConstants;
 
 class ContentfulSearchQueryPlugin extends AbstractPlugin implements SearchContextAwareQueryInterface, QueryInterface, SearchStringSetterInterface, SearchStringGetterInterface
 {
+    /**
+     * @var string
+     */
     protected const SOURCE_IDENTIFIER = 'page';
 
     /**
@@ -81,7 +84,7 @@ class ContentfulSearchQueryPlugin extends AbstractPlugin implements SearchContex
     }
 
     /**
-     * @param  \Generated\Shared\Transfer\SearchContextTransfer  $searchContextTransfer
+     * @param \Generated\Shared\Transfer\SearchContextTransfer $searchContextTransfer
      *
      * @return void
      */
@@ -109,7 +112,7 @@ class ContentfulSearchQueryPlugin extends AbstractPlugin implements SearchContex
      */
     protected function addFulltextSearchToQuery(Query $baseQuery): Query
     {
-        if (!empty($this->searchString)) {
+        if ($this->searchString) {
             $matchQuery = $this->createFulltextSearchQuery($this->searchString);
         } else {
             $matchQuery = new MatchAll();

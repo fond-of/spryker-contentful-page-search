@@ -3,7 +3,6 @@
 namespace FondOfSpryker\Zed\ContentfulPageSearch\Business;
 
 use FondOfSpryker\Zed\ContentfulPageSearch\Business\Search\ContentfulPageSearchWriter;
-use FondOfSpryker\Zed\ContentfulPageSearch\Business\Search\ContentfulPageSearchWriterPluginInterface;
 use FondOfSpryker\Zed\ContentfulPageSearch\Business\Search\Plugin\BlogPostWriterPlugin;
 use FondOfSpryker\Zed\ContentfulPageSearch\Business\Validator\StructureValidatorCollectionInterface;
 use FondOfSpryker\Zed\ContentfulPageSearch\ContentfulPageSearchDependencyProvider;
@@ -36,12 +35,12 @@ class ContentfulPageSearchBusinessFactory extends AbstractBusinessFactory
             $this->getUtilEncodingService(),
             $this->getStoreFacade(),
             $this->getStructureValidatorCollection(),
-            $this->getContentfulPageSearchWriterPlugins()
+            $this->getContentfulPageSearchWriterPlugins(),
         );
     }
 
     /**
-     * @return \FondOfSpryker\Zed\ContentfulPageSearch\Business\Search\ContentfulPageSearchWriterPluginInterface[]
+     * @return array<\FondOfSpryker\Zed\ContentfulPageSearch\Business\Search\ContentfulPageSearchWriterPluginInterface>
      */
     public function getContentfulPageSearchWriterPlugins(): array
     {
@@ -58,7 +57,7 @@ class ContentfulPageSearchBusinessFactory extends AbstractBusinessFactory
         return new BlogPostWriterPlugin(
             $this->getStorageFacade(),
             $this->getSearchFacade(),
-            $this->createContentfulQuery()
+            $this->createContentfulQuery(),
         );
     }
 
@@ -112,7 +111,6 @@ class ContentfulPageSearchBusinessFactory extends AbstractBusinessFactory
 
     /**
      * @return \FondOfSpryker\Zed\ContentfulPageSearch\Business\Validator\StructureValidatorCollectionInterface|\FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Facade\ContentfulPageSearchToContentfulFacadeInterface
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      */
     public function getStructureValidatorCollection(): StructureValidatorCollectionInterface
     {

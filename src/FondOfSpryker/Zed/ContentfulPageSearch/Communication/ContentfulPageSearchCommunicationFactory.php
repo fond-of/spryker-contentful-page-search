@@ -27,7 +27,7 @@ class ContentfulPageSearchCommunicationFactory extends AbstractCommunicationFact
     }
 
     /**
-     * @return \FondOfSpryker\Zed\ContentfulPageSearch\Communication\Plugin\Search\ContentfulTypeMapperPluginInterface[]
+     * @return array<\FondOfSpryker\Zed\ContentfulPageSearch\Communication\Plugin\Search\ContentfulTypeMapperPluginInterface>
      */
     public function getContentfulPageSeachMapperTypes(): array
     {

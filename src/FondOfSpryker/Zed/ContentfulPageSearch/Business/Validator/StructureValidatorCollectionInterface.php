@@ -26,7 +26,7 @@ interface StructureValidatorCollectionInterface
     public function has(string $ident): bool;
 
     /**
-     * @return \FondOfSpryker\Zed\ContentfulPageSearch\Business\Validator\Structure\StructureValidatorInterface[]
+     * @return array<\FondOfSpryker\Zed\ContentfulPageSearch\Business\Validator\Structure\StructureValidatorInterface>
      */
     public function getValidator(): array;
 

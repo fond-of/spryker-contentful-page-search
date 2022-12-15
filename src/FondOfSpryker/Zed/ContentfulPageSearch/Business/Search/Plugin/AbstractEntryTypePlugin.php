@@ -29,7 +29,7 @@ abstract class AbstractEntryTypePlugin
     protected $contentfulQuery;
 
     /**
-     * @var \FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Facade\ContentfulPageSearchToSearchFacadeInterface 
+     * @var \FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Facade\ContentfulPageSearchToSearchFacadeInterface
      */
     protected $searchFacade;
 
@@ -80,7 +80,7 @@ abstract class AbstractEntryTypePlugin
         return $this->searchFacade->transformPageMapToDocumentByMapperName(
             $fosContentfulData,
             (new LocaleTransfer())->setLocaleName($localeName),
-            ContentfulPageSearchConstants::CONTENTFUL_RESOURCE_NAME
+            ContentfulPageSearchConstants::CONTENTFUL_RESOURCE_NAME,
         );
     }
 

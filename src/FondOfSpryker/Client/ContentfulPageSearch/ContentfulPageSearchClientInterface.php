@@ -8,7 +8,7 @@ interface ContentfulPageSearchClientInterface
      * @param string $searchString
      * @param array $requestParameters
      *
-     * @return array|\Elastica\ResultSet
+     * @return \Elastica\ResultSet|array
      */
     public function contentfulBlogCategorySearch(string $searchString, array $requestParameters);
 
@@ -16,7 +16,7 @@ interface ContentfulPageSearchClientInterface
      * @param string $searchString
      * @param array $requestParameters
      *
-     * @return array|\Elastica\ResultSet
+     * @return \Elastica\ResultSet|array
      */
     public function contentfulBlogTagSearch(string $searchString, array $requestParameters);
 
@@ -24,7 +24,7 @@ interface ContentfulPageSearchClientInterface
      * @param string $searchString
      * @param array $requestParameters
      *
-     * @return array|\Elastica\ResultSet
+     * @return \Elastica\ResultSet|array
      */
     public function contentfulCategoryNodeSearch(string $searchString, array $requestParameters);
 }

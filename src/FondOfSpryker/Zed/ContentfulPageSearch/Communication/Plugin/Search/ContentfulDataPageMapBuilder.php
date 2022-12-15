@@ -17,6 +17,9 @@ use Spryker\Zed\Search\Dependency\Plugin\NamedPageMapInterface;
  */
 class ContentfulDataPageMapBuilder extends AbstractPlugin implements NamedPageMapInterface
 {
+    /**
+     * @var string
+     */
     public const TYPE = 'contentful_blog_post';
 
     /**
@@ -51,7 +54,7 @@ class ContentfulDataPageMapBuilder extends AbstractPlugin implements NamedPageMa
                 $data['id_contentful'],
                 $pageMapTransfer,
                 $pageMapBuilder,
-                $this->clearStoreNameFromData($data)
+                $this->clearStoreNameFromData($data),
             );
         }
 

@@ -14,10 +14,29 @@ use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInt
  */
 abstract class AbstractContentfulTypeMapperPlugin extends AbstractPlugin
 {
+    /**
+     * @var string
+     */
     public const ID_CONTENTFUL = 'id_contentful';
+
+    /**
+     * @var string
+     */
     public const ENTRY_ID = 'entry_id';
+
+    /**
+     * @var string
+     */
     public const ENTRY_TYPE_ID = 'entry_type_id';
+
+    /**
+     * @var string
+     */
     public const ENTRY_LOCALE = 'entry_locale';
+
+    /**
+     * @var string
+     */
     public const FIELD_TYPE_REFERENCE = 'Reference';
 
     /**
@@ -122,5 +141,10 @@ abstract class AbstractContentfulTypeMapperPlugin extends AbstractPlugin
      *
      * @return \Generated\Shared\Transfer\PageMapTransfer
      */
-    abstract protected function mapSearchResults(PageMapBuilderInterface $pageMapBuilder, PageMapTransfer $pageMapTransfer, array $data, array $mapper): PageMapTransfer;
+    abstract protected function mapSearchResults(
+        PageMapBuilderInterface $pageMapBuilder,
+        PageMapTransfer $pageMapTransfer,
+        array $data,
+        array $mapper
+    ): PageMapTransfer;
 }

@@ -14,9 +14,24 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class ContentfulPageSearchConsole extends Console
 {
+    /**
+     * @var string
+     */
     public const COMMAND_NAME = 'contentful:restore:page-search';
+
+    /**
+     * @var string
+     */
     public const DESCRIPTION = 'command for restoring fos_contentful_page_search table';
+
+    /**
+     * @var string
+     */
     public const IDS_OPTION = 'ids';
+
+    /**
+     * @var string
+     */
     public const IDS_OPTION_SHORTCUT = 'i';
 
     /**
@@ -33,7 +48,7 @@ class ContentfulPageSearchConsole extends Console
             static::IDS_OPTION,
             static::IDS_OPTION_SHORTCUT,
             InputArgument::OPTIONAL,
-            'define the ids which should be fixed'
+            'define the ids which should be fixed',
         );
 
         $this->setName(static::COMMAND_NAME)
@@ -68,7 +83,7 @@ class ContentfulPageSearchConsole extends Console
 
         $messenger->info(sprintf(
             'You just executed %s!',
-            static::COMMAND_NAME
+            static::COMMAND_NAME,
         ));
 
         return static::CODE_SUCCESS;

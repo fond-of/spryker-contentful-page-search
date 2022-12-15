@@ -101,7 +101,7 @@ class ContentfulPageSearchWriter implements ContentfulPageSearchWriterInterface
     {
         $this->contentfulPageSearchQuery->clear();
 
-        /** @var \Orm\Zed\Contentful\Persistence\FosContentful[] $contentfulEntries */
+        /** @var array<\Orm\Zed\Contentful\Persistence\FosContentful> $contentfulEntries */
         $contentfulEntries = $this->contentfulQuery
             ->filterByIdContentful_In($contentfulEntryIds);
 
@@ -138,7 +138,7 @@ class ContentfulPageSearchWriter implements ContentfulPageSearchWriterInterface
                 $contentfulPageSearchWriterPlugin->extractEntry(
                     $contentfulEntity,
                     $contentfulPageSearchEntity,
-                    $this->getStoreNameById($contentfulEntity->getFkStore())
+                    $this->getStoreNameById($contentfulEntity->getFkStore()),
                 );
             }
         }
@@ -175,10 +175,9 @@ class ContentfulPageSearchWriter implements ContentfulPageSearchWriterInterface
     }
 
     /**
-     * @param  int  $contentfulId
+     * @param int $contentfulId
+     *
      * @return \Orm\Zed\ContentfulPageSearch\Persistence\FosContentfulPageSearch
-     * @throws \Propel\Runtime\Exception\PropelException
-     * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
      */
     protected function getContentfulPageSearchEntity(int $contentfulId): FosContentfulPageSearch
     {
