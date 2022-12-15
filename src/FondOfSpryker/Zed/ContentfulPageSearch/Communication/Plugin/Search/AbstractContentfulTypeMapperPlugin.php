@@ -4,7 +4,6 @@ namespace FondOfSpryker\Zed\ContentfulPageSearch\Communication\Plugin\Search;
 
 use Generated\Shared\Transfer\PageMapTransfer;
 use Orm\Zed\Contentful\Persistence\FosContentful;
-use Orm\Zed\ContentfulPageSearch\Persistence\FosContentfulPageSearch;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface;
 
@@ -14,10 +13,29 @@ use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInt
  */
 abstract class AbstractContentfulTypeMapperPlugin extends AbstractPlugin
 {
+    /**
+     * @var string
+     */
     public const ID_CONTENTFUL = 'id_contentful';
+
+    /**
+     * @var string
+     */
     public const ENTRY_ID = 'entry_id';
+
+    /**
+     * @var string
+     */
     public const ENTRY_TYPE_ID = 'entry_type_id';
+
+    /**
+     * @var string
+     */
     public const ENTRY_LOCALE = 'entry_locale';
+
+    /**
+     * @var string
+     */
     public const FIELD_TYPE_REFERENCE = 'Reference';
 
     /**
@@ -61,27 +79,12 @@ abstract class AbstractContentfulTypeMapperPlugin extends AbstractPlugin
      */
     protected function getContentfulEntity(int $contentfulId): FosContentful
     {
-        $contentfulQuery = $this->getFactory()->createContentfulQuery();
+        $contentfulQuery = $this->getFactory()->getContentfulQuery();
         $contentfulQuery->clear();
 
         return $contentfulQuery
             ->filterByIdContentful($contentfulId)
             ->findOne();
-    }
-
-    /**
-     * @param int $contentfulId
-     *
-     * @return \Orm\Zed\ContentfulPageSearch\Persistence\Base\FosContentfulPageSearch
-     */
-    protected function getContentfulPageSearchEntity(int $contentfulId): FosContentfulPageSearch
-    {
-        $contentfulPageSearchQuery = $this->getFactory()->createContentfulPageSearchQuery();
-        $contentfulPageSearchQuery->clear();
-
-        return $contentfulPageSearchQuery
-            ->filterByFkContentful($contentfulId)
-            ->findOneOrCreate();
     }
 
     /**
@@ -100,7 +103,7 @@ abstract class AbstractContentfulTypeMapperPlugin extends AbstractPlugin
 
         foreach ($data['fields'][$name]['value'] as $field) {
             if ($field['type'] === static::FIELD_TYPE_REFERENCE) {
-                array_push($items, $this->getRelatedItemEntryId($field['value']));
+                $items[] = $this->getRelatedItemEntryId($field['value']);
             }
         }
 
@@ -122,5 +125,10 @@ abstract class AbstractContentfulTypeMapperPlugin extends AbstractPlugin
      *
      * @return \Generated\Shared\Transfer\PageMapTransfer
      */
-    abstract protected function mapSearchResults(PageMapBuilderInterface $pageMapBuilder, PageMapTransfer $pageMapTransfer, array $data, array $mapper): PageMapTransfer;
+    abstract protected function mapSearchResults(
+        PageMapBuilderInterface $pageMapBuilder,
+        PageMapTransfer $pageMapTransfer,
+        array $data,
+        array $mapper
+    ): PageMapTransfer;
 }

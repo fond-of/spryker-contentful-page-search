@@ -7,7 +7,8 @@ use Orm\Zed\Contentful\Persistence\FosContentful;
 interface ContentfulPageSearchToContentfulQueryContainerInterface
 {
     /**
-     * @param  string  $contentfulEntryId
+     * @param string $contentfulEntryId
+     *
      * @return \Orm\Zed\Contentful\Persistence\FosContentful|null
      */
     public function queryContentfulEntryByEntryId(string $contentfulEntryId): ?FosContentful;

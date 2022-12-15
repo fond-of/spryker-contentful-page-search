@@ -38,7 +38,7 @@ class StructureValidatorCollection implements StructureValidatorCollectionInterf
     }
 
     /**
-     * @return \FondOfSpryker\Zed\ContentfulPageSearch\Business\Validator\Structure\StructureValidatorInterface[]
+     * @return array<\FondOfSpryker\Zed\ContentfulPageSearch\Business\Validator\Structure\StructureValidatorInterface>
      */
     public function getValidator(): array
     {

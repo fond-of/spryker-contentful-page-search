@@ -1,6 +1,6 @@
 # fond-of-spryker/contentful-page-search
-[![PHP from Travis config](https://img.shields.io/travis/php-v/symfony/symfony.svg)](https://php.net/)
-[![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://packagist.org/packages/fond-of-spryker/contentful)
+![build](https://github.com/fond-of/spryker-contentful-page-search/actions/workflows/main.yml/badge.svg)
+[![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://packagist.org/packages/fond-of-spryker/contentful-page-search)
 
 ## Install
 

@@ -2,39 +2,55 @@
 
 namespace FondOfSpryker\Client\ContentfulPageSearch;
 
-use FondOfSpryker\Client\ContentfulPageSearch\Plugin\Elasticsearch\Query\BlogCategoryQueryExpander;
-use FondOfSpryker\Client\ContentfulPageSearch\Plugin\Elasticsearch\Query\BlogPaginatedQueryExpanderPlugin;
-use FondOfSpryker\Client\ContentfulPageSearch\Plugin\Elasticsearch\Query\BlogPostQueryExpander;
-use FondOfSpryker\Client\ContentfulPageSearch\Plugin\Elasticsearch\Query\BlogSortQueryExpander;
-use FondOfSpryker\Client\ContentfulPageSearch\Plugin\Elasticsearch\Query\BlogTagQueryExpander;
-use FondOfSpryker\Client\ContentfulPageSearch\Plugin\Elasticsearch\Query\CategoryNodeQueryExpanderPlugin;
 use FondOfSpryker\Client\ContentfulPageSearch\Plugin\Elasticsearch\Query\ContentfulSearchQueryPlugin;
-use FondOfSpryker\Client\ContentfulPageSearch\Plugin\Elasticsearch\ResultFormatter\BlogPaginatedResultFormatterPlugin;
-use FondOfSpryker\Client\ContentfulPageSearch\Plugin\Elasticsearch\ResultFormatter\BlogPostResultFormatterPlugin;
-use FondOfSpryker\Client\ContentfulPageSearch\Plugin\Elasticsearch\ResultFormatter\CategoryNodeResultFormatterPlugin;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
-use Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\LocalizedQueryExpanderPlugin;
-use Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\StoreQueryExpanderPlugin;
 
 class ContentfulPageSearchDependencyProvider extends AbstractDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_SEARCH = 'CLIENT_SEARCH';
 
+    /**
+     * @var string
+     */
     public const CONTENTFUL_SEARCH_QUERY_PLUGIN = 'CONTENTFUL_SEARCH_QUERY_PLUGIN';
 
+    /**
+     * @var string
+     */
     public const CONTENTFUL_SEARCH_BLOG_CATEGORY_QUERY_EXPANDER_PLUGINS = 'CONTENTFUL_SEARCH_BLOG_CATEGORY_QUERY_EXPANDER_PLUGINS';
 
+    /**
+     * @var string
+     */
     public const CONTENTFUL_SEARCH_BLOG_TAG_QUERY_EXPANDER_PLUGINS = 'CONTENTFUL_SEARCH_BLOG_TAG_QUERY_EXPANDER_PLUGINS';
 
+    /**
+     * @var string
+     */
     public const CONTENTFUL_SEARCH_CATEGORY_NODE_QUERY_EXPANDER_PLUGINS = 'CONTENTFUL_SEARCH_CATEGORY_NODE_QUERY_EXPANDER_PLUGINS';
 
+    /**
+     * @var string
+     */
     public const CONTENTFUL_SEARCH_BLOG_CATEGORY_RESULT_FORMATTER_PLUGINS = 'CONTENTFUL_SEARCH_BLOG_CATEGORY_RESULT_FORMATTER_PLUGINS';
 
+    /**
+     * @var string
+     */
     public const CONTENTFUL_SEARCH_BLOG_TAG_RESULT_FORMATTER_PLUGINS = 'CONTENTFUL_SEARCH_BLOG_TAG_RESULT_FORMATTER_PLUGINS';
 
+    /**
+     * @var string
+     */
     public const CONTENTFUL_SEARCH_CATEGORY_NODE_QUERY_FORMATTER_PLUGINS = 'CONTENTFUL_SEARCH_CATEGORY_NODE_QUERY_FORMATTER_PLUGINS';
 
+    /**
+     * @var string
+     */
     public const PROVIDE_BLOG_CATEGORY_DEPENDENCIES = 'PROVIDE_BLOG_CATEGORY_DEPENDENCIES';
 
     /**
@@ -177,75 +193,50 @@ class ContentfulPageSearchDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[]
+     * @return array<\Spryker\Client\SearchExtension\Dependency\Plugin\QueryExpanderPluginInterface>
      */
     protected function createContentfulBlogCategorySearchQueryExpanderPlugins(): array
     {
-        return [
-            new StoreQueryExpanderPlugin(),
-            new LocalizedQueryExpanderPlugin(),
-            new BlogPostQueryExpander(),
-            new BlogCategoryQueryExpander(),
-            new BlogSortQueryExpander(),
-            new BlogPaginatedQueryExpanderPlugin(),
-        ];
+        return [];
     }
 
     /**
-     * @return \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[]
+     * @return array<\Spryker\Client\SearchExtension\Dependency\Plugin\QueryExpanderPluginInterface>
      */
     protected function createContentfulBlogTagSearchQueryExpanderPlugins(): array
     {
-        return [
-            new StoreQueryExpanderPlugin(),
-            new LocalizedQueryExpanderPlugin(),
-            new BlogPostQueryExpander(),
-            new BlogTagQueryExpander(),
-            new BlogPaginatedQueryExpanderPlugin(),
-        ];
+        return [];
     }
 
     /**
-     * @return \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[]
+     * @return array<\Spryker\Client\SearchExtension\Dependency\Plugin\QueryExpanderPluginInterface>
      */
     protected function createContentfulSearchCategoryNodeQueryExpanderPlugins(): array
     {
-        return [
-            new StoreQueryExpanderPlugin(),
-            new LocalizedQueryExpanderPlugin(),
-            new CategoryNodeQueryExpanderPlugin(),
-        ];
+        return [];
     }
 
     /**
-     * @return \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface[]
+     * @return array<\Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface>
      */
     protected function createContentfulSearchBlogCategoryResultFormatter(): array
     {
-        return [
-            new BlogPaginatedResultFormatterPlugin(),
-            new BlogPostResultFormatterPlugin(),
-        ];
+        return [];
     }
 
     /**
-     * @return \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface[]
+     * @return array<\Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface>
      */
     protected function createContentfulSearchBlogTagResultFormatter(): array
     {
-        return [
-            new BlogPaginatedResultFormatterPlugin(),
-            new BlogPostResultFormatterPlugin(),
-        ];
+        return [];
     }
 
     /**
-     * @return \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface[]
+     * @return array<\Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface>
      */
     protected function createContentfulSearchCategoryNodeResultFormatter(): array
     {
-        return [
-            new CategoryNodeResultFormatterPlugin(),
-        ];
+        return [];
     }
 }

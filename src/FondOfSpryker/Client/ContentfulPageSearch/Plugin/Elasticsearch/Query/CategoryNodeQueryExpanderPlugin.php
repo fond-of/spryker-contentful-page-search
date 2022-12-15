@@ -7,8 +7,8 @@ use Elastica\Query\BoolQuery;
 use FondOfSpryker\Shared\Contentful\ContentfulConstants;
 use InvalidArgumentException;
 use Spryker\Client\Kernel\AbstractPlugin;
-use Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface;
-use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
+use Spryker\Client\SearchExtension\Dependency\Plugin\QueryExpanderPluginInterface;
+use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 
 /**
  * @method \FondOfSpryker\Client\ContentfulPageSearch\ContentfulPageSearchFactory getFactory();
@@ -18,22 +18,21 @@ class CategoryNodeQueryExpanderPlugin extends AbstractPlugin implements QueryExp
     /**
      * @api
      *
-     * @param \Spryker\Client\Search\Dependency\Plugin\QueryInterface $searchQuery
+     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $searchQuery
      * @param array $requestParameters
      *
-     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
+     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
      */
-    public function expandQuery(QueryInterface $searchQuery, array $requestParameters = [])
+    public function expandQuery(QueryInterface $searchQuery, array $requestParameters = []): QueryInterface
     {
-        //$this->addCategoryIdFilter($searchQuery->getSearchQuery(), $requestParameters);
-        //$this->addCategoryTypeFilter($searchQuery->getSearchQuery());
-
         $boolQuery = $this->getBoolQuery($searchQuery->getSearchQuery());
 
+        /** @var \Elastica\Query\MatchQuery $matchQuery */
         $matchQuery = $this->getFactory()
             ->createQueryBuilder()
-            ->createMatchQuery()
-            ->setField('category_id', $requestParameters[ContentfulConstants::FIELD_ID_CATEGORY]);
+            ->createMatchQuery();
+
+        $matchQuery->setField('category_id', $requestParameters[ContentfulConstants::FIELD_ID_CATEGORY]);
 
         $boolQuery->addMust($matchQuery);
 
@@ -49,10 +48,12 @@ class CategoryNodeQueryExpanderPlugin extends AbstractPlugin implements QueryExp
     {
         $boolQuery = $this->getBoolQuery($query);
 
+        /** @var \Elastica\Query\MatchQuery $matchQuery */
         $matchQuery = $this->getFactory()
             ->createQueryBuilder()
-            ->createMatchQuery()
-            ->setField(ContentfulConstants::FIELD_TYPE, 'category');
+            ->createMatchQuery();
+
+        $matchQuery->setField(ContentfulConstants::FIELD_TYPE, 'category');
 
         $boolQuery->addMust($matchQuery);
     }
@@ -70,10 +71,12 @@ class CategoryNodeQueryExpanderPlugin extends AbstractPlugin implements QueryExp
         }
         $boolQuery = $this->getBoolQuery($query);
 
+        /** @var \Elastica\Query\MatchQuery $matchQuery */
         $matchQuery = $this->getFactory()
             ->createQueryBuilder()
-            ->createMatchQuery()
-            ->setField('category_id', $requestParameters[ContentfulConstants::FIELD_ID_CATEGORY]);
+            ->createMatchQuery();
+
+        $matchQuery->setField('category_id', $requestParameters[ContentfulConstants::FIELD_ID_CATEGORY]);
 
         $boolQuery->addMust($matchQuery);
     }
@@ -92,7 +95,7 @@ class CategoryNodeQueryExpanderPlugin extends AbstractPlugin implements QueryExp
             throw new InvalidArgumentException(sprintf(
                 'Localized query expander available only with %s, got: %s',
                 BoolQuery::class,
-                get_class($boolQuery)
+                get_class($boolQuery),
             ));
         }
 

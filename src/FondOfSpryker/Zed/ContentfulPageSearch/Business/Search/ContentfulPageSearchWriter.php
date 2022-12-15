@@ -2,7 +2,6 @@
 
 namespace FondOfSpryker\Zed\ContentfulPageSearch\Business\Search;
 
-use Exception;
 use FondOfSpryker\Zed\ContentfulPageSearch\Business\Validator\Structure\StructureValidatorInterface;
 use FondOfSpryker\Zed\ContentfulPageSearch\Business\Validator\StructureValidatorCollectionInterface;
 use FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Facade\ContentfulPageSearchToSearchFacadeInterface;
@@ -101,13 +100,13 @@ class ContentfulPageSearchWriter implements ContentfulPageSearchWriterInterface
     {
         $this->contentfulPageSearchQuery->clear();
 
-        /** @var \Orm\Zed\Contentful\Persistence\FosContentful[] $contentfulEntries */
+        /** @var array<\Orm\Zed\Contentful\Persistence\FosContentful> $contentfulEntries */
         $contentfulEntries = $this->contentfulQuery
             ->filterByIdContentful_In($contentfulEntryIds);
 
         /** @var \Orm\Zed\Contentful\Persistence\FosContentful $entry */
         foreach ($contentfulEntries as $entry) {
-            $this->store($entry->getPrimaryKey());
+            $this->store((int)$entry->getPrimaryKey());
         }
     }
 
@@ -138,7 +137,7 @@ class ContentfulPageSearchWriter implements ContentfulPageSearchWriterInterface
                 $contentfulPageSearchWriterPlugin->extractEntry(
                     $contentfulEntity,
                     $contentfulPageSearchEntity,
-                    $this->getStoreNameById($contentfulEntity->getFkStore())
+                    $this->getStoreNameById($contentfulEntity->getFkStore()),
                 );
             }
         }
@@ -175,10 +174,9 @@ class ContentfulPageSearchWriter implements ContentfulPageSearchWriterInterface
     }
 
     /**
-     * @param  int  $contentfulId
+     * @param int $contentfulId
+     *
      * @return \Orm\Zed\ContentfulPageSearch\Persistence\FosContentfulPageSearch
-     * @throws \Propel\Runtime\Exception\PropelException
-     * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
      */
     protected function getContentfulPageSearchEntity(int $contentfulId): FosContentfulPageSearch
     {
@@ -204,10 +202,10 @@ class ContentfulPageSearchWriter implements ContentfulPageSearchWriterInterface
             $this->storeNameChache[$storeId] = $store->getName();
         }
 
-        try {
+        if (array_key_exists($storeId, $this->storeNameChache)) {
             return $this->storeNameChache[$storeId];
-        } catch (Exception $exception) {
-            throw new StoreNotFoundException(sprintf('Store with id %s not found!', $storeId));
         }
+
+        throw new StoreNotFoundException(sprintf('Store with id %s not found!', $storeId));
     }
 }

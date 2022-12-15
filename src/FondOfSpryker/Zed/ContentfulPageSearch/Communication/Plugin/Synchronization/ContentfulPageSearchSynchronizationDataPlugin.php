@@ -86,7 +86,7 @@ class ContentfulPageSearchSynchronizationDataPlugin extends AbstractPlugin imple
      *
      * @api
      *
-     * @param int[] $ids
+     * @param array<int> $ids
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria|null
      */
@@ -94,7 +94,7 @@ class ContentfulPageSearchSynchronizationDataPlugin extends AbstractPlugin imple
     {
         $query = $this->getQueryContainer()->queryContentfulPageSearchByIds($ids);
 
-        if (empty($ids)) {
+        if (!$ids) {
             $query->clear();
         }
 

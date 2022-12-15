@@ -17,13 +17,44 @@ use Spryker\Zed\Kernel\Container;
 
 class ContentfulPageSearchDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
+
+    /**
+     * @var string
+     */
     public const FACADE_SEARCH = 'FACADE_SEARCH';
+
+    /**
+     * @var string
+     */
     public const FACADE_STORAGE = 'FACADE_STORAGE';
+
+    /**
+     * @var string
+     */
     public const QUERY_CONTAINER_CONTENTFUL_ENTRY = 'QUERY_CONTAINER_CONTENTFUL_ENTRY';
+
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+
+    /**
+     * @var string
+     */
     public const FACADE_STORE = 'FACADE_STORE';
+
+    /**
+     * @var string
+     */
     public const FACADE_CONTENTFUL = 'FACADE_CONTENTFUL';
+
+    /**
+     * @var string
+     */
     public const COLLECTION_STRUCTURE_VALIDATOR = 'COLLECTION_STRUCTURE_VALIDATOR';
 
     /**
@@ -92,7 +123,7 @@ class ContentfulPageSearchDependencyProvider extends AbstractBundleDependencyPro
     {
         $container[static::FACADE_STORAGE] = function (Container $container) {
             return new ContentfulPageSearchToStorageFacadeBridge(
-                $container->getLocator()->storage()->facade()
+                $container->getLocator()->storage()->facade(),
             );
         };
 
@@ -108,7 +139,7 @@ class ContentfulPageSearchDependencyProvider extends AbstractBundleDependencyPro
     {
         $container[static::QUERY_CONTAINER_CONTENTFUL_ENTRY] = function (Container $container) {
             return new ContentfulPageSearchToContentfulQueryContainerBridge(
-                $container->getLocator()->contentful()->queryContainer()
+                $container->getLocator()->contentful()->queryContainer(),
             );
         };
 
@@ -124,7 +155,7 @@ class ContentfulPageSearchDependencyProvider extends AbstractBundleDependencyPro
     {
         $container[static::FACADE_SEARCH] = function (Container $container) {
             return new ContentfulPageSearchToSearchFacadeBridge(
-                $container->getLocator()->search()->facade()
+                $container->getLocator()->search()->facade(),
             );
         };
 
@@ -140,7 +171,7 @@ class ContentfulPageSearchDependencyProvider extends AbstractBundleDependencyPro
     {
         $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
             return new ContentfulPageSearchToUtilEncodingBridge(
-                $container->getLocator()->utilEncoding()->service()
+                $container->getLocator()->utilEncoding()->service(),
             );
         };
 
@@ -156,7 +187,7 @@ class ContentfulPageSearchDependencyProvider extends AbstractBundleDependencyPro
     {
         $container[static::FACADE_STORE] = function (Container $container) {
             return new ContentfulPageSearchToStoreFacadeBridge(
-                $container->getLocator()->store()->facade()
+                $container->getLocator()->store()->facade(),
             );
         };
 
@@ -172,7 +203,7 @@ class ContentfulPageSearchDependencyProvider extends AbstractBundleDependencyPro
     {
         $container[static::FACADE_CONTENTFUL] = function (Container $container) {
             return new ContentfulPageSearchToContentfulFacadeBridge(
-                $container->getLocator()->contentful()->facade()
+                $container->getLocator()->contentful()->facade(),
             );
         };
 

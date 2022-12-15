@@ -4,10 +4,13 @@ namespace FondOfSpryker\Client\ContentfulPageSearch\Plugin\Elasticsearch\ResultF
 
 use Elastica\ResultSet;
 use Generated\Shared\Search\PageIndexMap;
-use Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter\AbstractElasticsearchResultFormatterPlugin;
+use Spryker\Client\SearchElasticsearch\Plugin\ResultFormatter\AbstractElasticsearchResultFormatterPlugin;
 
 class CategoryNodeResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlugin
 {
+    /**
+     * @var string
+     */
     private const NAME = 'results';
 
     /**

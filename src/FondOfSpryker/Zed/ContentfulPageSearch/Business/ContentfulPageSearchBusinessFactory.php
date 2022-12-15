@@ -3,7 +3,6 @@
 namespace FondOfSpryker\Zed\ContentfulPageSearch\Business;
 
 use FondOfSpryker\Zed\ContentfulPageSearch\Business\Search\ContentfulPageSearchWriter;
-use FondOfSpryker\Zed\ContentfulPageSearch\Business\Search\ContentfulPageSearchWriterPluginInterface;
 use FondOfSpryker\Zed\ContentfulPageSearch\Business\Search\Plugin\BlogPostWriterPlugin;
 use FondOfSpryker\Zed\ContentfulPageSearch\Business\Validator\StructureValidatorCollectionInterface;
 use FondOfSpryker\Zed\ContentfulPageSearch\ContentfulPageSearchDependencyProvider;
@@ -29,19 +28,19 @@ class ContentfulPageSearchBusinessFactory extends AbstractBusinessFactory
     public function createContentfulPageSearchWriter(): ContentfulPageSearchWriter
     {
         return new ContentfulPageSearchWriter(
-            $this->createContentfulQuery(),
-            $this->createFosContentfulPageSearchQuery(),
+            $this->getContentfulQuery(),
+            $this->getFosContentfulPageSearchQuery(),
             $this->getSearchFacade(),
             $this->getStorageFacade(),
             $this->getUtilEncodingService(),
             $this->getStoreFacade(),
             $this->getStructureValidatorCollection(),
-            $this->getContentfulPageSearchWriterPlugins()
+            $this->getContentfulPageSearchWriterPlugins(),
         );
     }
 
     /**
-     * @return \FondOfSpryker\Zed\ContentfulPageSearch\Business\Search\ContentfulPageSearchWriterPluginInterface[]
+     * @return array<\FondOfSpryker\Zed\ContentfulPageSearch\Business\Search\ContentfulPageSearchWriterPluginInterface>
      */
     public function getContentfulPageSearchWriterPlugins(): array
     {
@@ -58,14 +57,14 @@ class ContentfulPageSearchBusinessFactory extends AbstractBusinessFactory
         return new BlogPostWriterPlugin(
             $this->getStorageFacade(),
             $this->getSearchFacade(),
-            $this->createContentfulQuery()
+            $this->getContentfulQuery(),
         );
     }
 
     /**
      * @return \Orm\Zed\Contentful\Persistence\FosContentfulQuery
      */
-    protected function createContentfulQuery(): FosContentfulQuery
+    protected function getContentfulQuery(): FosContentfulQuery
     {
         return FosContentfulQuery::create();
     }
@@ -73,7 +72,7 @@ class ContentfulPageSearchBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Orm\Zed\ContentfulPageSearch\Persistence\FosContentfulPageSearchQuery
      */
-    protected function createFosContentfulPageSearchQuery(): FosContentfulPageSearchQuery
+    protected function getFosContentfulPageSearchQuery(): FosContentfulPageSearchQuery
     {
         return FosContentfulPageSearchQuery::create();
     }
@@ -111,8 +110,7 @@ class ContentfulPageSearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \FondOfSpryker\Zed\ContentfulPageSearch\Business\Validator\StructureValidatorCollectionInterface|\FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Facade\ContentfulPageSearchToContentfulFacadeInterface
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
+     * @return \FondOfSpryker\Zed\ContentfulPageSearch\Business\Validator\StructureValidatorCollectionInterface
      */
     public function getStructureValidatorCollection(): StructureValidatorCollectionInterface
     {

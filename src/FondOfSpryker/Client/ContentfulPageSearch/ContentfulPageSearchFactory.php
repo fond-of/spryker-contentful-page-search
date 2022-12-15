@@ -3,45 +3,21 @@
 namespace FondOfSpryker\Client\ContentfulPageSearch;
 
 use Spryker\Client\Kernel\AbstractFactory;
-use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
-use Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface;
-use Spryker\Client\Search\Dependency\Plugin\SearchStringSetterInterface;
-use Spryker\Client\Search\Model\Elasticsearch\Query\QueryBuilder;
-use Spryker\Client\Search\Model\Elasticsearch\Query\QueryBuilderInterface;
-use Spryker\Client\Search\Plugin\Config\SearchConfig;
 use Spryker\Client\Search\SearchClientInterface;
+use Spryker\Client\SearchElasticsearch\Query\QueryBuilder;
+use Spryker\Client\SearchElasticsearch\Query\QueryBuilderInterface;
+use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
+use Spryker\Client\SearchExtension\Dependency\Plugin\SearchStringSetterInterface;
 
+/**
+ * @method \FondOfSpryker\Client\ContentfulPageSearch\ContentfulPageSearchConfig getConfig()
+ */
 class ContentfulPageSearchFactory extends AbstractFactory
 {
     /**
-     * @var \Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface
-     */
-    protected static $searchConfigInstance;
-
-    /**
-     * @return \Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface
-     */
-    public function getSearchConfig()
-    {
-        if (static::$searchConfigInstance === null) {
-            static::$searchConfigInstance = $this->createSearchConfig();
-        }
-
-        return static::$searchConfigInstance;
-    }
-
-    /**
-     * @return \Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface
-     */
-    public function createSearchConfig(): SearchConfigInterface
-    {
-        return new SearchConfig();
-    }
-
-    /**
      * @param string $searchString
      *
-     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
+     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
      */
     public function createContentfulSearchQuery(string $searchString): QueryInterface
     {
@@ -55,7 +31,7 @@ class ContentfulPageSearchFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Search\Model\Elasticsearch\Query\QueryBuilderInterface
+     * @return \Spryker\Client\SearchElasticsearch\Query\QueryBuilderInterface
      */
     public function createQueryBuilder(): QueryBuilderInterface
     {
@@ -63,7 +39,7 @@ class ContentfulPageSearchFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
+     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
      */
     public function getContentfulSearchQueryPlugin(): QueryInterface
     {
@@ -79,7 +55,7 @@ class ContentfulPageSearchFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[]
+     * @return array<\Spryker\Client\SearchExtension\Dependency\Plugin\QueryExpanderPluginInterface>
      */
     public function getContentfulSearchBlogCategoryQueryExpanderPlugins(): array
     {
@@ -87,7 +63,7 @@ class ContentfulPageSearchFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[]
+     * @return array<\Spryker\Client\SearchExtension\Dependency\Plugin\QueryExpanderPluginInterface>
      */
     public function getContentfulSearchBlogTagQueryExpanderPlugins(): array
     {
@@ -95,7 +71,7 @@ class ContentfulPageSearchFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[]
+     * @return array<\Spryker\Client\SearchExtension\Dependency\Plugin\QueryExpanderPluginInterface>
      */
     public function getContentfulSearchCategoryNodeQueryExpanderPlugins(): array
     {
@@ -103,7 +79,7 @@ class ContentfulPageSearchFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface[]
+     * @return array<\Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface>
      */
     public function getContentfulSearchBlogCategoryFormatterPlugins(): array
     {
@@ -111,7 +87,7 @@ class ContentfulPageSearchFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface[]
+     * @return array<\Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface>
      */
     public function getContentfulSearchBlogTagFormatterPlugins(): array
     {
@@ -119,7 +95,7 @@ class ContentfulPageSearchFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface[]
+     * @return array<\Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface>
      */
     public function getContentfulSearchCategoryNodeFormatterPlugins(): array
     {
