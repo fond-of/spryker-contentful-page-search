@@ -16,6 +16,7 @@ class ContentfulPageSearchFactory extends AbstractFactory
 {
     /**
      * @param string $searchString
+     *
      * @return \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
      */
     public function createContentfulSearchQuery(string $searchString): QueryInterface

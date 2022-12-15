@@ -4,7 +4,6 @@ namespace FondOfSpryker\Zed\ContentfulPageSearch\Communication\Plugin\Search;
 
 use Generated\Shared\Transfer\PageMapTransfer;
 use Orm\Zed\Contentful\Persistence\FosContentful;
-use Orm\Zed\ContentfulPageSearch\Persistence\FosContentfulPageSearch;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface;
 

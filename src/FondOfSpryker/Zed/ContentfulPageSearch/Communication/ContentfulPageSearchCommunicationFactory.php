@@ -31,7 +31,7 @@ class ContentfulPageSearchCommunicationFactory extends AbstractCommunicationFact
     {
         return [
             new BlogPostPageMapPlugin(
-                $this->getStructureValidatorCollection()
+                $this->getStructureValidatorCollection(),
             ),
         ];
     }
