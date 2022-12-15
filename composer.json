@@ -4,10 +4,6 @@
   "license": "MIT",
   "authors": [
     {
-      "name": "Markus Nörenberg",
-      "email": "noerenberg.markus@gmail.com"
-    },
-    {
       "name": "Daniel Rose",
       "email": "daniel-rose@gmx.de"
     },
@@ -41,7 +37,15 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "FondOfSpryker\\": "tests/FondOfSpryker/"
+      "FondOfSpryker\\": "tests/FondOfSpryker/",
+      "Generated\\":"src/Generated/",
+      "Orm\\Zed\\": "src/Orm/Zed/"
+    }
+  },
+  "config": {
+    "sort-packages": true,
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true
     }
   }
 }
