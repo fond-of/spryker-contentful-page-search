@@ -28,8 +28,8 @@ class ContentfulPageSearchBusinessFactory extends AbstractBusinessFactory
     public function createContentfulPageSearchWriter(): ContentfulPageSearchWriter
     {
         return new ContentfulPageSearchWriter(
-            $this->createContentfulQuery(),
-            $this->createFosContentfulPageSearchQuery(),
+            $this->getContentfulQuery(),
+            $this->getFosContentfulPageSearchQuery(),
             $this->getSearchFacade(),
             $this->getStorageFacade(),
             $this->getUtilEncodingService(),
@@ -57,14 +57,14 @@ class ContentfulPageSearchBusinessFactory extends AbstractBusinessFactory
         return new BlogPostWriterPlugin(
             $this->getStorageFacade(),
             $this->getSearchFacade(),
-            $this->createContentfulQuery(),
+            $this->getContentfulQuery(),
         );
     }
 
     /**
      * @return \Orm\Zed\Contentful\Persistence\FosContentfulQuery
      */
-    protected function createContentfulQuery(): FosContentfulQuery
+    protected function getContentfulQuery(): FosContentfulQuery
     {
         return FosContentfulQuery::create();
     }
@@ -72,7 +72,7 @@ class ContentfulPageSearchBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Orm\Zed\ContentfulPageSearch\Persistence\FosContentfulPageSearchQuery
      */
-    protected function createFosContentfulPageSearchQuery(): FosContentfulPageSearchQuery
+    protected function getFosContentfulPageSearchQuery(): FosContentfulPageSearchQuery
     {
         return FosContentfulPageSearchQuery::create();
     }

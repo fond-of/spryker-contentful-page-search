@@ -8,8 +8,6 @@ use FondOfSpryker\Zed\ContentfulPageSearch\ContentfulPageSearchDependencyProvide
 use FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Facade\ContentfulPageSearchToContentfulFacadeInterface;
 use FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Facade\ContentfulPageSearchToStorageFacadeInterface;
 use FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Facade\ContentfulSearchPageToEventBehaviorFacadeInterface;
-use Orm\Zed\Contentful\Persistence\FosContentfulQuery;
-use Orm\Zed\ContentfulPageSearch\Persistence\FosContentfulPageSearchQuery;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
@@ -34,22 +32,6 @@ class ContentfulPageSearchCommunicationFactory extends AbstractCommunicationFact
         return [
             new BlogPostPageMapPlugin($this->getStructureValidatorCollection()),
         ];
-    }
-
-    /**
-     * @return \Orm\Zed\Contentful\Persistence\FosContentfulQuery
-     */
-    public function createContentfulQuery(): FosContentfulQuery
-    {
-        return FosContentfulQuery::create();
-    }
-
-    /**
-     * @return \Orm\Zed\ContentfulPageSearch\Persistence\FosContentfulPageSearchQuery
-     */
-    public function createContentfulPageSearchQuery(): FosContentfulPageSearchQuery
-    {
-        return FosContentfulPageSearchQuery::create();
     }
 
     /**
