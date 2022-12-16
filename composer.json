@@ -19,7 +19,6 @@
   "require": {
     "php": ">=7.4",
     "ext-json": "*",
-    "fond-of-spryker/configurable-pagination": "dev-spryker_upgrade",
     "fond-of-spryker/contentful": "dev-master",
     "spryker/locale": "^3.3.0",
     "spryker/search-elasticsearch": "^1.14.0",
