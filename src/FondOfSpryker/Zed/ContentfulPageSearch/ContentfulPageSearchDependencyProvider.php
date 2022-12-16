@@ -44,11 +44,6 @@ class ContentfulPageSearchDependencyProvider extends AbstractBundleDependencyPro
     /**
      * @var string
      */
-    public const FACADE_CONTENTFUL = 'FACADE_CONTENTFUL';
-
-    /**
-     * @var string
-     */
     public const COLLECTION_STRUCTURE_VALIDATOR = 'COLLECTION_STRUCTURE_VALIDATOR';
 
     /**
@@ -60,7 +55,6 @@ class ContentfulPageSearchDependencyProvider extends AbstractBundleDependencyPro
     {
         $container = $this->addEventBehaviourFacade($container);
         $container = $this->addStorageFacade($container);
-        $container = $this->addContentfulFacade($container);
         $container = $this->addStructureValidatorCollection($container);
 
         return $container;
@@ -154,22 +148,6 @@ class ContentfulPageSearchDependencyProvider extends AbstractBundleDependencyPro
         $container[static::FACADE_STORE] = function (Container $container) {
             return new ContentfulPageSearchToStoreFacadeBridge(
                 $container->getLocator()->store()->facade(),
-            );
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addContentfulFacade(Container $container): Container
-    {
-        $container[static::FACADE_CONTENTFUL] = function (Container $container) {
-            return new ContentfulPageSearchToContentfulFacadeBridge(
-                $container->getLocator()->contentful()->facade(),
             );
         };
 

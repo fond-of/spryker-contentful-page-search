@@ -45,14 +45,6 @@ class ContentfulPageSearchCommunicationFactory extends AbstractCommunicationFact
     }
 
     /**
-     * @return \FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Facade\ContentfulPageSearchToContentfulFacadeInterface
-     */
-    public function getContentfulFacade(): ContentfulPageSearchToContentfulFacadeInterface
-    {
-        return $this->getProvidedDependency(ContentfulPageSearchDependencyProvider::FACADE_CONTENTFUL);
-    }
-
-    /**
      * @return \FondOfSpryker\Zed\ContentfulPageSearch\Business\Validator\StructureValidatorCollectionInterface
      */
     public function getStructureValidatorCollection(): StructureValidatorCollectionInterface
