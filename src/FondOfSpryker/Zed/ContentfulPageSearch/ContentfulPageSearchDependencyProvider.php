@@ -5,7 +5,6 @@ namespace FondOfSpryker\Zed\ContentfulPageSearch;
 use FondOfSpryker\Zed\ContentfulPageSearch\Business\Validator\Structure\BlogPostStructureValidator;
 use FondOfSpryker\Zed\ContentfulPageSearch\Business\Validator\StructureValidatorCollection;
 use FondOfSpryker\Zed\ContentfulPageSearch\Business\Validator\StructureValidatorCollectionInterface;
-use FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Facade\ContentfulPageSearchToContentfulFacadeBridge;
 use FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Facade\ContentfulPageSearchToSearchFacadeBridge;
 use FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Facade\ContentfulPageSearchToStorageFacadeBridge;
 use FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Facade\ContentfulPageSearchToStoreFacadeBridge;

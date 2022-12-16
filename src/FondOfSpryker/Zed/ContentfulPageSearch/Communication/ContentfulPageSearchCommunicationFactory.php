@@ -5,7 +5,6 @@ namespace FondOfSpryker\Zed\ContentfulPageSearch\Communication;
 use FondOfSpryker\Zed\ContentfulPageSearch\Business\Validator\StructureValidatorCollectionInterface;
 use FondOfSpryker\Zed\ContentfulPageSearch\Communication\Plugin\Search\BlogPostPageMapPlugin;
 use FondOfSpryker\Zed\ContentfulPageSearch\ContentfulPageSearchDependencyProvider;
-use FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Facade\ContentfulPageSearchToContentfulFacadeInterface;
 use FondOfSpryker\Zed\ContentfulPageSearch\Dependency\Facade\ContentfulSearchPageToEventBehaviorFacadeInterface;
 use Orm\Zed\Contentful\Persistence\FosContentfulQuery;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
