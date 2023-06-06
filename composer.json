@@ -20,7 +20,7 @@
     "php": ">=7.4",
     "ext-json": "*",
     "fond-of-spryker/contentful": "dev-master",
-    "spryker/locale": "^3.3.0",
+    "spryker/locale": "^3.0.0 || ^4.0.0",
     "spryker/search-elasticsearch": "^1.14.0",
     "spryker/search-extension": "^1.1.0",
     "spryker/storage": "^3.19.0",
